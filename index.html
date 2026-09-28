@@ -126,11 +126,12 @@ button:hover {
 }
 .message {
     font-size: 18px;
-    line-height: 2;
+    line-height: 1.9;
+    letter-spacing: 0.2px;
 }
 
 .message p {
-    margin-bottom: 25px;
+    margin-bottom: 30px;
 }
 .slides {
     position: relative;
@@ -249,35 +250,39 @@ button:hover {
 .nav-button {
     padding: 10px 22px;
     font-size: 14px;
-}   
+    background: rgba(137, 114, 23, 0.9);
+    box-shadow: 0 5px 14px rgba(80, 60, 10, 0.15);
+}
 .signature {
-    margin-top: 45px;
+    margin-top: 50px;
     text-align: right;
 
     font-family: "Segoe Print",
                  "Bradley Hand",
                  cursive;
 
+    font-size: 17px;
+    font-style: italic;
     color: #897217;
 }
-
 /* FLOWERS */
 
 .flower {
     position: fixed;
-    width: 110px;
-    opacity: 0.55;
+    width: 95px;
+    opacity: 0.42;
     pointer-events: none;
+    z-index: 0;
 }
 
 .flower-top {
-    top: 15px;
-    left: 15px;
+    top: 25px;
+    left: 25px;
 }
 
 .flower-bottom {
-    bottom: 15px;
-    right: 15px;
+    bottom: 25px;
+    right: 25px;
     transform: rotate(180deg);
 }
 
