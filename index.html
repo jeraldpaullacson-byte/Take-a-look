@@ -129,26 +129,49 @@ button:hover {
 .message p {
     margin-bottom: 25px;
 }
+.slides {
+    position: relative;
+    overflow: hidden;
+}
+
 .slide {
     display: none;
-    opacity: 0;
-    transform: translateY(15px);
+    width: 100%;
 }
 
 .slide.active {
     display: block;
-    animation: slideFade 0.6s ease;
 }
 
-@keyframes slideFade {
+.slide.enter-right {
+    animation: enterRight 0.6s ease forwards;
+}
+
+.slide.enter-left {
+    animation: enterLeft 0.6s ease forwards;
+}
+
+@keyframes enterRight {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateX(50px);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes enterLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
  .navigation {
@@ -405,26 +428,38 @@ function openLetter() {
 let currentSlide = 0;
 
 const slides = document.querySelectorAll(".slide");
+function showSlide(index, direction) {
 
-function showSlide(index) {
     slides.forEach(slide => {
-        slide.classList.remove("active");
+        slide.classList.remove(
+            "active",
+            "enter-right",
+            "enter-left"
+        );
     });
 
-    slides[index].classList.add("active");
+    const next = slides[index];
+
+    next.classList.add("active");
+
+    if (direction === "next") {
+        next.classList.add("enter-right");
+    } else {
+        next.classList.add("enter-left");
+    }
 }
 
 function nextSlide() {
     if (currentSlide < slides.length - 1) {
         currentSlide++;
-        showSlide(currentSlide);
+        showSlide(currentSlide, "next");
     }
 }
 
 function previousSlide() {
     if (currentSlide > 0) {
         currentSlide--;
-        showSlide(currentSlide);
+        showSlide(currentSlide, "back");
     }
 }
 </script>
