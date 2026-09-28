@@ -235,10 +235,12 @@ button:hover {
         transform: translateX(0);
     }
 }
- .navigation {
+.navigation {
+    max-width: 750px;
+    margin: 20px auto 0;
+
     display: flex;
     justify-content: space-between;
-    margin-top: 35px;
 }
 
 .nav-button {
@@ -400,7 +402,6 @@ button:hover {
 
     </div>
 
-
     <div class="slide">
 
         <div class="message">
@@ -437,7 +438,7 @@ button:hover {
     </div>
 
 
-    <div class="slide">
+      <div class="slide">
 
         <div class="message">
 
@@ -451,23 +452,31 @@ button:hover {
 
         </div>
 
+    </div>
+
 </div>
+
 </div>
+
 <div class="navigation">
-    <button class="nav-button back" onclick="previousSlide()">‹ Back</button>
+
+    <button class="nav-button back" onclick="previousSlide()">
+        ‹ Back
+    </button>
 
     <button class="nav-button continue-button" onclick="nextSlide()">
         Continue ›
     </button>
 
-    <button class="nav-button beginning-button" onclick="backToBeginning()" style="display: none;">
+    <button class="nav-button beginning-button"
+            onclick="backToBeginning()"
+            style="display: none;">
         Back to beginning
     </button>
-</div>
 
 </div>
+
 </section>
-
 
 <script>
 
