@@ -136,6 +136,16 @@ button:hover {
 .slide.active {
     display: block;
 }
+ .navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 35px;
+}
+
+.nav-button {
+    padding: 10px 22px;
+    font-size: 14px;
+}   
 .signature {
     margin-top: 45px;
     text-align: right;
@@ -342,9 +352,13 @@ button:hover {
 
         </div>
 
-    </div>
 </div>
 </div>
+<div class="navigation">
+    <button class="nav-button back" onclick="previousSlide()">‹ Back</button>
+    <button class="nav-button next" onclick="nextSlide()">Continue ›</button>
+</div>
+
 </div>
 </section>
 
@@ -373,7 +387,31 @@ function openLetter() {
     }, 700);
 
 }
+let currentSlide = 0;
 
+const slides = document.querySelectorAll(".slide");
+
+function showSlide(index) {
+    slides.forEach(slide => {
+        slide.classList.remove("active");
+    });
+
+    slides[index].classList.add("active");
+}
+
+function nextSlide() {
+    if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        showSlide(currentSlide);
+    }
+}
+
+function previousSlide() {
+    if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+    }
+}
 </script>
 
 
