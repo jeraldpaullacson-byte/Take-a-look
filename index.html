@@ -135,7 +135,13 @@ button:hover {
 .message p {
     margin-bottom: 25px;
 }
+.slide {
+    display: none;
+}
 
+.slide.active {
+    display: block;
+}
 .signature {
     margin-top: 45px;
     text-align: right;
@@ -271,9 +277,11 @@ button:hover {
 
     <div class="paper">
 
-        <div class="message">
+        <div class="slides">
 
-            <!-- SAMPLE MESSAGE -->
+    <div class="slide active">
+
+        <div class="message">
 
             <p>
                 Hey. I know this is super random,
@@ -285,6 +293,15 @@ button:hover {
                 wanting to tell you for a while.
             </p>
 
+        </div>
+
+    </div>
+
+
+    <div class="slide">
+
+        <div class="message">
+
             <p>
                 I wasn't really sure how to say it,
                 so I decided to write it down instead.
@@ -294,16 +311,35 @@ button:hover {
                 Sample lang to para hindi mabasa ni Sarah muna yan sha HAHA.
             </p>
 
+        </div>
+
+    </div>
+
+
+    <div class="slide">
+
+        <div class="message">
+
             <p>
                 I just wanted you to know that you're
                 someone EMEEEEEE.....
             </p>
 
             <p>
-                sana may chance bess no? pag wala edi nomo nalang AHAHA
+                sana may chance bess no?
             </p>
 
-           
+        </div>
+
+    </div>
+
+
+    <div class="slide">
+
+        <div class="message">
+
+            <p>
+                Pag wala edi nomo nalang AHAHA.
             </p>
 
             <div class="signature">
@@ -313,6 +349,8 @@ button:hover {
         </div>
 
     </div>
+
+</div>
 
 </section>
 
