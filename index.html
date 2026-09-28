@@ -318,11 +318,19 @@ button:hover {
 
 function openLetter() {
 
-    document.getElementById("opening").style.display = "none";
+    const opening = document.getElementById("opening");
+    const letter = document.getElementById("letter");
 
-    document.getElementById("letter").style.display = "block";
+    opening.classList.add("fade-out");
 
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+
+        opening.style.display = "none";
+        letter.style.display = "block";
+
+        window.scrollTo(0, 0);
+
+    }, 700);
 
 }
 
