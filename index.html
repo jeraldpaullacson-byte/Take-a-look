@@ -331,6 +331,11 @@ function openLetter() {
         opening.style.display = "none";
         letter.style.display = "block";
 
+        requestAnimationFrame(() => {
+            letter.style.opacity = "1";
+            letter.style.transform = "translateY(0)";
+        });
+
         window.scrollTo(0, 0);
 
     }, 700);
