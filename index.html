@@ -151,8 +151,16 @@ button:hover {
 .slide.enter-right {
     animation: enterRight 0.6s ease forwards;
 }
-.slide:first-child.enter-right,
-.slide:first-child.enter-left {
+
+.slide.enter-left {
+    animation: enterLeft 0.6s ease forwards;
+}
+
+
+/* SLIDE 1 — Gentle beginning */
+
+.slide:nth-child(1).enter-right,
+.slide:nth-child(1).enter-left {
     animation: firstSlideIn 0.8s ease forwards;
 }
 
@@ -167,9 +175,10 @@ button:hover {
         transform: translateY(0);
     }
 }
-.slide.enter-left {
-    animation: enterLeft 0.6s ease forwards;
-}
+
+
+/* SLIDE 2 — Subtle realization */
+
 .slide:nth-child(2).enter-right,
 .slide:nth-child(2).enter-left {
     animation: secondSlideIn 0.7s ease forwards;
@@ -186,20 +195,13 @@ button:hover {
         transform: scale(1);
     }
 }
-@keyframes enterRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
+
+/* SLIDE 3 — The confession */
+
 .slide:nth-child(3).enter-right,
 .slide:nth-child(3).enter-left {
-    animation: thirdSlideIn 0.7s ease forwards;
+    animation: thirdSlideIn 0.8s ease forwards;
 }
 
 @keyframes thirdSlideIn {
@@ -213,12 +215,76 @@ button:hover {
         transform: scale(1);
     }
 }
+
+
+/* SLIDE 4 — Reassurance */
+
 .slide:nth-child(4).enter-right,
 .slide:nth-child(4).enter-left {
-    animation: fourthSlideIn 0.9s ease forwards;
+    animation: fourthSlideIn 0.8s ease forwards;
 }
 
 @keyframes fourthSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* SLIDE 5 — Looking back */
+
+.slide:nth-child(5).enter-right,
+.slide:nth-child(5).enter-left {
+    animation: fifthSlideIn 0.7s ease forwards;
+}
+
+@keyframes fifthSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+/* SLIDE 6 — Dog tag */
+
+.slide:nth-child(6).enter-right,
+.slide:nth-child(6).enter-left {
+    animation: sixthSlideIn 0.9s ease forwards;
+}
+
+@keyframes sixthSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+
+/* SLIDE 7 — Ending */
+
+.slide:nth-child(7).enter-right,
+.slide:nth-child(7).enter-left {
+    animation: seventhSlideIn 1s ease forwards;
+}
+
+@keyframes seventhSlideIn {
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -228,7 +294,23 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
-}    
+}
+
+
+/* GENERIC FALLBACK */
+
+@keyframes enterRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 @keyframes enterLeft {
     from {
         opacity: 0;
