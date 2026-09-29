@@ -1413,9 +1413,36 @@ background-repeat: no-repeat;
 <!-- LETTER -->
 
 <section id="letter">
- <!-- FOREGROUND FLOWERS -->
-<div class="foreground-flower-layer"></div>   
-<!-- FLOWERS -->
+
+<!-- FOREGROUND FLOWERS -->
+<div class="foreground-flower-layer">
+
+    <!-- CLONE OF FLOWER 1 -->
+    <svg class="flower flower-1" viewBox="0 0 100 100">
+        <g class="flower-inner">
+            <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
+            <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
+            <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
+            <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
+            <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
+        </g>
+    </svg>
+
+    <!-- CLONE OF FLOWER 5 -->
+    <svg class="flower flower-5" viewBox="0 0 100 100">
+        <g class="flower-inner">
+            <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
+            <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
+            <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+            <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+            <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+            <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+        </g>
+    </svg>
+
+</div>
+
+<!-- ORIGINAL FLOWERS -->
 <div class="flower-layer">
 <svg class="flower flower-1" viewBox="0 0 100 100">
    <g class="flower-inner"> 
@@ -1991,34 +2018,6 @@ function createForegroundFlowers() {
         foregroundLayer.appendChild(copy);
     });
 }
-/* =========================================
-   FOREGROUND FLOWER COPIES
-   ========================================= */
-
-function createForegroundFlowers() {
-
-    const foregroundLayer =
-        document.querySelector(".foreground-flower-layer");
-
-    const flower1 =
-        document.querySelector(".flower-layer .flower-1");
-
-    const flower5 =
-        document.querySelector(".flower-layer .flower-5");
-
-    const flower1Copy = flower1.cloneNode(true);
-    const flower5Copy = flower5.cloneNode(true);
-
-    flower1Copy.classList.add("foreground-copy");
-    flower5Copy.classList.add("foreground-copy");
-
-    foregroundLayer.appendChild(flower1Copy);
-    foregroundLayer.appendChild(flower5Copy);
-}
-
-createForegroundFlowers();
-
-
 
 /* INITIAL STATE */
 showSlide(0, "back");
