@@ -476,15 +476,14 @@ button:hover {
     /* Default starting position */
     transform: translateY(18px) scale(0.92);
 
-transition:
+    transition:
     opacity 0.8s ease,
-    transform 0.8s ease,
-    visibility 0.8s ease;
+    transform 0.8s ease;
 }
 /* SHOW FLOWERS WHEN LETTER OPENS */
 body.letter-open .flower {
     visibility: visible;
-    opacity: 1;
+   
 }
 body.hide-letter-flowers .flower {
     opacity: 0 !important;
@@ -1210,34 +1209,40 @@ function openLetter() {
 
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
+    const flowers = document.querySelectorAll(".flower");
 
-    /* Prepare letter underneath */
+    /* Prepare letter */
     letter.style.display = "block";
-
-    /* Reset animation */
     letter.classList.remove("opening-letter");
+
+    /* Prepare flowers */
+    document.body.classList.remove("letter-open");
+    document.body.classList.remove("hide-letter-flowers");
+
+    flowers.forEach(flower => {
+        flower.style.visibility = "visible";
+    });
+
+    /* Force browser to register starting states */
     void letter.offsetWidth;
 
-    /* Start letter fade-in */
-    letter.classList.add("opening-letter");
+    requestAnimationFrame(() => {
 
-    /* Fade opening out at the same time */
-    opening.classList.add("fade-out");
+        requestAnimationFrame(() => {
 
-/* Prepare flowers */
-document.body.classList.remove("letter-open");
-document.body.classList.remove("hide-letter-flowers");
+            /* CROSSFADE — everything starts together */
+            opening.classList.add("fade-out");
+            letter.classList.add("opening-letter");
+            document.body.classList.add("letter-open");
 
-/* Register hidden state */
-void document.body.offsetWidth;
+        });
 
-/* Start flowers at exactly the same time */
-document.body.classList.add("letter-open");
-setTimeout(() => {
-        /* Remove opening completely */
+    });
+
+    setTimeout(() => {
+
         opening.style.display = "none";
 
-        /* Return letter to normal layout */
         letter.classList.remove("opening-letter");
 
         letter.style.position = "";
@@ -1249,8 +1254,9 @@ setTimeout(() => {
 
         window.scrollTo(0, 0);
 
-    }, 800);
+    }, 850);
 }
+
 let currentSlide = 0;
 
 const slides = document.querySelectorAll(".slide");
