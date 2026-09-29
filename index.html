@@ -1959,7 +1959,7 @@ letter.style.transform = "translateY(15px)";
 
     }, 800);
 }
- /* =========================================
+/* =========================================
    FOREGROUND FLOWER COPIES
    ========================================= */
 
@@ -1968,29 +1968,88 @@ function createForegroundFlowers() {
     const foregroundLayer =
         document.querySelector(".foreground-flower-layer");
 
-    const flower1 =
-        document.querySelector(".flower-layer .flower-1");
+    const originals = [
+        document.querySelector(".flower-layer .flower-1"),
+        document.querySelector(".flower-layer .flower-5")
+    ];
 
-    const flower5 =
-        document.querySelector(".flower-layer .flower-5");
+    originals.forEach(original => {
 
-    /* Make copies — originals stay untouched */
-    const flower1Copy = flower1.cloneNode(true);
-    const flower5Copy = flower5.cloneNode(true);
+        const copy = original.cloneNode(true);
 
-    /* Mark copies so we can control them separately */
-    flower1Copy.classList.add("foreground-copy");
-    flower5Copy.classList.add("foreground-copy");
+        copy.classList.add("foreground-copy");
 
-    /* Invisible for testing first */
-    flower1Copy.style.visibility = "hidden";
-    flower5Copy.style.visibility = "hidden";
+        /* Keep invisible while we test synchronization */
+        copy.style.visibility = "hidden";
 
-    foregroundLayer.appendChild(flower1Copy);
-    foregroundLayer.appendChild(flower5Copy);
+        /*
+           Remove normal flower animation from the COPY.
+           The original remains completely untouched.
+        */
+        copy.style.animation = "none";
+
+        foregroundLayer.appendChild(copy);
+    });
 }
 
-createForegroundFlowers();   
+
+/* =========================================
+   SYNC FOREGROUND COPIES TO ORIGINALS
+   ========================================= */
+
+function syncForegroundFlowers() {
+
+    const pairs = [
+        {
+            original: document.querySelector(".flower-layer .flower-1"),
+            copy: document.querySelector(".foreground-flower-layer .flower-1")
+        },
+        {
+            original: document.querySelector(".flower-layer .flower-5"),
+            copy: document.querySelector(".foreground-flower-layer .flower-5")
+        }
+    ];
+
+    pairs.forEach(pair => {
+
+        if (!pair.original || !pair.copy) return;
+
+        const rect = pair.original.getBoundingClientRect();
+        const style = getComputedStyle(pair.original);
+
+        /*
+           Copy the ORIGINAL'S exact visible position.
+        */
+        pair.copy.style.position = "fixed";
+
+        pair.copy.style.left = rect.left + "px";
+        pair.copy.style.top = rect.top + "px";
+
+        pair.copy.style.right = "auto";
+        pair.copy.style.bottom = "auto";
+
+        pair.copy.style.width = rect.width + "px";
+        pair.copy.style.height = rect.height + "px";
+
+        /*
+           Copy visual properties.
+        */
+        pair.copy.style.opacity = style.opacity;
+        pair.copy.style.transform = style.transform;
+
+        /*
+           We already copied the final screen position,
+           so don't apply another drift translation.
+        */
+        pair.copy.style.translate = "none";
+    });
+
+    requestAnimationFrame(syncForegroundFlowers);
+}
+
+
+createForegroundFlowers();
+syncForegroundFlowers();
 /* INITIAL STATE */
 showSlide(0, "back");
 </script>
