@@ -43,6 +43,30 @@ body {
     opacity: 0;
     transform: translateY(-20px);
 }
+ #letter.opening-letter {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow-y: auto;
+
+    opacity: 0;
+    transform: translateY(15px);
+
+    animation: letterOpen 0.8s ease forwards;
+}
+
+@keyframes letterOpen {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}   
   #opening.returning {
     display: flex;
     position: fixed;
@@ -1196,27 +1220,42 @@ function openLetter() {
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
 
+    /* Prepare letter underneath */
+    letter.style.display = "block";
+
+    /* Reset animation */
+    letter.classList.remove("opening-letter");
+    void letter.offsetWidth;
+
+    /* Start letter fade-in */
+    letter.classList.add("opening-letter");
+
+    /* Fade opening out at the same time */
     opening.classList.add("fade-out");
+
+    /* Start animated letter flowers */
+    document.body.classList.remove("hide-letter-flowers");
+    document.body.classList.add("letter-open");
 
     setTimeout(() => {
 
+        /* Remove opening completely */
         opening.style.display = "none";
-        letter.style.display = "block";
-        
-       document.body.classList.remove("hide-letter-flowers");
-       document.body.classList.add("letter-open");
-        
-        requestAnimationFrame(() => {
-            letter.style.opacity = "1";
-            letter.style.transform = "translateY(0)";
-        });
+
+        /* Return letter to normal layout */
+        letter.classList.remove("opening-letter");
+
+        letter.style.position = "";
+        letter.style.inset = "";
+        letter.style.zIndex = "";
+        letter.style.overflowY = "";
+        letter.style.opacity = "1";
+        letter.style.transform = "translateY(0)";
 
         window.scrollTo(0, 0);
 
-    }, 700);
-
+    }, 800);
 }
-
 let currentSlide = 0;
 
 const slides = document.querySelectorAll(".slide");
