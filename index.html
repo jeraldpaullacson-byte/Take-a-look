@@ -1066,9 +1066,14 @@ button:hover {
 
 @media (max-height: 600px) and (orientation: landscape) {
 
-    #letter {
-        padding: 30px 12px;
-    }
+   #letter {
+    padding: 30px 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
     .paper {
         width: 85%;
@@ -1077,10 +1082,18 @@ button:hover {
         padding: 30px 40px;
     }
 
-    .navigation {
-        width: 85%;
-    }
+ .navigation {
+    width: 85%;
+    max-width: 750px;
+    margin: 20px auto 0;
 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    flex-shrink: 0;
+}
     .message {
         font-size: 15px;
         line-height: 1.8;
