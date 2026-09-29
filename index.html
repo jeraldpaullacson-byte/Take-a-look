@@ -432,11 +432,15 @@ button:hover {
     }
 }
 .navigation {
+    width: 90%;
     max-width: 750px;
     margin: 20px auto 0;
 
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    flex-shrink: 0;
 }
 
 .nav-button {
@@ -982,7 +986,9 @@ button:hover {
 /* MOBILE */
 
 @media (max-width: 600px) {
-
+.navigation {
+    width: 92%;
+}
     h1 {
         font-size: 34px;
     }
@@ -1058,7 +1064,7 @@ button:hover {
     }
 }
 
-@media (max-width: 600px) and (orientation: landscape) {
+@media (max-height: 600px) and (orientation: landscape) {
 
     #letter {
         padding: 30px 12px;
@@ -1066,17 +1072,20 @@ button:hover {
 
     .paper {
         width: 85%;
-        min-height: 70vh;
+        min-height: 0;
+        height: auto;
         padding: 30px 40px;
+    }
+
+    .navigation {
+        width: 85%;
     }
 
     .message {
         font-size: 15px;
         line-height: 1.8;
     }
-
-} 
-
+}
 </style>
 </head>
 
