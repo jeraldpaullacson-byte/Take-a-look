@@ -134,26 +134,27 @@ button:hover {
     transform: translateY(-3px);
 }
 @keyframes gentleButtonPulse {
-    0%, 70%, 100% {
+    0%, 65%, 100% {
         transform: scale(1);
         box-shadow: 0 8px 20px rgba(80,60,10,0.2);
     }
 
-    78% {
-        transform: scale(1.025);
+    76% {
+        transform: scale(1.035);
         box-shadow:
-            0 8px 20px rgba(80,60,10,0.22),
-            0 0 0 6px rgba(137,114,23,0.08);
+            0 8px 24px rgba(80,60,10,0.28),
+            0 0 0 8px rgba(137,114,23,0.14),
+            0 0 22px rgba(137,114,23,0.22);
     }
 
-    86% {
+    87% {
         transform: scale(1);
         box-shadow: 0 8px 20px rgba(80,60,10,0.2);
     }
 }
 
 #openBtn {
-    animation: gentleButtonPulse 4s ease-in-out infinite;
+    animation: gentleButtonPulse 3s ease-in-out infinite;
 }
 
 #openBtn:hover {
