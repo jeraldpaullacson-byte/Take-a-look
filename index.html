@@ -1119,7 +1119,9 @@ function openLetter() {
 
     /* Reset opening state */
     opening.classList.remove("returning", "fade-out");
-
+/* Remove inline styles left by backToBeginning */
+opening.style.opacity = "";
+opening.style.transform = "";
     /* Prepare the ENTIRE letter scene:
        flowers + paper + text */
     letter.style.display = "block";
