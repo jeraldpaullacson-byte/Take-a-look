@@ -2082,7 +2082,17 @@ backButton.style.transition =
     });
 
     /* Message appears after intro settles */
-  setTimeout(() => {
+/* Message appears first */
+setTimeout(() => {
+
+    message.style.opacity = "1";
+    message.style.transform = "translateY(0)";
+
+}, 450);
+
+
+/* Navigation buttons appear slightly later */
+setTimeout(() => {
 
     backButton.style.opacity = "1";
     backButton.style.transform = "translateY(0)";
@@ -2417,6 +2427,65 @@ function backToPreSlide() {
 
     }, 800);
 } 
+ function backToOpening() {
+
+    const preSlide = document.getElementById("preSlide");
+    const opening = document.getElementById("opening");
+
+    /* Prepare opening behind pre-slide */
+    opening.style.display = "flex";
+    opening.style.position = "fixed";
+    opening.style.inset = "0";
+    opening.style.zIndex = "10";
+
+    opening.style.opacity = "0";
+    opening.style.transform = "translateY(-15px)";
+
+    /* Keep pre-slide above during transition */
+    preSlide.style.position = "fixed";
+    preSlide.style.inset = "0";
+    preSlide.style.zIndex = "20";
+
+    /* Force browser to register starting state */
+    void opening.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            /* Pre-slide moves away */
+            preSlide.style.opacity = "0";
+            preSlide.style.transform = "translateY(15px)";
+
+            /* Opening returns */
+            opening.style.opacity = "1";
+            opening.style.transform = "translateY(0)";
+
+        });
+
+    });
+
+    setTimeout(() => {
+
+        /* Hide pre-slide */
+        preSlide.style.display = "none";
+        preSlide.style.position = "";
+        preSlide.style.inset = "";
+        preSlide.style.zIndex = "";
+
+        /* Reset pre-slide for next visit */
+        preSlide.style.opacity = "0";
+        preSlide.style.transform = "translateY(15px)";
+
+        /* Return opening to normal layout */
+        opening.style.position = "";
+        opening.style.inset = "";
+        opening.style.zIndex = "";
+
+        window.scrollTo(0, 0);
+
+    }, 800);
+}   
 function backToBeginning() {
 
     currentSlide = 0;
