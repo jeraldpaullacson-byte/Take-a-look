@@ -2061,6 +2061,16 @@ if (index === slides.length - 1) {
     continueButton.style.display = "block";
     beginningButton.style.display = "none";
 }
+}
+function nextSlide() {
+
+    if (currentSlide < slides.length - 1) {
+
+        currentSlide++;
+
+        showSlide(currentSlide, "next");
+
+    }
 
 }
 function previousSlide() {
