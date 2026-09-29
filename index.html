@@ -293,17 +293,73 @@ background-repeat: no-repeat;
     animation: enterLeft 0.6s ease forwards;
 }
 
-/* SLIDE 1 — Gentle beginning */
+/* =========================================
+   SLIDE TEXT ENTRANCE — SOFT & COHESIVE
+   ========================================= */
 
+/* SLIDE 1 — Gentle beginning */
 .slide:nth-child(1).enter-right,
 .slide:nth-child(1).enter-left {
-    animation: firstSlideIn 0.8s ease forwards;
+    animation: softSlideIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-@keyframes firstSlideIn {
+
+/* SLIDE 2 — Building up */
+.slide:nth-child(2).enter-right,
+.slide:nth-child(2).enter-left {
+    animation: softSlideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* SLIDE 3 — Reveal */
+.slide:nth-child(3).enter-right,
+.slide:nth-child(3).enter-left {
+    animation: revealSlideIn 0.8s ease forwards;
+}
+
+
+/* SLIDE 4 — Actual confession */
+.slide:nth-child(4).enter-right,
+.slide:nth-child(4).enter-left {
+    animation: confessionSlideIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* SLIDE 5 — Reassurance */
+.slide:nth-child(5).enter-right,
+.slide:nth-child(5).enter-left {
+    animation: softSlideIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* SLIDE 6 — Looking back */
+.slide:nth-child(6).enter-right,
+.slide:nth-child(6).enter-left {
+    animation: softSlideIn 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* SLIDE 7 — Dog tag */
+.slide:nth-child(7).enter-right,
+.slide:nth-child(7).enter-left {
+    animation: softSlideIn 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+
+/* SLIDE 8 — Ending */
+.slide:nth-child(8).enter-right,
+.slide:nth-child(8).enter-left {
+    animation: endingSlideIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* =========================================
+   MAIN SOFT ENTRANCE
+   ========================================= */
+
+@keyframes softSlideIn {
     from {
         opacity: 0;
-        transform: translateY(25px);
+        transform: translateY(14px);
     }
 
     to {
@@ -311,54 +367,14 @@ background-repeat: no-repeat;
         transform: translateY(0);
     }
 }
-
-/* SLIDE 2 — Building up to the reveal */
-
-.slide:nth-child(2).enter-right,
-.slide:nth-child(2).enter-left {
-    animation: secondSlideIn 0.7s ease forwards;
-}
-
-@keyframes secondSlideIn {
-    from {
-        opacity: 0;
-        transform: scale(0.97);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* SLIDE 3 — "Well, Trixie, it's you." */
-
-.slide:nth-child(3).enter-right,
-.slide:nth-child(3).enter-left {
-    animation: revealSlideIn 0.45s ease forwards;
-}
+ /* =========================================
+   REVEAL — QUIETER / MORE DELIBERATE
+   ========================================= */
 
 @keyframes revealSlideIn {
     from {
         opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-/* SLIDE 4 — Actual confession */
-
-.slide:nth-child(4).enter-right,
-.slide:nth-child(4).enter-left {
-    animation: confessionSlideIn 0.8s ease forwards;
-}
-
-@keyframes confessionSlideIn {
-    from {
-        opacity: 0;
-        transform: scale(1.025);
+        transform: scale(0.985);
     }
 
     to {
@@ -367,55 +383,15 @@ background-repeat: no-repeat;
     }
 }
 
-/* SLIDE 5 — Reassurance */
 
-.slide:nth-child(5).enter-right,
-.slide:nth-child(5).enter-left {
-    animation: reassuranceSlideIn 0.8s ease forwards;
-}
+/* =========================================
+   CONFESSION — VERY SLIGHT PUSH-IN
+   ========================================= */
 
-@keyframes reassuranceSlideIn {
+@keyframes confessionSlideIn {
     from {
         opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* SLIDE 6 — Looking back */
-
-.slide:nth-child(6).enter-right,
-.slide:nth-child(6).enter-left {
-    animation: lookingBackSlideIn 0.7s ease forwards;
-}
-
-@keyframes lookingBackSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* SLIDE 7 — Dog tag */
-
-.slide:nth-child(7).enter-right,
-.slide:nth-child(7).enter-left {
-    animation: dogTagSlideIn 0.9s ease forwards;
-}
-
-@keyframes dogTagSlideIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px) scale(0.99);
+        transform: translateY(8px) scale(0.992);
     }
 
     to {
@@ -424,24 +400,21 @@ background-repeat: no-repeat;
     }
 }
 
-/* SLIDE 8 — Ending */
-
-.slide:nth-child(8).enter-right,
-.slide:nth-child(8).enter-left {
-    animation: endingSlideIn 1s ease forwards;
-}
+/* =========================================
+   ENDING — SLOWER & CALMER
+   ========================================= */
 
 @keyframes endingSlideIn {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(12px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
     }
-}
+}   
 /* GENERIC FALLBACK */
 
 @keyframes enterRight {
