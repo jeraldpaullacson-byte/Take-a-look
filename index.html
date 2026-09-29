@@ -1390,11 +1390,7 @@ background-repeat: no-repeat;
 </style>
 </head>
 
-
 <body>
-
-
-
 
 <!-- OPENING -->
 
@@ -2058,10 +2054,7 @@ function showSlide(index, direction) {
     /* NAVIGATION */
 
     if (index === 0) {
-        backButton.style.visibility = "hidden";
-    } else {
-        backButton.style.visibility = "visible";
-    }
+backButton.style.visibility = "visible";
 
     if (index === slides.length - 1) {
         continueButton.style.display = "none";
@@ -2072,19 +2065,6 @@ function showSlide(index, direction) {
     }
 }
 
-function nextSlide() {
-
-    if (currentSlide < slides.length - 1) {
-
-        currentSlide++;
-
-        showSlide(currentSlide, "next");
-
-    }
-
-}
-
-
 function previousSlide() {
 
     if (currentSlide > 0) {
@@ -2093,9 +2073,73 @@ function previousSlide() {
 
         showSlide(currentSlide, "back");
 
+    } else {
+
+        backToPreSlide();
+
     }
 }
+function backToPreSlide() {
 
+    const preSlide = document.getElementById("preSlide");
+    const letter = document.getElementById("letter");
+
+    /* Prepare pre-slide behind letter */
+    preSlide.style.display = "flex";
+    preSlide.style.position = "fixed";
+    preSlide.style.inset = "0";
+    preSlide.style.zIndex = "10";
+
+    preSlide.style.opacity = "0";
+    preSlide.style.transform = "translateY(-15px)";
+
+    /* Keep letter above during crossfade */
+    letter.style.position = "fixed";
+    letter.style.inset = "0";
+    letter.style.zIndex = "20";
+    letter.style.overflowY = "auto";
+
+    /* Force starting state */
+    void preSlide.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            /* Letter fades downward */
+            letter.style.opacity = "0";
+            letter.style.transform = "translateY(15px)";
+
+            /* Pre-slide fades back in */
+            preSlide.style.opacity = "1";
+            preSlide.style.transform = "translateY(0)";
+
+        });
+
+    });
+
+    setTimeout(() => {
+
+        /* Hide letter */
+        letter.style.display = "none";
+        letter.style.position = "";
+        letter.style.inset = "";
+        letter.style.zIndex = "";
+        letter.style.overflowY = "";
+
+        /* Reset letter for next Proceed */
+        letter.style.opacity = "0";
+        letter.style.transform = "translateY(15px)";
+
+        /* Return pre-slide to normal layout */
+        preSlide.style.position = "";
+        preSlide.style.inset = "";
+        preSlide.style.zIndex = "";
+
+        window.scrollTo(0, 0);
+
+    }, 800);
+}    
 function backToBeginning() {
 
     currentSlide = 0;
