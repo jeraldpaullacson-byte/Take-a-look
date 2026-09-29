@@ -477,9 +477,9 @@ button:hover {
     transform: translateY(18px) scale(0.92);
 
 transition:
-    opacity 1.2s ease,
-    transform 1.2s ease,
-    visibility 1.2s ease;
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    visibility 0.8s ease;
 }
 /* SHOW FLOWERS WHEN LETTER OPENS */
 body.letter-open .flower {
@@ -513,7 +513,6 @@ body.hide-letter-flowers .flower {
         scale(0.92)
         rotate(-10deg);
 
-    transition-delay: 0.15s;
 }
 body.letter-open .flower-1 {
     opacity: 0.42;
@@ -535,7 +534,6 @@ body.letter-open .flower-1 {
         scale(0.92)
         rotate(25deg);
 
-    transition-delay: 0.15s;
 }
 body.letter-open .flower-2 {
     opacity: 0.34;
@@ -557,7 +555,6 @@ body.letter-open .flower-2 {
         scale(0.92)
         rotate(-20deg);
 
-    transition-delay: 0.15s;
 }
 body.letter-open .flower-3 {
     opacity: 0.32;
@@ -579,7 +576,6 @@ body.letter-open .flower-3 {
         scale(0.92)
         rotate(15deg);
 
-    transition-delay: 0.15s;
 }
 body.letter-open .flower-4 {
     opacity: 0.36;
@@ -600,8 +596,6 @@ body.letter-open .flower-4 {
         translateY(18px)
         scale(0.92)
         rotate(180deg);
-
-    transition-delay: 0.16s;
 }
 body.letter-open .flower-5 {
     opacity: 0.38;
@@ -622,8 +616,6 @@ body.letter-open .flower-5 {
         translateY(18px)
         scale(0.92)
         rotate(-15deg);
-
-    transition-delay: 0.15s;
 }
 
 body.letter-open .flower-6 {
@@ -1232,19 +1224,16 @@ function openLetter() {
     /* Fade opening out at the same time */
     opening.classList.add("fade-out");
 
-/* Prepare flowers first */
+/* Prepare flowers */
 document.body.classList.remove("letter-open");
 document.body.classList.remove("hide-letter-flowers");
 
-/* Let browser register their hidden starting state */
+/* Register hidden state */
 void document.body.offsetWidth;
 
-/* Start flowers shortly after letter begins */
+/* Start flowers at exactly the same time */
+document.body.classList.add("letter-open");
 setTimeout(() => {
-    document.body.classList.add("letter-open");
-}, 50);
-    setTimeout(() => {
-
         /* Remove opening completely */
         opening.style.display = "none";
 
