@@ -1137,8 +1137,10 @@ function openLetter() {
     opening.style.inset = "0";
     opening.style.zIndex = "20";
 
-    /* Make browser register opacity: 0 first */
-    void letter.offsetWidth;
+/* Force the browser to paint the hidden letter first */
+void letter.offsetWidth;
+
+requestAnimationFrame(() => {
 
     requestAnimationFrame(() => {
 
@@ -1150,6 +1152,8 @@ function openLetter() {
         letter.style.transform = "translateY(0)";
 
     });
+
+});
 
     setTimeout(() => {
 
@@ -1269,7 +1273,9 @@ function backToBeginning() {
     setTimeout(() => {
 
         letter.style.display = "none";
-
+/* Reset letter for the next opening */
+letter.style.opacity = "0";
+letter.style.transform = "translateY(15px)";
         /* Return opening to normal state */
         opening.classList.remove("returning");
 
