@@ -114,21 +114,34 @@ button:hover {
 
     margin: 0 auto;
 
-    background: #fffdf5;
+    /* warm paper look */
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.55),
+            rgba(255,248,218,0.35)
+        ),
+        #fffdf3;
+
     padding: 50px;
 
     box-sizing: border-box;
-    border-radius: 14px;
+    border-radius: 12px;
 
+    /* subtle golden paper edge */
+    border: 1px solid rgba(137, 114, 23, 0.16);
+
+    /* more natural depth */
     box-shadow:
-        0 18px 40px rgba(80, 60, 10, 0.18),
-        0 3px 8px rgba(80, 60, 10, 0.10);
+        0 24px 55px rgba(80, 60, 10, 0.16),
+        0 8px 18px rgba(80, 60, 10, 0.10),
+        inset 0 0 35px rgba(244, 223, 120, 0.08);
 }
 .message {
-    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-family: "Trebuchet MS", Arial, sans-serif;
     font-size: 17px;
     line-height: 1.9;
-    letter-spacing: 0.1px;
+    letter-spacing: 0.15px;
     text-align: left;
     color: #6b5424;
 }
@@ -136,14 +149,48 @@ button:hover {
 .message p {
     margin-bottom: 30px;
 }
-.reveal-line {
+.reveal-slide {
+    min-height: 58vh;
+}
+
+.reveal-message {
+    min-height: 58vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     text-align: center;
+}
+
+.reveal-line {
+    margin: 0;
+
     font-family: "Segoe Print", "Bradley Hand", cursive;
-    font-size: 21px;
+    font-size: 27px;
+    line-height: 1.5;
+
     color: #897217;
-    margin-top: 45px;
-    margin-bottom: 10px;
-}    
+
+    opacity: 0;
+    transform: translateY(12px);
+
+    animation: revealTrixie 1.2s ease 0.55s forwards;
+}
+
+@keyframes revealTrixie {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+} 
 .slides {
     position: relative;
     overflow: hidden;
@@ -166,7 +213,6 @@ button:hover {
     animation: enterLeft 0.6s ease forwards;
 }
 
-
 /* SLIDE 1 — Gentle beginning */
 
 .slide:nth-child(1).enter-right,
@@ -186,8 +232,7 @@ button:hover {
     }
 }
 
-
-/* SLIDE 2 — Subtle realization */
+/* SLIDE 2 — Building up to the reveal */
 
 .slide:nth-child(2).enter-right,
 .slide:nth-child(2).enter-left {
@@ -206,18 +251,34 @@ button:hover {
     }
 }
 
-
-/* SLIDE 3 — The confession */
+/* SLIDE 3 — "Well, Trixie, it's you." */
 
 .slide:nth-child(3).enter-right,
 .slide:nth-child(3).enter-left {
-    animation: thirdSlideIn 0.8s ease forwards;
+    animation: revealSlideIn 0.45s ease forwards;
 }
 
-@keyframes thirdSlideIn {
+@keyframes revealSlideIn {
     from {
         opacity: 0;
-        transform: scale(1.03);
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* SLIDE 4 — Actual confession */
+
+.slide:nth-child(4).enter-right,
+.slide:nth-child(4).enter-left {
+    animation: confessionSlideIn 0.8s ease forwards;
+}
+
+@keyframes confessionSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(1.025);
     }
 
     to {
@@ -226,15 +287,14 @@ button:hover {
     }
 }
 
+/* SLIDE 5 — Reassurance */
 
-/* SLIDE 4 — Reassurance */
-
-.slide:nth-child(4).enter-right,
-.slide:nth-child(4).enter-left {
-    animation: fourthSlideIn 0.8s ease forwards;
+.slide:nth-child(5).enter-right,
+.slide:nth-child(5).enter-left {
+    animation: reassuranceSlideIn 0.8s ease forwards;
 }
 
-@keyframes fourthSlideIn {
+@keyframes reassuranceSlideIn {
     from {
         opacity: 0;
         transform: translateY(25px);
@@ -246,15 +306,14 @@ button:hover {
     }
 }
 
+/* SLIDE 6 — Looking back */
 
-/* SLIDE 5 — Looking back */
-
-.slide:nth-child(5).enter-right,
-.slide:nth-child(5).enter-left {
-    animation: fifthSlideIn 0.7s ease forwards;
+.slide:nth-child(6).enter-right,
+.slide:nth-child(6).enter-left {
+    animation: lookingBackSlideIn 0.7s ease forwards;
 }
 
-@keyframes fifthSlideIn {
+@keyframes lookingBackSlideIn {
     from {
         opacity: 0;
         transform: translateX(30px);
@@ -266,15 +325,14 @@ button:hover {
     }
 }
 
+/* SLIDE 7 — Dog tag */
 
-/* SLIDE 6 — Dog tag */
-
-.slide:nth-child(6).enter-right,
-.slide:nth-child(6).enter-left {
-    animation: sixthSlideIn 0.9s ease forwards;
+.slide:nth-child(7).enter-right,
+.slide:nth-child(7).enter-left {
+    animation: dogTagSlideIn 0.9s ease forwards;
 }
 
-@keyframes sixthSlideIn {
+@keyframes dogTagSlideIn {
     from {
         opacity: 0;
         transform: translateY(20px) scale(0.99);
@@ -286,15 +344,14 @@ button:hover {
     }
 }
 
+/* SLIDE 8 — Ending */
 
-/* SLIDE 7 — Ending */
-
-.slide:nth-child(7).enter-right,
-.slide:nth-child(7).enter-left {
-    animation: seventhSlideIn 1s ease forwards;
+.slide:nth-child(8).enter-right,
+.slide:nth-child(8).enter-left {
+    animation: endingSlideIn 1s ease forwards;
 }
 
-@keyframes seventhSlideIn {
+@keyframes endingSlideIn {
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -305,8 +362,6 @@ button:hover {
         transform: translateY(0);
     }
 }
-
-
 /* GENERIC FALLBACK */
 
 @keyframes enterRight {
@@ -612,12 +667,18 @@ button:hover {
                 hindi ko sinabi.
             </p>
 
-            <p class="reveal-line">Well, Trixie, it's you.</p>
-
-        </div>
-
     </div>
+    </div>
+<div class="slide reveal-slide">
 
+    <div class="message reveal-message">
+
+        <p class="reveal-line">
+            Well, Trixie, it's you.
+        </p>
+
+</div>
+</div>
 
     <div class="slide">
 
