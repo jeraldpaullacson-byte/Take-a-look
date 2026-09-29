@@ -151,6 +151,10 @@ button:hover {
         radial-gradient(circle at 90% 90%, #e8cf60 0%, transparent 30%),
         #f4df78;
 }
+ .letter-content {
+    width: 100%;
+}
+       
 .paper {
     width: 90%;
     max-width: 750px;
@@ -1042,8 +1046,7 @@ button:hover {
         height: auto;
         padding: 40px 25px;
     }
-
-    .slides {
+.slides {
         height: auto;
         min-height: 0;
     }
@@ -1066,13 +1069,12 @@ button:hover {
 
 @media (max-height: 600px) and (orientation: landscape) {
 
-   #letter {
+#letter {
     padding: 30px 12px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
     .paper {
@@ -1090,7 +1092,7 @@ button:hover {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+   
 
     flex-shrink: 0;
 }
@@ -1231,6 +1233,7 @@ button:hover {
     <circle cx="31" cy="40" r="10" fill="#fff9d9"/>
 </svg>
 </div>
+    <div class="letter-content">
     <div class="paper">
 
        <div class="slides">
@@ -1482,7 +1485,7 @@ button:hover {
     </button>
 
 </div>
-
+</div> <!-- letter-content -->
 </section>
 
 <script>
