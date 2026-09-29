@@ -1233,10 +1233,17 @@ function openLetter() {
     /* Fade opening out at the same time */
     opening.classList.add("fade-out");
 
-    /* Start animated letter flowers */
-    document.body.classList.remove("hide-letter-flowers");
-    document.body.classList.add("letter-open");
+/* Prepare flowers first */
+document.body.classList.remove("letter-open");
+document.body.classList.remove("hide-letter-flowers");
 
+/* Let browser register their hidden starting state */
+void document.body.offsetWidth;
+
+/* Start flowers shortly after letter begins */
+setTimeout(() => {
+    document.body.classList.add("letter-open");
+}, 120);
     setTimeout(() => {
 
         /* Remove opening completely */
