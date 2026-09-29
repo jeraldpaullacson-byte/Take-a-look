@@ -1277,27 +1277,38 @@ function backToBeginning() {
     document.body.classList.add("hide-letter-flowers");
     document.body.classList.remove("letter-open");
 
+    /* PREPARE OPENING SCREEN */
+    opening.style.display = "flex";
+    opening.classList.remove("fade-out");
+
+    opening.style.opacity = "0";
+    opening.style.transform = "translateY(20px)";
+
+    /* FADE LETTER OUT */
     letter.style.opacity = "0";
-    letter.style.transform = "translateY(20px)";
+    letter.style.transform = "translateY(-15px)";
 
-    setTimeout(() => {
-
-        letter.style.display = "none";
-
-        opening.style.display = "flex";
-        opening.classList.remove("fade-out");
+    /* SMOOTHLY BRING OPENING IN */
+    requestAnimationFrame(() => {
 
         requestAnimationFrame(() => {
             opening.style.opacity = "1";
             opening.style.transform = "translateY(0)";
         });
 
+    });
+
+    /* CLEAN UP LETTER AFTER TRANSITION */
+    setTimeout(() => {
+
+        letter.style.display = "none";
+
         showSlide(0, "back");
 
         window.scrollTo(0, 0);
 
-    }, 500);
-    } 
+    }, 700);
+}
 /* INITIAL STATE */
 
 showSlide(0, "back");
