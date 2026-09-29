@@ -225,9 +225,17 @@ button:hover {
     transform: rotate(18deg);
 }
 
-#proceedBtn {
+ .pre-slide-navigation {
+    width: 100%;
+    max-width: 420px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
     margin-top: 5px;
-}  
+}
 /* =========================================
    CONFESSION INTRO
    ========================================= */
@@ -275,6 +283,20 @@ button:hover {
 }
 
 #confessionContinueBtn {
+    opacity: 0;
+    transform: translateY(6px);
+}  
+.confession-intro-navigation {
+    width: 100%;
+    max-width: 420px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.confession-back-button {
     opacity: 0;
     transform: translateY(6px);
 }    
@@ -1545,9 +1567,17 @@ background-repeat: no-repeat;
             </svg>
         </div>
 
-<button id="proceedBtn" onclick="proceedToConfessionIntro()">
-    Proceed
-</button>
+<div class="pre-slide-navigation">
+
+    <button onclick="backToOpening()">
+        ‹ Back
+    </button>
+
+    <button id="proceedBtn" onclick="proceedToConfessionIntro()">
+        Proceed ›
+    </button>
+
+</div>
 
     </div>
 
@@ -1563,11 +1593,17 @@ background-repeat: no-repeat;
             keeping to myself for a while.
         </p>
 
-<button id="confessionContinueBtn" onclick="proceedToLetter()">
-    Continue ›
-</button>
+<div class="confession-intro-navigation">
 
-    </div>
+    <button class="confession-back-button" onclick="backToPreSlide()">
+        ‹ Back
+    </button>
+
+    <button id="confessionContinueBtn" onclick="proceedToLetter()">
+        Continue ›
+    </button>
+
+</div>
 
 </section>    
 <!-- LETTER -->
@@ -1994,7 +2030,8 @@ function openLetter() {
 
     const message = document.querySelector(".confession-intro-message");
     const button = document.getElementById("confessionContinueBtn");
-
+const backButton =
+    document.querySelector(".confession-back-button");
     /* Prepare confession intro behind pre-slide */
     confessionIntro.style.display = "flex";
     confessionIntro.style.position = "fixed";
@@ -2021,7 +2058,10 @@ function openLetter() {
     button.style.transform = "translateY(6px)";
     button.style.transition =
         "opacity 0.8s ease, transform 0.8s ease";
-
+backButton.style.opacity = "0";
+backButton.style.transform = "translateY(6px)";
+backButton.style.transition =
+    "opacity 0.8s ease, transform 0.8s ease";
     /* Force starting state */
     void confessionIntro.offsetWidth;
 
@@ -2042,16 +2082,15 @@ function openLetter() {
     });
 
     /* Message appears after intro settles */
-    setTimeout(() => {
-        message.style.opacity = "1";
-        message.style.transform = "translateY(0)";
-    }, 450);
+  setTimeout(() => {
 
-    /* Continue button appears slightly later */
-    setTimeout(() => {
-        button.style.opacity = "1";
-        button.style.transform = "translateY(0)";
-    }, 850);
+    backButton.style.opacity = "1";
+    backButton.style.transform = "translateY(0)";
+
+    button.style.opacity = "1";
+    button.style.transform = "translateY(0)";
+
+}, 850);
 
     setTimeout(() => {
 
@@ -2318,10 +2357,13 @@ function backToConfessionIntro() {
 }    
 function backToPreSlide() {
 
-    const preSlide = document.getElementById("preSlide");
-    const letter = document.getElementById("letter");
+    const confessionIntro =
+        document.getElementById("confessionIntro");
 
-    /* Prepare pre-slide behind letter */
+    const preSlide =
+        document.getElementById("preSlide");
+
+    /* Prepare flower pre-slide behind confession intro */
     preSlide.style.display = "flex";
     preSlide.style.position = "fixed";
     preSlide.style.inset = "0";
@@ -2330,24 +2372,23 @@ function backToPreSlide() {
     preSlide.style.opacity = "0";
     preSlide.style.transform = "translateY(-15px)";
 
-    /* Keep letter above during crossfade */
-    letter.style.position = "fixed";
-    letter.style.inset = "0";
-    letter.style.zIndex = "20";
-    letter.style.overflowY = "auto";
+    /* Keep confession intro above during transition */
+    confessionIntro.style.position = "fixed";
+    confessionIntro.style.inset = "0";
+    confessionIntro.style.zIndex = "20";
 
-    /* Force starting state */
+    /* Force browser to register starting state */
     void preSlide.offsetWidth;
 
     requestAnimationFrame(() => {
 
         requestAnimationFrame(() => {
 
-            /* Letter fades downward */
-            letter.style.opacity = "0";
-            letter.style.transform = "translateY(15px)";
+            /* Confession intro moves away */
+            confessionIntro.style.opacity = "0";
+            confessionIntro.style.transform = "translateY(15px)";
 
-            /* Pre-slide fades back in */
+            /* Flower pre-slide returns */
             preSlide.style.opacity = "1";
             preSlide.style.transform = "translateY(0)";
 
@@ -2357,18 +2398,17 @@ function backToPreSlide() {
 
     setTimeout(() => {
 
-        /* Hide letter */
-        letter.style.display = "none";
-        letter.style.position = "";
-        letter.style.inset = "";
-        letter.style.zIndex = "";
-        letter.style.overflowY = "";
+        /* Hide confession intro */
+        confessionIntro.style.display = "none";
+        confessionIntro.style.position = "";
+        confessionIntro.style.inset = "";
+        confessionIntro.style.zIndex = "";
 
-        /* Reset letter for next Proceed */
-        letter.style.opacity = "0";
-        letter.style.transform = "translateY(15px)";
+        /* Reset intro for next visit */
+        confessionIntro.style.opacity = "0";
+        confessionIntro.style.transform = "translateY(15px)";
 
-        /* Return pre-slide to normal layout */
+        /* Return flower pre-slide to normal layout */
         preSlide.style.position = "";
         preSlide.style.inset = "";
         preSlide.style.zIndex = "";
@@ -2376,7 +2416,7 @@ function backToPreSlide() {
         window.scrollTo(0, 0);
 
     }, 800);
-}    
+} 
 function backToBeginning() {
 
     currentSlide = 0;
