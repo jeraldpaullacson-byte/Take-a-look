@@ -475,6 +475,15 @@ button:hover {
     position: fixed;
     pointer-events: none;
     z-index: 2;
+
+    transition:
+        top 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        bottom 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        left 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        right 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        width 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.8s ease;
 }
 
 /* Keep paper above flowers */
@@ -541,6 +550,51 @@ button:hover {
     opacity: 0.30;
     transform: rotate(-15deg);
 }
+   /* =========================================
+   SLIDE 2 — FLOWER ARRANGEMENT
+   ========================================= */
+
+#letter[data-slide="2"] .flower-1 {
+    width: 125px;
+    top: 12%;
+    left: 7%;
+    transform: rotate(100deg);
+}
+
+#letter[data-slide="2"] .flower-2 {
+    width: 60px;
+    top: 38%;
+    right: 5%;
+    transform: rotate(-70deg);
+}
+
+#letter[data-slide="2"] .flower-3 {
+    width: 80px;
+    bottom: 14%;
+    left: 9%;
+    transform: rotate(75deg);
+}
+
+#letter[data-slide="2"] .flower-4 {
+    width: 90px;
+    top: 62%;
+    left: 3%;
+    transform: rotate(140deg);
+}
+
+#letter[data-slide="2"] .flower-5 {
+    width: 125px;
+    bottom: 6%;
+    right: 7%;
+    transform: rotate(260deg);
+}
+
+#letter[data-slide="2"] .flower-6 {
+    width: 82px;
+    top: 9%;
+    right: 13%;
+    transform: rotate(65deg);
+} 
 /* =========================================
    OPENING FLOWERS — STATIC
    ========================================= */
@@ -1207,7 +1261,8 @@ function showSlide(index, direction) {
     const next = slides[index];
 
     next.classList.add("active");
-
+/* Update flower arrangement for current slide */
+document.getElementById("letter").setAttribute("data-slide", index + 1);
     if (direction === "next") {
         next.classList.add("enter-right");
     } else {
