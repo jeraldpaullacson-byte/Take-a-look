@@ -469,6 +469,23 @@ background-repeat: no-repeat;
     font-size: 17px;
     font-style: italic;
     color: #897217;
+
+    opacity: 0;
+    transform: translateY(6px);
+
+    animation: signatureReveal 0.9s ease 0.65s forwards;
+}
+
+@keyframes signatureReveal {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 /* =========================================
    FOREGROUND FLOWER LAYER
