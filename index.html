@@ -90,37 +90,6 @@ body {
         transform: translateY(0);
     }
 }  
-  /* Flowers join the Opening → Letter crossfade */
-body.opening-to-letter .flower {
-    visibility: visible;
-}
-
-body.opening-to-letter .flower-1 {
-    opacity: 0.42;
-}
-
-body.opening-to-letter .flower-2 {
-    opacity: 0.34;
-}
-
-body.opening-to-letter .flower-3 {
-    opacity: 0.32;
-}
-
-body.opening-to-letter .flower-4 {
-    opacity: 0.36;
-}
-
-body.opening-to-letter .flower-5 {
-    opacity: 0.38;
-}
-
-body.opening-to-letter .flower-6 {
-    opacity: 0.30;
-}      
-.opening-content {
-    max-width: 600px;
-}
 
 .small-title {
     font-size: 14px;
@@ -496,29 +465,8 @@ button:hover {
     position: fixed;
     pointer-events: none;
     z-index: 2;
-
-    /* Hidden habang opening screen */
-    opacity: 0;
-    visibility: hidden;
-
-    /* Default starting position */
-    transform: translateY(18px) scale(0.92);
-
-transition:
-    opacity 0.8s ease,
-    transform 0.8s ease,
-    visibility 0s;
 }
-/* SHOW FLOWERS WHEN LETTER OPENS */
-body.letter-open .flower {
-    visibility: visible;
-   
-}
-body.hide-letter-flowers .flower {
-    opacity: 0 !important;
-    visibility: hidden !important;
-    transition: none !important;
-}
+
 /* Keep paper above flowers */
 .paper,
 .navigation {
@@ -535,20 +483,8 @@ body.hide-letter-flowers .flower {
     width: 95px;
     top: 4%;
     left: 2%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(-10deg);
-
-}
-body.letter-open .flower-1 {
     opacity: 0.42;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(-10deg);
+    transform: rotate(-10deg);
 }
 
 /* UPPER RIGHT */
@@ -556,20 +492,8 @@ body.letter-open .flower-1 {
     width: 80px;
     top: 19%;
     right: 2%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(25deg);
-
-}
-body.letter-open .flower-2 {
     opacity: 0.34;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(25deg);
+    transform: rotate(25deg);
 }
 
 /* BOTTOM LEFT */
@@ -577,20 +501,8 @@ body.letter-open .flower-2 {
     width: 110px;
     bottom: 5%;
     left: 2%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(-20deg);
-
-}
-body.letter-open .flower-3 {
     opacity: 0.32;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(-20deg);
+    transform: rotate(-20deg);
 }
 
 /* MIDDLE LEFT */
@@ -598,20 +510,8 @@ body.letter-open .flower-3 {
     width: 65px;
     top: 48%;
     left: 2%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(15deg);
-
-}
-body.letter-open .flower-4 {
     opacity: 0.36;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(15deg);
+    transform: rotate(15deg);
 }
 
 /* LOWER RIGHT */
@@ -619,19 +519,8 @@ body.letter-open .flower-4 {
     width: 95px;
     bottom: 15%;
     right: 2%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(180deg);
-}
-body.letter-open .flower-5 {
     opacity: 0.38;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(180deg);
+    transform: rotate(180deg);
 }
 
 /* TOP RIGHT */
@@ -639,20 +528,8 @@ body.letter-open .flower-5 {
     width: 60px;
     top: 5%;
     right: 6%;
-
-    transform:
-        translateY(18px)
-        scale(0.92)
-        rotate(-15deg);
-}
-
-body.letter-open .flower-6 {
     opacity: 0.30;
-
-    transform:
-        translateY(0)
-        scale(1)
-        rotate(-15deg);
+    transform: rotate(-15deg);
 }
 /* =========================================
    OPENING FLOWERS — STATIC
@@ -854,59 +731,6 @@ body.letter-open .flower-6 {
 <body>
 
 
-<!-- FLOWERS -->
-
-<svg class="flower flower-1" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
-    <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
-    <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
-    <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
-    <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
-</svg>
-
-<svg class="flower flower-2" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="8" fill="#d6a83a"/>
-    <circle cx="50" cy="24" r="15" fill="#f2d98b"/>
-    <circle cx="74" cy="38" r="15" fill="#f2d98b"/>
-    <circle cx="65" cy="67" r="15" fill="#f2d98b"/>
-    <circle cx="35" cy="67" r="15" fill="#f2d98b"/>
-    <circle cx="26" cy="38" r="15" fill="#f2d98b"/>
-</svg>
-
-<svg class="flower flower-3" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="9" fill="#c99b32"/>
-    <ellipse cx="50" cy="22" rx="13" ry="22" fill="#fff4bd"/>
-    <ellipse cx="78" cy="50" rx="22" ry="13" fill="#fff4bd"/>
-    <ellipse cx="50" cy="78" rx="13" ry="22" fill="#fff4bd"/>
-    <ellipse cx="22" cy="50" rx="22" ry="13" fill="#fff4bd"/>
-</svg>
-
-<svg class="flower flower-4" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="7" fill="#d1a52f"/>
-    <circle cx="50" cy="27" r="12" fill="#e8c65d"/>
-    <circle cx="70" cy="38" r="12" fill="#e8c65d"/>
-    <circle cx="63" cy="62" r="12" fill="#e8c65d"/>
-    <circle cx="37" cy="62" r="12" fill="#e8c65d"/>
-    <circle cx="30" cy="38" r="12" fill="#e8c65d"/>
-</svg>
-
-<svg class="flower flower-5" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
-    <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
-    <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
-    <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
-    <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
-    <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
-</svg>
-
-<svg class="flower flower-6" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="6" fill="#d8ad3b"/>
-    <circle cx="50" cy="30" r="10" fill="#fff9d9"/>
-    <circle cx="69" cy="40" r="10" fill="#fff9d9"/>
-    <circle cx="62" cy="62" r="10" fill="#fff9d9"/>
-    <circle cx="38" cy="62" r="10" fill="#fff9d9"/>
-    <circle cx="31" cy="40" r="10" fill="#fff9d9"/>
-</svg>
 
 
 <!-- OPENING -->
@@ -978,6 +802,59 @@ body.letter-open .flower-6 {
 <!-- LETTER -->
 
 <section id="letter">
+<!-- FLOWERS -->
+
+<svg class="flower flower-1" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
+    <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
+    <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
+    <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
+    <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
+</svg>
+
+<svg class="flower flower-2" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="8" fill="#d6a83a"/>
+    <circle cx="50" cy="24" r="15" fill="#f2d98b"/>
+    <circle cx="74" cy="38" r="15" fill="#f2d98b"/>
+    <circle cx="65" cy="67" r="15" fill="#f2d98b"/>
+    <circle cx="35" cy="67" r="15" fill="#f2d98b"/>
+    <circle cx="26" cy="38" r="15" fill="#f2d98b"/>
+</svg>
+
+<svg class="flower flower-3" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="9" fill="#c99b32"/>
+    <ellipse cx="50" cy="22" rx="13" ry="22" fill="#fff4bd"/>
+    <ellipse cx="78" cy="50" rx="22" ry="13" fill="#fff4bd"/>
+    <ellipse cx="50" cy="78" rx="13" ry="22" fill="#fff4bd"/>
+    <ellipse cx="22" cy="50" rx="22" ry="13" fill="#fff4bd"/>
+</svg>
+
+<svg class="flower flower-4" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="7" fill="#d1a52f"/>
+    <circle cx="50" cy="27" r="12" fill="#e8c65d"/>
+    <circle cx="70" cy="38" r="12" fill="#e8c65d"/>
+    <circle cx="63" cy="62" r="12" fill="#e8c65d"/>
+    <circle cx="37" cy="62" r="12" fill="#e8c65d"/>
+    <circle cx="30" cy="38" r="12" fill="#e8c65d"/>
+</svg>
+
+<svg class="flower flower-5" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
+    <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
+    <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+    <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+    <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+    <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+</svg>
+
+<svg class="flower flower-6" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="6" fill="#d8ad3b"/>
+    <circle cx="50" cy="30" r="10" fill="#fff9d9"/>
+    <circle cx="69" cy="40" r="10" fill="#fff9d9"/>
+    <circle cx="62" cy="62" r="10" fill="#fff9d9"/>
+    <circle cx="38" cy="62" r="10" fill="#fff9d9"/>
+    <circle cx="31" cy="40" r="10" fill="#fff9d9"/>
+</svg>
 
     <div class="paper">
 
@@ -1240,62 +1117,53 @@ function openLetter() {
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
 
-    /* Reset states */
-    document.body.classList.remove("letter-open");
-    document.body.classList.remove("hide-letter-flowers");
-    document.body.classList.remove("opening-to-letter");
+    /* Reset opening state */
+    opening.classList.remove("returning", "fade-out");
 
-    opening.classList.remove("returning");
-    opening.classList.remove("fade-out");
-
-    /* Prepare letter underneath opening */
+    /* Prepare the ENTIRE letter scene:
+       flowers + paper + text */
     letter.style.display = "block";
     letter.style.position = "fixed";
     letter.style.inset = "0";
     letter.style.zIndex = "10";
     letter.style.overflowY = "auto";
+
+    /* Starting state of entire first slide */
     letter.style.opacity = "0";
     letter.style.transform = "translateY(15px)";
 
-    /* Keep opening above the letter */
+    /* Opening stays above while crossfade begins */
     opening.style.position = "fixed";
     opening.style.inset = "0";
     opening.style.zIndex = "20";
 
-    /* Force browser to register starting positions */
+    /* Make browser register opacity: 0 first */
     void letter.offsetWidth;
 
     requestAnimationFrame(() => {
 
-        /* Opening fades OUT */
+        /* OPENING fades OUT */
         opening.classList.add("fade-out");
 
-        /* Letter fades IN */
+        /* ENTIRE FIRST SLIDE fades IN together */
         letter.style.opacity = "1";
         letter.style.transform = "translateY(0)";
-
-        /* Flowers fade IN together */
-        document.body.classList.add("opening-to-letter");
 
     });
 
     setTimeout(() => {
 
-        /* Remove opening after crossfade */
+        /* Opening is finished — remove it */
         opening.style.display = "none";
         opening.style.position = "";
         opening.style.inset = "";
         opening.style.zIndex = "";
 
-        /* Return letter to normal layout */
+        /* Letter stays visible normally */
         letter.style.position = "";
         letter.style.inset = "";
         letter.style.zIndex = "";
         letter.style.overflowY = "";
-
-        /* Keep letter flowers visible */
-        document.body.classList.add("letter-open");
-        document.body.classList.remove("opening-to-letter");
 
         window.scrollTo(0, 0);
 
@@ -1380,10 +1248,6 @@ function backToBeginning() {
 
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
-
-    /* Remove letter flowers instantly */
-    document.body.classList.add("hide-letter-flowers");
-    document.body.classList.remove("letter-open");
 
     /* Prepare opening */
     opening.style.display = "flex";
