@@ -90,6 +90,34 @@ body {
         transform: translateY(0);
     }
 }  
+  /* Flowers join the Opening → Letter crossfade */
+body.opening-to-letter .flower {
+    visibility: visible;
+}
+
+body.opening-to-letter .flower-1 {
+    opacity: 0.42;
+}
+
+body.opening-to-letter .flower-2 {
+    opacity: 0.34;
+}
+
+body.opening-to-letter .flower-3 {
+    opacity: 0.32;
+}
+
+body.opening-to-letter .flower-4 {
+    opacity: 0.36;
+}
+
+body.opening-to-letter .flower-5 {
+    opacity: 0.38;
+}
+
+body.opening-to-letter .flower-6 {
+    opacity: 0.30;
+}      
 .opening-content {
     max-width: 600px;
 }
@@ -476,9 +504,10 @@ button:hover {
     /* Default starting position */
     transform: translateY(18px) scale(0.92);
 
-    transition:
+transition:
     opacity 0.8s ease,
-    transform 0.8s ease;
+    transform 0.8s ease,
+    visibility 0s;
 }
 /* SHOW FLOWERS WHEN LETTER OPENS */
 body.letter-open .flower {
@@ -816,7 +845,8 @@ body.letter-open .flower-6 {
         line-height: 1.8;
     }
 
-}    
+} 
+
 </style>
 </head>
 
@@ -1209,52 +1239,67 @@ function openLetter() {
 
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
-    const flowers = document.querySelectorAll(".flower");
 
-    /* Prepare letter */
-    letter.style.display = "block";
-    letter.classList.remove("opening-letter");
-
-    /* Prepare flowers */
+    /* Reset states */
     document.body.classList.remove("letter-open");
     document.body.classList.remove("hide-letter-flowers");
+    document.body.classList.remove("opening-to-letter");
 
-    flowers.forEach(flower => {
-        flower.style.visibility = "visible";
-    });
+    opening.classList.remove("returning");
+    opening.classList.remove("fade-out");
 
-    /* Force browser to register starting states */
+    /* Prepare letter underneath opening */
+    letter.style.display = "block";
+    letter.style.position = "fixed";
+    letter.style.inset = "0";
+    letter.style.zIndex = "10";
+    letter.style.overflowY = "auto";
+    letter.style.opacity = "0";
+    letter.style.transform = "translateY(15px)";
+
+    /* Keep opening above the letter */
+    opening.style.position = "fixed";
+    opening.style.inset = "0";
+    opening.style.zIndex = "20";
+
+    /* Force browser to register starting positions */
     void letter.offsetWidth;
 
     requestAnimationFrame(() => {
 
-        requestAnimationFrame(() => {
+        /* Opening fades OUT */
+        opening.classList.add("fade-out");
 
-            /* CROSSFADE — everything starts together */
-            opening.classList.add("fade-out");
-            letter.classList.add("opening-letter");
-            document.body.classList.add("letter-open");
+        /* Letter fades IN */
+        letter.style.opacity = "1";
+        letter.style.transform = "translateY(0)";
 
-        });
+        /* Flowers fade IN together */
+        document.body.classList.add("opening-to-letter");
 
     });
 
     setTimeout(() => {
 
+        /* Remove opening after crossfade */
         opening.style.display = "none";
+        opening.style.position = "";
+        opening.style.inset = "";
+        opening.style.zIndex = "";
 
-        letter.classList.remove("opening-letter");
-
+        /* Return letter to normal layout */
         letter.style.position = "";
         letter.style.inset = "";
         letter.style.zIndex = "";
         letter.style.overflowY = "";
-        letter.style.opacity = "1";
-        letter.style.transform = "translateY(0)";
+
+        /* Keep letter flowers visible */
+        document.body.classList.add("letter-open");
+        document.body.classList.remove("opening-to-letter");
 
         window.scrollTo(0, 0);
 
-    }, 850);
+    }, 800);
 }
 
 let currentSlide = 0;
