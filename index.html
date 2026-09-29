@@ -476,12 +476,11 @@ button:hover {
     /* Default starting position */
     transform: translateY(18px) scale(0.92);
 
-    transition:
-        opacity 0.8s ease,
-        transform 0.8s ease,
-        visibility 0.8s ease;
+transition:
+    opacity 1.2s ease,
+    transform 1.2s ease,
+    visibility 1.2s ease;
 }
-
 /* SHOW FLOWERS WHEN LETTER OPENS */
 body.letter-open .flower {
     visibility: visible;
@@ -514,7 +513,7 @@ body.hide-letter-flowers .flower {
         scale(0.92)
         rotate(-10deg);
 
-    transition-delay: 0.10s;
+    transition-delay: 0.15s;
 }
 body.letter-open .flower-1 {
     opacity: 0.42;
@@ -536,7 +535,7 @@ body.letter-open .flower-1 {
         scale(0.92)
         rotate(25deg);
 
-    transition-delay: 0.25s;
+    transition-delay: 0.15s;
 }
 body.letter-open .flower-2 {
     opacity: 0.34;
@@ -558,7 +557,7 @@ body.letter-open .flower-2 {
         scale(0.92)
         rotate(-20deg);
 
-    transition-delay: 0.40s;
+    transition-delay: 0.15s;
 }
 body.letter-open .flower-3 {
     opacity: 0.32;
@@ -580,7 +579,7 @@ body.letter-open .flower-3 {
         scale(0.92)
         rotate(15deg);
 
-    transition-delay: 0.55s;
+    transition-delay: 0.15s;
 }
 body.letter-open .flower-4 {
     opacity: 0.36;
@@ -602,7 +601,7 @@ body.letter-open .flower-4 {
         scale(0.92)
         rotate(180deg);
 
-    transition-delay: 0.70s;
+    transition-delay: 0.16s;
 }
 body.letter-open .flower-5 {
     opacity: 0.38;
@@ -624,7 +623,7 @@ body.letter-open .flower-5 {
         scale(0.92)
         rotate(-15deg);
 
-    transition-delay: 0.85s;
+    transition-delay: 0.15s;
 }
 
 body.letter-open .flower-6 {
@@ -1243,7 +1242,7 @@ void document.body.offsetWidth;
 /* Start flowers shortly after letter begins */
 setTimeout(() => {
     document.body.classList.add("letter-open");
-}, 120);
+}, 50);
     setTimeout(() => {
 
         /* Remove opening completely */
