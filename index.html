@@ -413,106 +413,176 @@ button:hover {
     font-style: italic;
     color: #897217;
 }
-/* FLOWERS — DECORATIVE EDGE ELEMENTS */
+/* =========================================
+   LETTER FLOWERS — ANIMATED EDGE DECORATIONS
+   ========================================= */
 
 .flower {
     position: fixed;
     pointer-events: none;
+    z-index: 2;
 
-    /* Paper/text will stay above the flowers */
-    z-index: 0;
+    /* Hidden habang opening screen */
+    opacity: 0;
+    visibility: hidden;
 
-    animation: gentleFloat 6s ease-in-out infinite alternate;
+    /* Default starting position */
+    transform: translateY(18px) scale(0.92);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        visibility 0.8s ease;
 }
 
-/* Make the letter/opening stay above the flowers */
-#opening,
-#letter {
+/* SHOW FLOWERS WHEN LETTER OPENS */
+body.letter-open .flower {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Keep paper above flowers */
+.paper,
+.navigation {
     position: relative;
-    z-index: 1;
+    z-index: 5;
 }
+
+/* =========================
+   INDIVIDUAL FLOWERS
+   ========================= */
 
 /* TOP LEFT */
-
 .flower-1 {
-    width: 70px;
+    width: 95px;
     top: 4%;
     left: 2%;
-    opacity: 0.38;
+
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(-10deg);
+
+    transition-delay: 0.10s;
+}
+body.letter-open .flower-1 {
+    opacity: 0.42;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(-10deg);
 }
 
 /* UPPER RIGHT */
-
 .flower-2 {
-    width: 55px;
-    top: 20%;
+    width: 80px;
+    top: 19%;
     right: 2%;
-    opacity: 0.30;
 
-    transform: rotate(25deg);
-    animation-duration: 8s;
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(25deg);
+
+    transition-delay: 0.25s;
+}
+body.letter-open .flower-2 {
+    opacity: 0.34;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(25deg);
 }
 
 /* BOTTOM LEFT */
-
 .flower-3 {
-    width: 80px;
+    width: 110px;
     bottom: 5%;
     left: 2%;
-    opacity: 0.28;
 
-    transform: rotate(-20deg);
-    animation-duration: 7s;
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(-20deg);
+
+    transition-delay: 0.40s;
+}
+body.letter-open .flower-3 {
+    opacity: 0.32;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(-20deg);
 }
 
 /* MIDDLE LEFT */
-
 .flower-4 {
-    width: 45px;
-    top: 50%;
-    left: 1.5%;
-    opacity: 0.32;
+    width: 65px;
+    top: 48%;
+    left: 2%;
 
-    transform: rotate(15deg);
-    animation-duration: 8.5s;
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(15deg);
+
+    transition-delay: 0.55s;
+}
+body.letter-open .flower-4 {
+    opacity: 0.36;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(15deg);
 }
 
 /* LOWER RIGHT */
-
 .flower-5 {
-    width: 65px;
-    bottom: 16%;
+    width: 95px;
+    bottom: 15%;
     right: 2%;
-    opacity: 0.34;
 
-    transform: rotate(180deg);
-    animation-duration: 7.5s;
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(180deg);
+
+    transition-delay: 0.70s;
+}
+body.letter-open .flower-5 {
+    opacity: 0.38;
+
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(180deg);
 }
 
 /* TOP RIGHT */
-
 .flower-6 {
-    width: 40px;
+    width: 60px;
     top: 5%;
-    right: 5%;
-    opacity: 0.27;
+    right: 6%;
 
-    transform: rotate(-15deg);
-    animation-duration: 6.5s;
+    transform:
+        translateY(18px)
+        scale(0.92)
+        rotate(-15deg);
+
+    transition-delay: 0.85s;
 }
 
-/* SUBTLE FLOWER MOVEMENT */
+body.letter-open .flower-6 {
+    opacity: 0.30;
 
-@keyframes gentleFloat {
-
-    from {
-        translate: 0 0;
-    }
-
-    to {
-        translate: 0 -7px;
-    }
-
+    transform:
+        translateY(0)
+        scale(1)
+        rotate(-15deg);
 }
 /* =========================================
    OPENING FLOWERS — STATIC
@@ -1105,7 +1175,9 @@ function openLetter() {
 
         opening.style.display = "none";
         letter.style.display = "block";
-
+        
+        document.body.classList.add("letter-open");
+        
         requestAnimationFrame(() => {
             letter.style.opacity = "1";
             letter.style.transform = "translateY(0)";
@@ -1204,7 +1276,9 @@ function backToBeginning() {
     setTimeout(() => {
 
         letter.style.display = "none";
-
+        
+        document.body.classList.remove("letter-open");
+        
         opening.style.display = "flex";
         opening.classList.remove("fade-out");
 
