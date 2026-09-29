@@ -184,7 +184,10 @@ button:hover {
         0 24px 55px rgba(80, 60, 10, 0.16),
         0 8px 18px rgba(80, 60, 10, 0.10),
         inset 0 0 35px rgba(244, 223, 120, 0.08);
+    transition:
+    height 0.8s cubic-bezier(0.22, 1, 0.36, 1);  
 }
+  
 .message {
     font-family: "Trebuchet MS", Arial, sans-serif;
     font-size: 17px;
@@ -1564,6 +1567,14 @@ const beginningButton = document.querySelector(".beginning-button");
 
 function showSlide(index, direction) {
 
+    const paper = document.querySelector(".paper");
+
+    /* Remember current paper height */
+    const oldHeight = paper.getBoundingClientRect().height;
+
+    /* Lock paper at its current height */
+    paper.style.height = oldHeight + "px";
+
     slides.forEach(slide => {
         slide.classList.remove(
             "active",
@@ -1574,14 +1585,47 @@ function showSlide(index, direction) {
 
     const next = slides[index];
 
+    /* Show next slide */
     next.classList.add("active");
-/* Update flower arrangement for current slide */
-document.getElementById("letter").setAttribute("data-slide", index + 1);
+
+    /* Update flower arrangement */
+    document
+        .getElementById("letter")
+        .setAttribute("data-slide", index + 1);
+
+    /*
+       Temporarily let the paper find the natural
+       height required by the new slide.
+    */
+    paper.style.height = "auto";
+
+    const newHeight = paper.getBoundingClientRect().height;
+
+    /* Go back to old height without animating yet */
+    paper.style.transition = "none";
+    paper.style.height = oldHeight + "px";
+
+    /* Force browser to register old height */
+    void paper.offsetHeight;
+
+    /* Restore smooth height animation */
+    paper.style.transition =
+        "height 0.8s cubic-bezier(0.22, 1, 0.36, 1)";
+
+    /* Animate old height → new height */
+    paper.style.height = newHeight + "px";
+
+    /* Existing text animation */
     if (direction === "next") {
         next.classList.add("enter-right");
     } else {
         next.classList.add("enter-left");
     }
+
+    /* After animation, return to natural auto height */
+    setTimeout(() => {
+        paper.style.height = "auto";
+    }, 800);
 
 
     /* NAVIGATION */
@@ -1599,9 +1643,7 @@ document.getElementById("letter").setAttribute("data-slide", index + 1);
         continueButton.style.display = "block";
         beginningButton.style.display = "none";
     }
-
 }
-
 
 function nextSlide() {
 
