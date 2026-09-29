@@ -43,6 +43,29 @@ body {
     opacity: 0;
     transform: translateY(-20px);
 }
+  #opening.returning {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+
+    opacity: 0;
+    transform: translateY(15px);
+
+    animation: openingReturn 0.8s ease forwards;
+}
+
+@keyframes openingReturn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}  
 .opening-content {
     max-width: 600px;
 }
@@ -1273,45 +1296,46 @@ function backToBeginning() {
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
 
-    /* INSTANTLY HIDE LETTER FLOWERS */
+    /* Remove letter flowers instantly */
     document.body.classList.add("hide-letter-flowers");
     document.body.classList.remove("letter-open");
 
-    /* PREPARE OPENING SCREEN */
+    /* Prepare opening */
     opening.style.display = "flex";
     opening.classList.remove("fade-out");
 
-    opening.style.opacity = "0";
-    opening.style.transform = "translateY(20px)";
+    /* Reset animation first */
+    opening.classList.remove("returning");
 
-    /* FADE LETTER OUT */
+    /* Force browser to register the reset */
+    void opening.offsetWidth;
+
+    /* Start opening fade-in */
+    opening.classList.add("returning");
+
+    /* Fade last slide / letter out */
     letter.style.opacity = "0";
     letter.style.transform = "translateY(-15px)";
 
-    /* SMOOTHLY BRING OPENING IN */
-    requestAnimationFrame(() => {
-
-        requestAnimationFrame(() => {
-            opening.style.opacity = "1";
-            opening.style.transform = "translateY(0)";
-        });
-
-    });
-
-    /* CLEAN UP LETTER AFTER TRANSITION */
     setTimeout(() => {
 
         letter.style.display = "none";
+
+        /* Return opening to normal state */
+        opening.classList.remove("returning");
+
+        opening.style.position = "";
+        opening.style.inset = "";
+        opening.style.zIndex = "";
+        opening.style.opacity = "1";
+        opening.style.transform = "translateY(0)";
 
         showSlide(0, "back");
 
         window.scrollTo(0, 0);
 
-    }, 700);
+    }, 800);
 }
-/* INITIAL STATE */
-
-showSlide(0, "back");
 
 </script>
 
