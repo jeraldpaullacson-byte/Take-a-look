@@ -2050,20 +2050,18 @@ function showSlide(index, direction) {
         paper.style.height = "auto";
     }, 800);
 
+/* NAVIGATION */
 
-    /* NAVIGATION */
-
-    if (index === 0) {
 backButton.style.visibility = "visible";
 
-    if (index === slides.length - 1) {
-        continueButton.style.display = "none";
-        beginningButton.style.display = "block";
-    } else {
-        continueButton.style.display = "block";
-        beginningButton.style.display = "none";
-    }
+if (index === slides.length - 1) {
+    continueButton.style.display = "none";
+    beginningButton.style.display = "block";
+} else {
+    continueButton.style.display = "block";
+    beginningButton.style.display = "none";
 }
+
 }
 function previousSlide() {
 
