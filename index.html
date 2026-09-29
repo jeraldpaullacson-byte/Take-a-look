@@ -163,14 +163,30 @@ button:hover {
     margin: 0 auto;
 
     /* warm paper look */
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.55),
-            rgba(255,248,218,0.35)
-        ),
-        #fffdf3;
+background:
+    radial-gradient(
+        circle at 20% 30%,
+        rgba(137, 114, 23, 0.025) 0,
+        rgba(137, 114, 23, 0.025) 0.7px,
+        transparent 0.8px
+    ),
+    radial-gradient(
+        circle at 70% 65%,
+        rgba(107, 84, 36, 0.018) 0,
+        rgba(107, 84, 36, 0.018) 0.6px,
+        transparent 0.8px
+    ),
+    linear-gradient(
+        135deg,
+        rgba(255,255,255,0.55),
+        rgba(255,248,218,0.35)
+    ),
+    #fffdf3;
 
+background-size:
+    9px 9px,
+    13px 13px,
+    100% 100%;
     padding: 50px;
 
     box-sizing: border-box;
