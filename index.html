@@ -2236,12 +2236,86 @@ function previousSlide() {
 
         showSlide(currentSlide, "back");
 
-    } else {
+} else {
 
-        backToPreSlide();
+    backToConfessionIntro();
 
-    }
 }
+}
+function backToConfessionIntro() {
+
+    const letter = document.getElementById("letter");
+    const confessionIntro = document.getElementById("confessionIntro");
+
+    const message =
+        document.querySelector(".confession-intro-message");
+
+    const button =
+        document.getElementById("confessionContinueBtn");
+
+    /* Prepare confession intro behind letter */
+    confessionIntro.style.display = "flex";
+    confessionIntro.style.position = "fixed";
+    confessionIntro.style.inset = "0";
+    confessionIntro.style.zIndex = "10";
+
+    confessionIntro.style.opacity = "0";
+    confessionIntro.style.transform = "translateY(-15px)";
+
+    /* Message + button should already be visible */
+    message.style.opacity = "1";
+    message.style.transform = "translateY(0)";
+
+    button.style.opacity = "1";
+    button.style.transform = "translateY(0)";
+
+    /* Keep letter above during transition */
+    letter.style.position = "fixed";
+    letter.style.inset = "0";
+    letter.style.zIndex = "20";
+    letter.style.overflowY = "auto";
+
+    /* Force browser to register starting state */
+    void confessionIntro.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            /* Letter moves away */
+            letter.style.opacity = "0";
+            letter.style.transform = "translateY(15px)";
+
+            /* Confession intro returns */
+            confessionIntro.style.opacity = "1";
+            confessionIntro.style.transform = "translateY(0)";
+
+        });
+
+    });
+
+    setTimeout(() => {
+
+        /* Hide letter */
+        letter.style.display = "none";
+        letter.style.position = "";
+        letter.style.inset = "";
+        letter.style.zIndex = "";
+        letter.style.overflowY = "";
+
+        /* Reset letter for next Continue */
+        letter.style.opacity = "0";
+        letter.style.transform = "translateY(15px)";
+
+        /* Return intro to normal layout */
+        confessionIntro.style.position = "";
+        confessionIntro.style.inset = "";
+        confessionIntro.style.zIndex = "";
+
+        window.scrollTo(0, 0);
+
+    }, 800);
+}    
 function backToPreSlide() {
 
     const preSlide = document.getElementById("preSlide");
