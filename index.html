@@ -522,7 +522,7 @@ background-repeat: no-repeat;
     height: 100vh;
 
     pointer-events: none;
-    z-index: 6;
+   z-index: 4;
 
     overflow: hidden;
 }
@@ -1980,7 +1980,7 @@ function createForegroundFlowers() {
         copy.classList.add("foreground-copy");
 
         /* Keep invisible while we test synchronization */
-        copy.style.visibility = "hidden";
+        copy.style.visibility = "visible";
 
         /*
            Remove normal flower animation from the COPY.
