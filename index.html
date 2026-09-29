@@ -1991,65 +1991,35 @@ function createForegroundFlowers() {
         foregroundLayer.appendChild(copy);
     });
 }
-
-
 /* =========================================
-   SYNC FOREGROUND COPIES TO ORIGINALS
+   FOREGROUND FLOWER COPIES
    ========================================= */
 
-function syncForegroundFlowers() {
+function createForegroundFlowers() {
 
-    const pairs = [
-        {
-            original: document.querySelector(".flower-layer .flower-1"),
-            copy: document.querySelector(".foreground-flower-layer .flower-1")
-        },
-        {
-            original: document.querySelector(".flower-layer .flower-5"),
-            copy: document.querySelector(".foreground-flower-layer .flower-5")
-        }
-    ];
+    const foregroundLayer =
+        document.querySelector(".foreground-flower-layer");
 
-    pairs.forEach(pair => {
+    const flower1 =
+        document.querySelector(".flower-layer .flower-1");
 
-        if (!pair.original || !pair.copy) return;
+    const flower5 =
+        document.querySelector(".flower-layer .flower-5");
 
-        const rect = pair.original.getBoundingClientRect();
-        const style = getComputedStyle(pair.original);
+    const flower1Copy = flower1.cloneNode(true);
+    const flower5Copy = flower5.cloneNode(true);
 
-        /*
-           Copy the ORIGINAL'S exact visible position.
-        */
-        pair.copy.style.position = "fixed";
+    flower1Copy.classList.add("foreground-copy");
+    flower5Copy.classList.add("foreground-copy");
 
-        pair.copy.style.left = rect.left + "px";
-        pair.copy.style.top = rect.top + "px";
-
-        pair.copy.style.right = "auto";
-        pair.copy.style.bottom = "auto";
-
-        pair.copy.style.width = rect.width + "px";
-        pair.copy.style.height = rect.height + "px";
-
-        /*
-           Copy visual properties.
-        */
-        pair.copy.style.opacity = style.opacity;
-        pair.copy.style.transform = style.transform;
-
-        /*
-           We already copied the final screen position,
-           so don't apply another drift translation.
-        */
-        pair.copy.style.translate = "none";
-    });
-
-    requestAnimationFrame(syncForegroundFlowers);
+    foregroundLayer.appendChild(flower1Copy);
+    foregroundLayer.appendChild(flower5Copy);
 }
 
-
 createForegroundFlowers();
-syncForegroundFlowers();
+
+
+
 /* INITIAL STATE */
 showSlide(0, "back");
 </script>
