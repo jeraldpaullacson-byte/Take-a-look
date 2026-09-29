@@ -413,59 +413,106 @@ button:hover {
     font-style: italic;
     color: #897217;
 }
-/* FLOWERS */
+/* FLOWERS — DECORATIVE EDGE ELEMENTS */
 
 .flower {
     position: fixed;
     pointer-events: none;
-    z-index: 10;
+
+    /* Paper/text will stay above the flowers */
+    z-index: 0;
+
+    animation: gentleFloat 6s ease-in-out infinite alternate;
 }
+
+/* Make the letter/opening stay above the flowers */
+#opening,
+#letter {
+    position: relative;
+    z-index: 1;
+}
+
+/* TOP LEFT */
 
 .flower-1 {
-    width: 95px;
-    top: 25px;
-    left: 25px;
-    opacity: 0.42;
+    width: 70px;
+    top: 4%;
+    left: 2%;
+    opacity: 0.38;
 }
+
+/* UPPER RIGHT */
 
 .flower-2 {
-    width: 70px;
-    top: 18%;
-    right: 8%;
-    opacity: 0.32;
+    width: 55px;
+    top: 20%;
+    right: 2%;
+    opacity: 0.30;
+
     transform: rotate(25deg);
+    animation-duration: 8s;
 }
+
+/* BOTTOM LEFT */
 
 .flower-3 {
-    width: 120px;
-    bottom: 8%;
-    left: 5%;
-    opacity: 0.30;
+    width: 80px;
+    bottom: 5%;
+    left: 2%;
+    opacity: 0.28;
+
     transform: rotate(-20deg);
+    animation-duration: 7s;
 }
+
+/* MIDDLE LEFT */
 
 .flower-4 {
-    width: 55px;
-    top: 45%;
-    left: 10%;
-    opacity: 0.35;
+    width: 45px;
+    top: 50%;
+    left: 1.5%;
+    opacity: 0.32;
+
     transform: rotate(15deg);
+    animation-duration: 8.5s;
 }
+
+/* LOWER RIGHT */
 
 .flower-5 {
-    width: 85px;
-    bottom: 18%;
-    right: 7%;
-    opacity: 0.38;
+    width: 65px;
+    bottom: 16%;
+    right: 2%;
+    opacity: 0.34;
+
     transform: rotate(180deg);
+    animation-duration: 7.5s;
 }
 
+/* TOP RIGHT */
+
 .flower-6 {
-    width: 45px;
-    top: 8%;
-    right: 28%;
-    opacity: 0.28;
+    width: 40px;
+    top: 5%;
+    right: 5%;
+    opacity: 0.27;
+
     transform: rotate(-15deg);
+    animation-duration: 6.5s;
+}
+
+/* SUBTLE FLOWER MOVEMENT */
+
+@keyframes gentleFloat {
+
+    from {
+        translate: 0 0;
+    }
+
+    to {
+        translate: 0 -7px;
+    }
+
 }
 
 /* MOBILE */
@@ -475,7 +522,43 @@ button:hover {
     h1 {
         font-size: 34px;
     }
+    /* MOBILE FLOWERS */
 
+    .flower-1 {
+        width: 55px;
+        left: -18px;
+        top: 3%;
+    }
+
+    .flower-2 {
+        width: 45px;
+        right: -16px;
+        top: 20%;
+    }
+
+    .flower-3 {
+        width: 60px;
+        left: -22px;
+        bottom: 5%;
+    }
+
+    .flower-4 {
+        width: 38px;
+        left: -15px;
+        top: 48%;
+    }
+
+    .flower-5 {
+        width: 52px;
+        right: -20px;
+        bottom: 17%;
+    }
+
+    .flower-6 {
+        width: 35px;
+        right: -12px;
+        top: 5%;
+    }
     #letter {
         padding: 40px 12px;
     }
