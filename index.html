@@ -161,6 +161,73 @@ button:hover {
     animation-play-state: paused;
     transform: translateY(-3px);
 }
+/* =========================================
+   PRE-SLIDE
+   ========================================= */
+
+#preSlide {
+    display: none;
+
+    min-height: 100vh;
+    padding: 40px 20px;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+
+    background:
+        radial-gradient(circle at 20% 20%, #fff4b5 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, #e9ce55 0%, transparent 35%),
+        #f4df78;
+}
+
+.pre-slide-content {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pre-message {
+    margin: 20px 0 28px;
+
+    font-family: "Segoe Print",
+                 "Bradley Hand",
+                 cursive;
+
+    font-size: 25px;
+    line-height: 1.6;
+
+    color: #6b5424;
+}
+
+.pre-flower {
+    width: 85px;
+    pointer-events: none;
+}
+
+.pre-flower svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.pre-flower-top {
+    transform: rotate(-12deg);
+}
+
+.pre-flower-bottom {
+    width: 70px;
+    margin-bottom: 25px;
+    transform: rotate(18deg);
+}
+
+#proceedBtn {
+    margin-top: 5px;
+}    
 /* LETTER */
 
 #letter {
@@ -1400,8 +1467,45 @@ background-repeat: no-repeat;
     </div>
 
 </section>
+<!-- PRE-SLIDE -->
 
+<section id="preSlide">
 
+    <div class="pre-slide-content">
+
+        <div class="pre-flower pre-flower-top">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
+                <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
+                <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
+                <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
+                <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
+            </svg>
+        </div>
+
+        <p class="pre-message">
+            I can't afford to buy you real flowers,<br>
+            so I made these instead.
+        </p>
+
+        <div class="pre-flower pre-flower-bottom">
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
+                <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
+                <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+                <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+                <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+                <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+            </svg>
+        </div>
+
+<button id="proceedBtn" onclick="proceedToLetter()">
+    Proceed
+</button>
+
+    </div>
+
+</section>
 <!-- LETTER -->
 
 <section id="letter">
@@ -1760,57 +1864,117 @@ background-repeat: no-repeat;
 function openLetter() {
 
     const opening = document.getElementById("opening");
+    const preSlide = document.getElementById("preSlide");
+
+    /* Reset states */
+    opening.classList.remove("returning", "fade-out");
+
+    opening.style.opacity = "";
+    opening.style.transform = "";
+
+    /* Prepare pre-slide behind opening */
+    preSlide.style.display = "flex";
+    preSlide.style.position = "fixed";
+    preSlide.style.inset = "0";
+    preSlide.style.zIndex = "10";
+
+    preSlide.style.opacity = "0";
+    preSlide.style.transform = "translateY(15px)";
+    preSlide.style.transition =
+        "opacity 0.8s ease, transform 0.8s ease";
+
+    /* Keep opening above during crossfade */
+    opening.style.position = "fixed";
+    opening.style.inset = "0";
+    opening.style.zIndex = "20";
+
+    /* Make sure browser paints starting state */
+    void preSlide.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            /* Opening fades out */
+            opening.classList.add("fade-out");
+
+            /* Pre-slide fades in */
+            preSlide.style.opacity = "1";
+            preSlide.style.transform = "translateY(0)";
+
+        });
+
+    });
+
+    setTimeout(() => {
+
+        /* Remove opening after transition */
+        opening.style.display = "none";
+        opening.style.position = "";
+        opening.style.inset = "";
+        opening.style.zIndex = "";
+
+        /* Return pre-slide to normal layout */
+        preSlide.style.position = "";
+        preSlide.style.inset = "";
+        preSlide.style.zIndex = "";
+
+        window.scrollTo(0, 0);
+
+    }, 800);
+}
+function proceedToLetter() {
+
+    const preSlide = document.getElementById("preSlide");
     const letter = document.getElementById("letter");
 
-    /* Reset opening state */
-    opening.classList.remove("returning", "fade-out");
-/* Remove inline styles left by backToBeginning */
-opening.style.opacity = "";
-opening.style.transform = "";
-    /* Prepare the ENTIRE letter scene:
-       flowers + paper + text */
+    /* Prepare entire letter scene behind pre-slide */
     letter.style.display = "flex";
     letter.style.position = "fixed";
     letter.style.inset = "0";
     letter.style.zIndex = "10";
     letter.style.overflowY = "auto";
 
-    /* Starting state of entire first slide */
     letter.style.opacity = "0";
     letter.style.transform = "translateY(15px)";
 
-    /* Opening stays above while crossfade begins */
-    opening.style.position = "fixed";
-    opening.style.inset = "0";
-    opening.style.zIndex = "20";
+    /* Keep pre-slide above during crossfade */
+    preSlide.style.position = "fixed";
+    preSlide.style.inset = "0";
+    preSlide.style.zIndex = "20";
 
-/* Force the browser to paint the hidden letter first */
-void letter.offsetWidth;
-
-requestAnimationFrame(() => {
+    /* Make sure browser paints starting state */
+    void letter.offsetWidth;
 
     requestAnimationFrame(() => {
 
-        /* OPENING fades OUT */
-        opening.classList.add("fade-out");
+        requestAnimationFrame(() => {
 
-        /* ENTIRE FIRST SLIDE fades IN together */
-        letter.style.opacity = "1";
-        letter.style.transform = "translateY(0)";
+            /* Pre-slide fades upward */
+            preSlide.style.opacity = "0";
+            preSlide.style.transform = "translateY(-15px)";
+
+            /* Entire letter fades in */
+            letter.style.opacity = "1";
+            letter.style.transform = "translateY(0)";
+
+        });
 
     });
 
-});
-
     setTimeout(() => {
 
-        /* Opening is finished — remove it */
-        opening.style.display = "none";
-        opening.style.position = "";
-        opening.style.inset = "";
-        opening.style.zIndex = "";
+        /* Remove pre-slide */
+        preSlide.style.display = "none";
+        preSlide.style.position = "";
+        preSlide.style.inset = "";
+        preSlide.style.zIndex = "";
 
-        /* Letter stays visible normally */
+        /* Reset it so it's ready next time */
+        preSlide.style.opacity = "0";
+        preSlide.style.transform = "translateY(15px)";
+
+        /* Letter returns to normal layout */
         letter.style.position = "";
         letter.style.inset = "";
         letter.style.zIndex = "";
@@ -1820,7 +1984,6 @@ requestAnimationFrame(() => {
 
     }, 800);
 }
-
 let currentSlide = 0;
 
 const slides = document.querySelectorAll(".slide");
