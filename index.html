@@ -440,7 +440,11 @@ body.letter-open .flower {
     visibility: visible;
     opacity: 1;
 }
-
+body.hide-letter-flowers .flower {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transition: none !important;
+}
 /* Keep paper above flowers */
 .paper,
 .navigation {
@@ -1176,7 +1180,8 @@ function openLetter() {
         opening.style.display = "none";
         letter.style.display = "block";
         
-        document.body.classList.add("letter-open");
+       document.body.classList.remove("hide-letter-flowers");
+       document.body.classList.add("letter-open");
         
         requestAnimationFrame(() => {
             letter.style.opacity = "1";
@@ -1259,9 +1264,7 @@ function previousSlide() {
         showSlide(currentSlide, "back");
 
     }
-
 }
-
 
 function backToBeginning() {
 
@@ -1270,15 +1273,17 @@ function backToBeginning() {
     const opening = document.getElementById("opening");
     const letter = document.getElementById("letter");
 
+    /* INSTANTLY HIDE LETTER FLOWERS */
+    document.body.classList.add("hide-letter-flowers");
+    document.body.classList.remove("letter-open");
+
     letter.style.opacity = "0";
     letter.style.transform = "translateY(20px)";
 
     setTimeout(() => {
 
         letter.style.display = "none";
-        
-        document.body.classList.remove("letter-open");
-        
+
         opening.style.display = "flex";
         opening.classList.remove("fade-out");
 
@@ -1292,10 +1297,7 @@ function backToBeginning() {
         window.scrollTo(0, 0);
 
     }, 500);
-
-}
-
-
+    } 
 /* INITIAL STATE */
 
 showSlide(0, "back");
