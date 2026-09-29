@@ -1545,7 +1545,7 @@ background-repeat: no-repeat;
             </svg>
         </div>
 
-<button id="proceedBtn" onclick="proceedToLetter()">
+<button id="proceedBtn" onclick="proceedToConfessionIntro()">
     Proceed
 </button>
 
@@ -1563,9 +1563,9 @@ background-repeat: no-repeat;
             keeping to myself for a while.
         </p>
 
-        <button id="confessionContinueBtn">
-            Continue ›
-        </button>
+<button id="confessionContinueBtn" onclick="proceedToLetter()">
+    Continue ›
+</button>
 
     </div>
 
@@ -1987,12 +1987,99 @@ function openLetter() {
 
     }, 800);
 }
-function proceedToLetter() {
+ function proceedToConfessionIntro() {
 
     const preSlide = document.getElementById("preSlide");
+    const confessionIntro = document.getElementById("confessionIntro");
+
+    const message = document.querySelector(".confession-intro-message");
+    const button = document.getElementById("confessionContinueBtn");
+
+    /* Prepare confession intro behind pre-slide */
+    confessionIntro.style.display = "flex";
+    confessionIntro.style.position = "fixed";
+    confessionIntro.style.inset = "0";
+    confessionIntro.style.zIndex = "10";
+
+    confessionIntro.style.opacity = "0";
+    confessionIntro.style.transform = "translateY(15px)";
+    confessionIntro.style.transition =
+        "opacity 0.8s ease, transform 0.8s ease";
+
+    /* Keep pre-slide above during crossfade */
+    preSlide.style.position = "fixed";
+    preSlide.style.inset = "0";
+    preSlide.style.zIndex = "20";
+
+    /* Reset message + button */
+    message.style.opacity = "0";
+    message.style.transform = "translateY(8px)";
+    message.style.transition =
+        "opacity 0.8s ease, transform 0.8s ease";
+
+    button.style.opacity = "0";
+    button.style.transform = "translateY(6px)";
+    button.style.transition =
+        "opacity 0.8s ease, transform 0.8s ease";
+
+    /* Force starting state */
+    void confessionIntro.offsetWidth;
+
+    requestAnimationFrame(() => {
+
+        requestAnimationFrame(() => {
+
+            /* Pre-slide fades out */
+            preSlide.style.opacity = "0";
+            preSlide.style.transform = "translateY(-15px)";
+
+            /* Confession intro enters */
+            confessionIntro.style.opacity = "1";
+            confessionIntro.style.transform = "translateY(0)";
+
+        });
+
+    });
+
+    /* Message appears after intro settles */
+    setTimeout(() => {
+        message.style.opacity = "1";
+        message.style.transform = "translateY(0)";
+    }, 450);
+
+    /* Continue button appears slightly later */
+    setTimeout(() => {
+        button.style.opacity = "1";
+        button.style.transform = "translateY(0)";
+    }, 850);
+
+    setTimeout(() => {
+
+        /* Hide old pre-slide */
+        preSlide.style.display = "none";
+        preSlide.style.position = "";
+        preSlide.style.inset = "";
+        preSlide.style.zIndex = "";
+
+        /* Reset pre-slide for later */
+        preSlide.style.opacity = "0";
+        preSlide.style.transform = "translateY(15px)";
+
+        /* Return intro to normal layout */
+        confessionIntro.style.position = "";
+        confessionIntro.style.inset = "";
+        confessionIntro.style.zIndex = "";
+
+        window.scrollTo(0, 0);
+
+    }, 800);
+}   
+function proceedToLetter() {
+
+    const confessionIntro = document.getElementById("confessionIntro");
     const letter = document.getElementById("letter");
 
-    /* Prepare entire letter scene behind pre-slide */
+    /* Prepare entire letter scene behind confession intro */
     letter.style.display = "flex";
     letter.style.position = "fixed";
     letter.style.inset = "0";
@@ -2002,10 +2089,10 @@ function proceedToLetter() {
     letter.style.opacity = "0";
     letter.style.transform = "translateY(15px)";
 
-    /* Keep pre-slide above during crossfade */
-    preSlide.style.position = "fixed";
-    preSlide.style.inset = "0";
-    preSlide.style.zIndex = "20";
+    /* Keep confession intro above during crossfade */
+    confessionIntro.style.position = "fixed";
+    confessionIntro.style.inset = "0";
+    confessionIntro.style.zIndex = "20";
 
     /* Make sure browser paints starting state */
     void letter.offsetWidth;
@@ -2014,9 +2101,9 @@ function proceedToLetter() {
 
         requestAnimationFrame(() => {
 
-            /* Pre-slide fades upward */
-            preSlide.style.opacity = "0";
-            preSlide.style.transform = "translateY(-15px)";
+            /* Confession intro fades upward */
+            confessionIntro.style.opacity = "0";
+            confessionIntro.style.transform = "translateY(-15px)";
 
             /* Entire letter fades in */
             letter.style.opacity = "1";
@@ -2028,17 +2115,17 @@ function proceedToLetter() {
 
     setTimeout(() => {
 
-        /* Remove pre-slide */
-        preSlide.style.display = "none";
-        preSlide.style.position = "";
-        preSlide.style.inset = "";
-        preSlide.style.zIndex = "";
+        /* Remove confession intro */
+        confessionIntro.style.display = "none";
+        confessionIntro.style.position = "";
+        confessionIntro.style.inset = "";
+        confessionIntro.style.zIndex = "";
 
         /* Reset it so it's ready next time */
-        preSlide.style.opacity = "0";
-        preSlide.style.transform = "translateY(15px)";
+        confessionIntro.style.opacity = "0";
+        confessionIntro.style.transform = "translateY(15px)";
 
-        /* Letter returns to normal layout */
+        /* Letter stays visible normally */
         letter.style.position = "";
         letter.style.inset = "";
         letter.style.zIndex = "";
