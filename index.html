@@ -526,39 +526,48 @@ background-repeat: no-repeat;
         opacity 0.8s ease;
 }
 @keyframes flowerIdleFloat {
-    0%, 100% {
+    0% {
         translate: 0 0;
+        rotate: 0deg;
     }
 
     25% {
-        translate: 10px -12px;
+        translate: 12px -28px;
+        rotate: 4deg;
     }
 
     50% {
-        translate: -6px -24px;
+        translate: 38px -50px;
+        rotate: 8deg;
     }
 
     75% {
-        translate: -12px -9px;
+        translate: 50px -20px;
+        rotate: 4deg;
+    }
+
+    100% {
+        translate: 0 0;
+        rotate: 0deg;
     }
 }
+
 .flower {
-    animation: flowerIdleFloat 4.5s ease-in-out infinite;
+    animation: flowerIdleFloat 10s ease-in-out infinite;
 }
 
-/* Different timing para hindi sabay-sabay */
 .flower-2,
 .flower-5 {
-    animation-duration: 5.2s;
+    animation-duration: 12s;
 }
 
 .flower-3,
 .flower-6 {
-    animation-duration: 5.8s;
+    animation-duration: 14s;
 }
 
 .flower-4 {
-    animation-duration: 4.9s;
+    animation-duration: 11s;
 }
 /* Keep paper above flowers */
 .paper,
