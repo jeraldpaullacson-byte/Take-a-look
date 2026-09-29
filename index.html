@@ -514,7 +514,121 @@ button:hover {
     }
 
 }
+/* =========================================
+   OPENING FLOWERS — STATIC
+   ========================================= */
 
+#opening {
+    position: relative;
+    overflow: hidden;
+}
+
+.opening-content {
+    position: relative;
+    z-index: 2;
+}
+
+.opening-flower {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* TOP LEFT */
+.opening-flower-1 {
+    width: 150px;
+    top: 4%;
+    left: 3%;
+    opacity: 0.48;
+    transform: rotate(-12deg);
+}
+
+/* TOP RIGHT */
+.opening-flower-2 {
+    width: 120px;
+    top: 8%;
+    right: 5%;
+    opacity: 0.38;
+    transform: rotate(20deg);
+}
+
+/* BOTTOM LEFT */
+.opening-flower-3 {
+    width: 175px;
+    bottom: 3%;
+    left: 4%;
+    opacity: 0.38;
+    transform: rotate(-22deg);
+}
+
+/* BOTTOM RIGHT */
+.opening-flower-4 {
+    width: 155px;
+    bottom: 5%;
+    right: 3%;
+    opacity: 0.43;
+    transform: rotate(18deg);
+}
+
+
+/* MOBILE PORTRAIT */
+
+@media (max-width: 600px) {
+
+    .opening-flower-1 {
+        width: 115px;
+        top: 3%;
+        left: -18px;
+    }
+
+    .opening-flower-2 {
+        width: 95px;
+        top: 10%;
+        right: -15px;
+    }
+
+    .opening-flower-3 {
+        width: 135px;
+        bottom: 2%;
+        left: -25px;
+    }
+
+    .opening-flower-4 {
+        width: 120px;
+        bottom: 6%;
+        right: -20px;
+    }
+}
+
+
+/* MOBILE LANDSCAPE */
+
+@media (max-height: 600px) and (orientation: landscape) {
+
+    .opening-flower-1 {
+        width: 120px;
+        top: -20px;
+        left: 2%;
+    }
+
+    .opening-flower-2 {
+        width: 100px;
+        top: 4%;
+        right: 4%;
+    }
+
+    .opening-flower-3 {
+        width: 130px;
+        bottom: -25px;
+        left: 5%;
+    }
+
+    .opening-flower-4 {
+        width: 115px;
+        bottom: -20px;
+        right: 4%;
+    }
+}
 /* MOBILE */
 
 @media (max-width: 600px) {
@@ -657,6 +771,43 @@ button:hover {
 <!-- OPENING -->
 
 <section id="opening">
+
+    <!-- STATIC OPENING FLOWERS -->
+
+    <svg class="opening-flower opening-flower-1" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
+        <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
+        <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
+        <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
+        <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
+    </svg>
+
+    <svg class="opening-flower opening-flower-2" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="8" fill="#d6a83a"/>
+        <circle cx="50" cy="24" r="15" fill="#f2d98b"/>
+        <circle cx="74" cy="38" r="15" fill="#f2d98b"/>
+        <circle cx="65" cy="67" r="15" fill="#f2d98b"/>
+        <circle cx="35" cy="67" r="15" fill="#f2d98b"/>
+        <circle cx="26" cy="38" r="15" fill="#f2d98b"/>
+    </svg>
+
+    <svg class="opening-flower opening-flower-3" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="9" fill="#c99b32"/>
+        <ellipse cx="50" cy="22" rx="13" ry="22" fill="#fff4bd"/>
+        <ellipse cx="78" cy="50" rx="22" ry="13" fill="#fff4bd"/>
+        <ellipse cx="50" cy="78" rx="13" ry="22" fill="#fff4bd"/>
+        <ellipse cx="22" cy="50" rx="22" ry="13" fill="#fff4bd"/>
+    </svg>
+
+    <svg class="opening-flower opening-flower-4" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
+        <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
+        <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+        <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+        <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
+        <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
+    </svg>
+
 
     <div class="opening-content">
 
