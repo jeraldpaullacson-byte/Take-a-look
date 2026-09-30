@@ -2094,11 +2094,6 @@ function openLetter() {
     message.style.transition =
         "opacity 0.8s ease, transform 0.8s ease";
 
-
-backButton.style.opacity = "0";
-backButton.style.transform = "translateY(6px)";
-backButton.style.transition =
-    "opacity 0.8s ease, transform 0.8s ease";
     /* Force starting state */
     void confessionIntro.offsetWidth;
 
@@ -2291,13 +2286,8 @@ function showSlide(index, direction) {
 
 /* NAVIGATION */
 
-if (index === 0) {
-    backButton.style.visibility = "hidden";
-    backButton.style.pointerEvents = "none";
-} else {
-    backButton.style.visibility = "visible";
-    backButton.style.pointerEvents = "auto";
-}
+backButton.style.visibility = "visible";
+backButton.style.pointerEvents = "auto";
 
 if (index === slides.length - 1) {
     continueButton.style.display = "none";
