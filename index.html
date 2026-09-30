@@ -2291,7 +2291,13 @@ function showSlide(index, direction) {
 
 /* NAVIGATION */
 
-backButton.style.visibility = "visible";
+if (index === 0) {
+    backButton.style.visibility = "hidden";
+    backButton.style.pointerEvents = "none";
+} else {
+    backButton.style.visibility = "visible";
+    backButton.style.pointerEvents = "auto";
+}
 
 if (index === slides.length - 1) {
     continueButton.style.display = "none";
