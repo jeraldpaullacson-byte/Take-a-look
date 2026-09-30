@@ -2071,8 +2071,7 @@ function openLetter() {
 
     const message = document.querySelector(".confession-intro-message");
     const button = document.getElementById("confessionContinueBtn");
-const backButton =
-    document.querySelector(".confession-back-button");
+
     /* Prepare confession intro behind pre-slide */
     confessionIntro.style.display = "flex";
     confessionIntro.style.position = "fixed";
@@ -2095,10 +2094,7 @@ const backButton =
     message.style.transition =
         "opacity 0.8s ease, transform 0.8s ease";
 
-    button.style.opacity = "0";
-    button.style.transform = "translateY(6px)";
-    button.style.transition =
-        "opacity 0.8s ease, transform 0.8s ease";
+
 backButton.style.opacity = "0";
 backButton.style.transform = "translateY(6px)";
 backButton.style.transition =
@@ -2135,8 +2131,6 @@ setTimeout(() => {
 /* Navigation buttons appear slightly later */
 setTimeout(() => {
 
-    backButton.style.opacity = "1";
-    backButton.style.transform = "translateY(0)";
 
     button.style.opacity = "1";
     button.style.transform = "translateY(0)";
