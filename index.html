@@ -227,14 +227,14 @@ button:hover {
 /* =========================================
    PRE-SLIDE BOUQUET — STATIC PROTOTYPE
    ========================================= */
-
 .bouquet {
+    --b: 2;
+
     position: relative;
-    width: 300px;
-    height: 245px;
+    width: calc(300px * var(--b));
+    height: calc(245px * var(--b));
     margin: 4px auto 14px;
     pointer-events: none;
-
 }
 
 /* Every flower occupies its own layer */
@@ -252,92 +252,91 @@ button:hover {
 
 /* SUNFLOWER — centerpiece */
 .bouquet-sunflower {
-    width: 138px;
-    height: 138px;
+    width: calc(138px * var(--b));
+    height: calc(138px * var(--b));
 
-    left: 81px;
-    top: 49px;
+    left: calc(81px * var(--b));
+    top: calc(49px * var(--b));
 
     z-index: 5;
-
     transform: rotate(7deg);
 }
 
+
 /* DUSTY PINK — upper left */
 .bouquet-pink {
-    width: 91px;
-    height: 91px;
+    width: calc(91px * var(--b));
+    height: calc(91px * var(--b));
 
-    left: 31px;
-    top: 24px;
+    left: calc(31px * var(--b));
+    top: calc(24px * var(--b));
 
     z-index: 3;
-
     transform: rotate(-24deg);
 }
 
+
 /* CREAM DAISY — upper right */
 .bouquet-cream {
-    width: 88px;
-    height: 88px;
+    width: calc(88px * var(--b));
+    height: calc(88px * var(--b));
 
-    right: 28px;
-    top: 19px;
+    right: calc(28px * var(--b));
+    top: calc(19px * var(--b));
 
     z-index: 2;
-
     transform: rotate(21deg);
 }
 
+
 /* PALE YELLOW — middle left */
 .bouquet-yellow {
-    width: 78px;
-    height: 78px;
+    width: calc(78px * var(--b));
+    height: calc(78px * var(--b));
 
-    left: 17px;
-    top: 101px;
+    left: calc(17px * var(--b));
+    top: calc(101px * var(--b));
 
     z-index: 4;
-
     transform: rotate(-11deg);
 }
 
+
 /* LAVENDER — middle right */
 .bouquet-lavender {
-    width: 75px;
-    height: 75px;
+    width: calc(75px * var(--b));
+    height: calc(75px * var(--b));
 
-    right: 15px;
-    top: 103px;
+    right: calc(15px * var(--b));
+    top: calc(103px * var(--b));
 
     z-index: 4;
-
     transform: rotate(31deg);
 }
 
+
 /* IVORY — lower left */
 .bouquet-ivory {
-    width: 81px;
-    height: 81px;
+    width: calc(81px * var(--b));
+    height: calc(81px * var(--b));
 
-    left: 55px;
-    bottom: 8px;
+    left: calc(55px * var(--b));
+    bottom: calc(8px * var(--b));
 
     z-index: 2;
-
     transform: rotate(17deg);
 }
 
+
 /* PEACH — lower right */
 .bouquet-peach {
-    width: 86px;
-    height: 86px;
+    width: calc(86px * var(--b));
+    height: calc(86px * var(--b));
 
-    right: 51px;
-    bottom: 3px;
+    right: calc(51px * var(--b));
+    bottom: calc(3px * var(--b));
 
     z-index: 3;
-
     transform: rotate(-29deg);
 }
 
