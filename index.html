@@ -395,64 +395,29 @@ button:hover {
     z-index: 3;
     transform: rotate(-29deg);
 }
-/* PHONE */
+/* PHONE — SAME BOUQUET COMPOSITION AS DESKTOP */
 @media (max-width: 600px) {
 
     .bouquet {
-        width: 255px;
-        height: 205px;
-        margin-bottom: 10px;
-        transform: scale(0.92);
-        transform-origin: center center;
-    }
+        /* Keep the exact desktop coordinate system */
+        width: 652px;
+        height: 533px;
 
-    .bouquet-sunflower {
-        width: 118px;
-        height: 118px;
-        left: 69px;
-        top: 40px;
-    }
+        /* Shrink the whole finished bouquet as ONE object */
+        transform: scale(0.52);
+        transform-origin: top center;
 
-    .bouquet-pink {
-        width: 76px;
-        height: 76px;
-        left: 25px;
-        top: 20px;
-    }
+        /*
+          Compensate for the space occupied by the
+          original 533px container after scaling.
+        */
+        margin: 4px auto -240px;
 
-    .bouquet-cream {
-        width: 74px;
-        height: 74px;
-        right: 23px;
-        top: 16px;
-    }
+        /* Center the 652px canvas inside portrait screen */
+        left: 50%;
+        margin-left: -326px;
 
-    .bouquet-yellow {
-        width: 65px;
-        height: 65px;
-        left: 14px;
-        top: 85px;
-    }
-
-    .bouquet-lavender {
-        width: 63px;
-        height: 63px;
-        right: 12px;
-        top: 86px;
-    }
-
-    .bouquet-ivory {
-        width: 68px;
-        height: 68px;
-        left: 46px;
-        bottom: 6px;
-    }
-
-    .bouquet-peach {
-        width: 72px;
-        height: 72px;
-        right: 43px;
-        bottom: 3px;
+        pointer-events: none;
     }
 }
 .pre-slide-navigation {
