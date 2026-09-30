@@ -395,30 +395,22 @@ button:hover {
     z-index: 3;
     transform: rotate(-29deg);
 }
-/* PHONE — SAME BOUQUET COMPOSITION AS DESKTOP */
-@media (max-width: 600px) {
+/* PHONE PORTRAIT — MESSAGE ABOVE BOUQUET */
+.pre-message {
+    order: -1;
+    margin: 0 0 28px;
+}
 
-    .bouquet {
-        /* Keep the exact desktop coordinate system */
-        width: 652px;
-        height: 533px;
+.bouquet {
+    order: 0;
+}
 
-        /* Shrink the whole finished bouquet as ONE object */
-        transform: scale(0.52);
-        transform-origin: top center;
+.pre-slide-navigation {
+    order: 1;
+}
 
-        /*
-          Compensate for the space occupied by the
-          original 533px container after scaling.
-        */
-        margin: 4px auto -240px;
-
-        /* Center the 652px canvas inside portrait screen */
-        left: 50%;
-        margin-left: -326px;
-
-        pointer-events: none;
-    }
+.swipe-back-hint {
+    order: 2;
 }
 .pre-slide-navigation {
     width: 100%;
