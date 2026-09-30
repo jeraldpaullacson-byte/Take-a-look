@@ -1727,12 +1727,15 @@ background-repeat: no-repeat;
         line-height: 1.7;
     }
 }
+/* =========================================
+   OPENING FLOWER → SUNFLOWER MORPH
+   ========================================= */
+
 .sunflower-morph-clone {
     position: fixed;
     z-index: 1000;
 
     pointer-events: none;
-
     transform-origin: center center;
 
     margin: 0;
@@ -1743,9 +1746,50 @@ background-repeat: no-repeat;
         top,
         width,
         height,
-        transform,
-        opacity;
-}    
+        transform;
+}
+
+/* Both flower designs occupy the same travelling box */
+
+.sunflower-morph-stage {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+}
+
+/* Original opening flower */
+
+.sunflower-morph-original {
+    opacity: 1;
+    transition: opacity 0.9s ease;
+}
+
+/* Sunflower starts hidden */
+
+.sunflower-morph-final {
+    opacity: 0;
+    transform: scale(0.72);
+    transform-origin: center;
+
+    transition:
+        opacity 1s ease,
+        transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Morph begins */
+
+.sunflower-morph-clone.morphing .sunflower-morph-original {
+    opacity: 0;
+}
+
+.sunflower-morph-clone.morphing .sunflower-morph-final {
+    opacity: 1;
+    transform: scale(1);
+}
 </style>
 </head>
 
@@ -2458,37 +2502,75 @@ function openLetter() {
         sunflower.getBoundingClientRect();
 
     /* Clone opening flower */
-    const clone =
-        openingFlower.cloneNode(true);
+   /* =========================================
+   BUILD TRAVELLING MORPH FLOWER
+   ========================================= */
 
-    clone.classList.remove(
-        "opening-flower",
-        "opening-flower-1"
-    );
+/* Main travelling container */
+const clone = document.createElement("div");
 
-    clone.classList.add(
-        "sunflower-morph-clone"
-    );
+clone.className = "sunflower-morph-clone";
 
-    clone.style.left =
-        startRect.left + "px";
+clone.style.left =
+    startRect.left + "px";
 
-    clone.style.top =
-        startRect.top + "px";
+clone.style.top =
+    startRect.top + "px";
 
-    clone.style.width =
-        startRect.width + "px";
+clone.style.width =
+    startRect.width + "px";
 
-    clone.style.height =
-        startRect.height + "px";
+clone.style.height =
+    startRect.height + "px";
 
-    clone.style.opacity = "1";
+clone.style.transform =
+    "rotate(-12deg)";
 
-    clone.style.transform =
-        "rotate(-12deg)";
 
-    document.body.appendChild(clone);
+/* ORIGINAL OPENING FLOWER */
 
+const originalLayer =
+    openingFlower.cloneNode(true);
+
+originalLayer.classList.remove(
+    "opening-flower",
+    "opening-flower-1"
+);
+
+originalLayer.classList.add(
+    "sunflower-morph-stage",
+    "sunflower-morph-original"
+);
+
+originalLayer.style.position = "absolute";
+originalLayer.style.inset = "0";
+originalLayer.style.width = "100%";
+originalLayer.style.height = "100%";
+originalLayer.style.opacity = "1";
+originalLayer.style.transform = "none";
+
+
+/* SUNFLOWER LAYER */
+
+/*
+   Clone ONLY the sunflower SVG,
+   not its positioned bouquet wrapper.
+*/
+const sunflowerLayer =
+    sunflower.querySelector("svg").cloneNode(true);
+
+sunflowerLayer.classList.add(
+    "sunflower-morph-stage",
+    "sunflower-morph-final"
+);
+
+
+/* Put both designs inside same travelling flower */
+
+clone.appendChild(originalLayer);
+clone.appendChild(sunflowerLayer);
+
+document.body.appendChild(clone);
     /* Hide originals during travel */
     openingFlower.style.visibility = "hidden";
     sunflower.style.visibility = "hidden";
@@ -2507,7 +2589,10 @@ function openLetter() {
     requestAnimationFrame(() => {
 
         opening.style.opacity = "0";
-
+/* Start morph shortly after travel begins */
+setTimeout(() => {
+    clone.classList.add("morphing");
+}, 280);
         /*
            Travel to exact sunflower position
         */
