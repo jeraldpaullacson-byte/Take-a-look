@@ -162,82 +162,17 @@ button:hover {
     transform: translateY(-3px);
 }
 /* =========================================
-   PRE-SLIDE
-   ========================================= */
-
-#preSlide {
-    display: none;
-
-    min-height: 100vh;
-    padding: 40px 20px;
-
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    background:
-        radial-gradient(circle at 20% 20%, #fff4b5 0%, transparent 30%),
-        radial-gradient(circle at 80% 80%, #e9ce55 0%, transparent 35%),
-        #f4df78;
-}
-
-.pre-slide-content {
-    width: 100%;
-    max-width: 600px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.pre-message {
-    margin: 20px 0 28px;
-
-    font-family: "Segoe Print",
-                 "Bradley Hand",
-                 cursive;
-
-    font-size: 25px;
-    line-height: 1.6;
-
-    color: #6b5424;
-}
-
-.pre-flower {
-    width: 85px;
-    pointer-events: none;
-}
-
-.pre-flower svg {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.pre-flower-top {
-    transform: rotate(-12deg);
-}
-
-.pre-flower-bottom {
-    width: 70px;
-    margin-bottom: 25px;
-    transform: rotate(18deg);
-}
-/* =========================================
-   PRE-SLIDE BOUQUET — STATIC PROTOTYPE
+   PRE-SLIDE BOUQUET — LARGE RESPONSIVE
    ========================================= */
 
 .bouquet {
     position: relative;
-    width: 300px;
-    height: 245px;
-    margin: 4px auto 14px;
-
+    width: min(92vw, 82vmin);
+    height: min(58vh, 62vmin);
+    margin: 0 auto 2vh;
     pointer-events: none;
 }
 
-/* Every flower occupies its own layer */
 .bouquet-flower {
     position: absolute;
     transform-origin: 50% 50%;
@@ -250,39 +185,41 @@ button:hover {
     overflow: visible;
 }
 
-/* SUNFLOWER — centerpiece */
+/* MAIN SUNFLOWER */
 .bouquet-sunflower {
-    width: 138px;
-    height: 138px;
+    width: 40vmin;
+    height: 40vmin;
 
-    left: 81px;
-    top: 49px;
+    left: 50%;
+    top: 50%;
 
     z-index: 5;
 
-    transform: rotate(7deg);
+    transform:
+        translate(-50%, -50%)
+        rotate(7deg);
 }
 
 /* DUSTY PINK — upper left */
 .bouquet-pink {
-    width: 91px;
-    height: 91px;
+    width: 25vmin;
+    height: 25vmin;
 
-    left: 31px;
-    top: 24px;
+    left: 8%;
+    top: 2%;
 
     z-index: 3;
 
     transform: rotate(-24deg);
 }
 
-/* CREAM DAISY — upper right */
+/* CREAM — upper right */
 .bouquet-cream {
-    width: 88px;
-    height: 88px;
+    width: 24vmin;
+    height: 24vmin;
 
-    right: 28px;
-    top: 19px;
+    right: 7%;
+    top: 1%;
 
     z-index: 2;
 
@@ -291,11 +228,11 @@ button:hover {
 
 /* PALE YELLOW — middle left */
 .bouquet-yellow {
-    width: 78px;
-    height: 78px;
+    width: 22vmin;
+    height: 22vmin;
 
-    left: 17px;
-    top: 101px;
+    left: 2%;
+    top: 39%;
 
     z-index: 4;
 
@@ -304,11 +241,11 @@ button:hover {
 
 /* LAVENDER — middle right */
 .bouquet-lavender {
-    width: 75px;
-    height: 75px;
+    width: 21vmin;
+    height: 21vmin;
 
-    right: 15px;
-    top: 103px;
+    right: 1%;
+    top: 40%;
 
     z-index: 4;
 
@@ -317,11 +254,11 @@ button:hover {
 
 /* IVORY — lower left */
 .bouquet-ivory {
-    width: 81px;
-    height: 81px;
+    width: 23vmin;
+    height: 23vmin;
 
-    left: 55px;
-    bottom: 8px;
+    left: 17%;
+    bottom: 0;
 
     z-index: 2;
 
@@ -330,77 +267,15 @@ button:hover {
 
 /* PEACH — lower right */
 .bouquet-peach {
-    width: 86px;
-    height: 86px;
+    width: 24vmin;
+    height: 24vmin;
 
-    right: 51px;
-    bottom: 3px;
+    right: 16%;
+    bottom: 0;
 
     z-index: 3;
 
     transform: rotate(-29deg);
-}
-
-
-/* PHONE */
-@media (max-width: 600px) {
-
-    .bouquet {
-        width: 255px;
-        height: 205px;
-        margin-bottom: 10px;
-        transform: scale(0.92);
-        transform-origin: center center;
-    }
-
-    .bouquet-sunflower {
-        width: 118px;
-        height: 118px;
-        left: 69px;
-        top: 40px;
-    }
-
-    .bouquet-pink {
-        width: 76px;
-        height: 76px;
-        left: 25px;
-        top: 20px;
-    }
-
-    .bouquet-cream {
-        width: 74px;
-        height: 74px;
-        right: 23px;
-        top: 16px;
-    }
-
-    .bouquet-yellow {
-        width: 65px;
-        height: 65px;
-        left: 14px;
-        top: 85px;
-    }
-
-    .bouquet-lavender {
-        width: 63px;
-        height: 63px;
-        right: 12px;
-        top: 86px;
-    }
-
-    .bouquet-ivory {
-        width: 68px;
-        height: 68px;
-        left: 46px;
-        bottom: 6px;
-    }
-
-    .bouquet-peach {
-        width: 72px;
-        height: 72px;
-        right: 43px;
-        bottom: 3px;
-    }
 }
 .pre-slide-navigation {
     width: 100%;
