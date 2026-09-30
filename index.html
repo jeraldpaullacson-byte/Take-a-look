@@ -2571,10 +2571,12 @@ clone.appendChild(originalLayer);
 clone.appendChild(sunflowerLayer);
 
 document.body.appendChild(clone);
-    /* Hide originals during travel */
-    openingFlower.style.visibility = "hidden";
-    sunflower.style.visibility = "hidden";
+/* Keep source flower visible at the start */
+openingFlower.style.visibility = "visible";
+openingFlower.style.opacity = "1";
 
+/* Hide original bouquet sunflower during morph */
+sunflower.style.visibility = "hidden";
     /*
        Make pre-slide visible behind
        the travelling flower
@@ -2591,7 +2593,17 @@ document.body.appendChild(clone);
         opening.style.opacity = "0";
 /* Start morph shortly after travel begins */
 setTimeout(() => {
+
+    /* Start clone morph */
     clone.classList.add("morphing");
+
+    /*
+       Fade the ORIGINAL source flower
+       at exactly the same moment
+    */
+    openingFlower.style.transition = "opacity 0.9s ease";
+    openingFlower.style.opacity = "0";
+
 }, 280);
         /*
            Travel to exact sunflower position
@@ -2628,30 +2640,89 @@ setTimeout(() => {
 
     });
 
-    setTimeout(() => {
+setTimeout(() => {
 
-        /* Remove travelling clone */
-        clone.remove();
+    /* =========================================
+       MORPH COMPLETE
+       ========================================= */
 
-        /* Reveal actual sunflower */
-        sunflower.style.visibility = "visible";
+    /*
+       Remove only the old cream-flower layer
+       from the travelling object.
+    */
+    originalLayer.remove();
 
-        /* Restore opening flower for Back */
-        openingFlower.style.visibility = "visible";
 
-        /* Hide opening */
-        opening.style.display = "none";
-        opening.style.opacity = "";
+    /*
+       The sunflower that actually travelled
+       and morphed stays alive.
+    */
+    sunflowerLayer.classList.remove(
+        "sunflower-morph-stage",
+        "sunflower-morph-final"
+    );
 
-        /* Return pre-slide to normal layout */
-        preSlide.style.position = "";
-        preSlide.style.inset = "";
-        preSlide.style.zIndex = "";
+    sunflowerLayer.style.opacity = "1";
+    sunflowerLayer.style.transform = "";
+    sunflowerLayer.style.transition = "";
 
-        window.scrollTo(0, 0);
 
-    }, 1850);
-}
+    /*
+       Put THAT SAME morphed sunflower SVG
+       into the existing bouquet sunflower wrapper.
+
+       The wrapper keeps our locked:
+       - position
+       - size
+       - responsive behavior
+    */
+    sunflower.innerHTML = "";
+    sunflower.appendChild(sunflowerLayer);
+
+    sunflower.style.visibility = "visible";
+
+
+    /*
+       Remove only the temporary travelling SHELL.
+
+       The morphed sunflower itself is NOT deleted.
+       It has already been transferred above.
+    */
+    clone.remove();
+
+
+    /* =========================================
+       RESTORE OPENING SOURCE FOR BACK
+       ========================================= */
+
+    /*
+       Restore it internally so when the user
+       returns to Opening, the original flower
+       is there again.
+    */
+    openingFlower.style.transition = "";
+    openingFlower.style.opacity = "1";
+    openingFlower.style.visibility = "visible";
+
+
+    /* =========================================
+       FINISH OPENING → PRE-SLIDE TRANSITION
+       ========================================= */
+
+    opening.style.display = "none";
+    opening.style.opacity = "";
+
+
+    /* Return pre-slide to normal layout */
+    preSlide.style.position = "";
+    preSlide.style.inset = "";
+    preSlide.style.zIndex = "";
+
+
+    window.scrollTo(0, 0);
+
+}, 1850);
+ }   
  function proceedToConfessionIntro() {
 
     const preSlide = document.getElementById("preSlide");
