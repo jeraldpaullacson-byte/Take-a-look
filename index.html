@@ -253,7 +253,24 @@ button:hover {
     overflow: visible;
 }
 
+/* =========================================
+   PRE-SLIDE BOUQUET — PHONE PORTRAIT
+   Keep original flower positions/sizes locked
+   Scale the ENTIRE bouquet as one unit
+   ========================================= */
 
+@media (max-width: 600px) and (orientation: portrait) {
+
+    .bouquet {
+        transform: scale(0.56);
+        transform-origin: center center;
+
+        /* compensate for the space retained by transform */
+        margin-top: -105px;
+        margin-bottom: -105px;
+    }
+
+}
 /* =========================================
    SUNFLOWER — ANCHOR / CENTER
    ========================================= */
