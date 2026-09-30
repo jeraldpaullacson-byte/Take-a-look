@@ -395,23 +395,7 @@ button:hover {
     z-index: 3;
     transform: rotate(-29deg);
 }
-/* PHONE PORTRAIT — MESSAGE ABOVE BOUQUET */
-.pre-message {
-    order: -1;
-    margin: 0 0 28px;
-}
 
-.bouquet {
-    order: 0;
-}
-
-.pre-slide-navigation {
-    order: 1;
-}
-
-.swipe-back-hint {
-    order: 2;
-}
 .pre-slide-navigation {
     width: 100%;
     max-width: 420px;
@@ -525,6 +509,48 @@ button:hover {
         opacity: 0.72;
     }
 }
+ /* =========================================
+   SWIPE TO CONTINUE VISUAL GUIDE
+   ========================================= */
+
+.swipe-continue-hint {
+    position: absolute;
+    right: 24px;
+    bottom: 28px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-size: 14px;
+    font-style: italic;
+
+    color: #897217;
+    opacity: 0.58;
+
+    pointer-events: none;
+    user-select: none;
+
+    animation: swipeContinueHint 2.4s ease-in-out infinite;
+}
+
+.swipe-continue-arrow {
+    font-size: 27px;
+    line-height: 1;
+}
+
+@keyframes swipeContinueHint {
+    0%, 100% {
+        transform: translateX(0);
+        opacity: 0.48;
+    }
+
+    50% {
+        transform: translateX(-7px);
+        opacity: 0.72;
+    }
+}   
 /* LETTER */
 
 #letter {
@@ -1972,20 +1998,14 @@ background-repeat: no-repeat;
     but I made them for you.
 </p>
 
-
-
-<div class="pre-slide-navigation">
-
-    <button id="proceedBtn" onclick="proceedToConfessionIntro()">
-        Proceed ›
-    </button>
-
-</div>
-
 <div class="swipe-back-hint">
     <span class="swipe-back-arrow">↝</span>
     <span>swipe to go back</span>
 </div>
+ <div class="swipe-continue-hint">
+    <span>swipe to continue</span>
+    <span class="swipe-continue-arrow">↜</span>
+</div>       
 </div>    
 </section>
 <!-- CONFESSION INTRO -->
@@ -1999,19 +2019,14 @@ background-repeat: no-repeat;
             keeping to myself for a while.
         </p>
 
-<div class="confession-intro-navigation">
-
-    <button id="confessionContinueBtn" onclick="proceedToLetter()">
-        Continue ›
-    </button>
-
-</div>
-
 <div class="swipe-back-hint">
     <span class="swipe-back-arrow">↝</span>
     <span>swipe to go back</span>
 </div>
-
+<div class="swipe-continue-hint">
+    <span>swipe to continue</span>
+    <span class="swipe-continue-arrow">↜</span>
+</div>
     </div>
 
 </section>  
@@ -2438,7 +2453,6 @@ function openLetter() {
     const confessionIntro = document.getElementById("confessionIntro");
 
     const message = document.querySelector(".confession-intro-message");
-    const button = document.getElementById("confessionContinueBtn");
 
     /* Prepare confession intro behind pre-slide */
     confessionIntro.style.display = "flex";
@@ -2489,16 +2503,6 @@ setTimeout(() => {
     message.style.transform = "translateY(0)";
 
 }, 450);
-
-
-/* Navigation buttons appear slightly later */
-setTimeout(() => {
-
-
-    button.style.opacity = "1";
-    button.style.transform = "translateY(0)";
-
-}, 850);
 
     setTimeout(() => {
 
@@ -2698,9 +2702,6 @@ function backToConfessionIntro() {
     const message =
         document.querySelector(".confession-intro-message");
 
-    const button =
-        document.getElementById("confessionContinueBtn");
-
     /* Prepare confession intro behind letter */
     confessionIntro.style.display = "flex";
     confessionIntro.style.position = "fixed";
@@ -2709,13 +2710,10 @@ function backToConfessionIntro() {
 
     confessionIntro.style.opacity = "0";
     confessionIntro.style.transform = "translateY(-15px)";
-
-    /* Message + button should already be visible */
+    
+/* Message should already be visible */
     message.style.opacity = "1";
     message.style.transform = "translateY(0)";
-
-    button.style.opacity = "1";
-    button.style.transform = "translateY(0)";
 
     /* Keep letter above during transition */
     letter.style.position = "fixed";
@@ -2963,11 +2961,14 @@ function createForegroundFlowers() {
     });
 }
 /* =========================================
-   SWIPE RIGHT TO GO BACK
+   SWIPE NAVIGATION
+   RIGHT = BACK
+   LEFT  = CONTINUE
+
    Pre-slide + Confession Intro only
    ========================================= */
 
-function addSwipeBack(element, backFunction) {
+function addSwipeNavigation(element, backFunction, continueFunction) {
 
     /* ---------- PHONE / TOUCH ---------- */
 
@@ -2975,8 +2976,10 @@ function addSwipeBack(element, backFunction) {
     let touchStartY = 0;
 
     element.addEventListener("touchstart", function(e) {
+
         touchStartX = e.changedTouches[0].screenX;
         touchStartY = e.changedTouches[0].screenY;
+
     }, { passive: true });
 
     element.addEventListener("touchend", function(e) {
@@ -2987,15 +2990,23 @@ function addSwipeBack(element, backFunction) {
         const distanceX = touchEndX - touchStartX;
         const distanceY = touchEndY - touchStartY;
 
-        if (
-            distanceX > 80 &&
-            Math.abs(distanceX) > Math.abs(distanceY)
-        ) {
+        /* Ignore mostly vertical gestures */
+        if (Math.abs(distanceX) <= Math.abs(distanceY)) return;
+
+        /* SWIPE RIGHT — BACK */
+
+        if (distanceX > 80) {
             backFunction();
+            return;
+        }
+
+        /* SWIPE LEFT — CONTINUE */
+
+        if (distanceX < -80) {
+            continueFunction();
         }
 
     }, { passive: true });
-
 
     /* ---------- LAPTOP / MOUSE ---------- */
 
@@ -3010,6 +3021,7 @@ function addSwipeBack(element, backFunction) {
 
         mouseStartX = e.screenX;
         mouseStartY = e.screenY;
+
         mouseDragging = true;
     });
 
@@ -3022,12 +3034,22 @@ function addSwipeBack(element, backFunction) {
         const distanceX = e.screenX - mouseStartX;
         const distanceY = e.screenY - mouseStartY;
 
-        if (
-            distanceX > 80 &&
-            Math.abs(distanceX) > Math.abs(distanceY)
-        ) {
+        /* Ignore mostly vertical gestures */
+        if (Math.abs(distanceX) <= Math.abs(distanceY)) return;
+
+        /* DRAG RIGHT — BACK */
+
+        if (distanceX > 80) {
             backFunction();
+            return;
         }
+
+        /* DRAG LEFT — CONTINUE */
+
+        if (distanceX < -80) {
+            continueFunction();
+        }
+
     });
 
     element.addEventListener("mouseleave", function() {
@@ -3035,14 +3057,20 @@ function addSwipeBack(element, backFunction) {
     });
 }
 
-addSwipeBack(
+/* PRE-SLIDE */
+
+addSwipeNavigation(
     document.getElementById("preSlide"),
-    backToOpening
+    backToOpening,
+    proceedToConfessionIntro
 );
 
-addSwipeBack(
+/* CONFESSION INTRO */
+
+addSwipeNavigation(
     document.getElementById("confessionIntro"),
-    backToPreSlide
+    backToPreSlide,
+    proceedToLetter
 );
 /* INITIAL STATE */
 showSlide(0, "back");
