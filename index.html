@@ -1727,6 +1727,25 @@ background-repeat: no-repeat;
         line-height: 1.7;
     }
 }
+.sunflower-morph-clone {
+    position: fixed;
+    z-index: 1000;
+
+    pointer-events: none;
+
+    transform-origin: center center;
+
+    margin: 0;
+    padding: 0;
+
+    will-change:
+        left,
+        top,
+        width,
+        height,
+        transform,
+        opacity;
+}    
 </style>
 </head>
 
@@ -2406,13 +2425,19 @@ function openLetter() {
     const opening = document.getElementById("opening");
     const preSlide = document.getElementById("preSlide");
 
+    const openingFlower =
+        document.querySelector(".opening-flower-1");
+
+    const sunflower =
+        document.querySelector(".bouquet-sunflower");
+
     /* Reset states */
     opening.classList.remove("returning", "fade-out");
 
     opening.style.opacity = "";
     opening.style.transform = "";
 
-    /* Prepare pre-slide behind opening */
+    /* Prepare pre-slide */
     preSlide.style.display = "flex";
     preSlide.style.position = "fixed";
     preSlide.style.inset = "0";
@@ -2420,39 +2445,118 @@ function openLetter() {
 
     preSlide.style.opacity = "0";
     preSlide.style.transform = "translateY(15px)";
-    preSlide.style.transition =
-        "opacity 0.8s ease, transform 0.8s ease";
 
-    /* Keep opening above during crossfade */
-    opening.style.position = "fixed";
-    opening.style.inset = "0";
-    opening.style.zIndex = "20";
-
-    /* Make sure browser paints starting state */
+    /* Let browser calculate final bouquet position */
     void preSlide.offsetWidth;
+
+    /* Get exact starting position */
+    const startRect =
+        openingFlower.getBoundingClientRect();
+
+    /* Get exact sunflower destination */
+    const endRect =
+        sunflower.getBoundingClientRect();
+
+    /* Clone opening flower */
+    const clone =
+        openingFlower.cloneNode(true);
+
+    clone.classList.remove(
+        "opening-flower",
+        "opening-flower-1"
+    );
+
+    clone.classList.add(
+        "sunflower-morph-clone"
+    );
+
+    clone.style.left =
+        startRect.left + "px";
+
+    clone.style.top =
+        startRect.top + "px";
+
+    clone.style.width =
+        startRect.width + "px";
+
+    clone.style.height =
+        startRect.height + "px";
+
+    clone.style.opacity = "1";
+
+    clone.style.transform =
+        "rotate(-12deg)";
+
+    document.body.appendChild(clone);
+
+    /* Hide originals during travel */
+    openingFlower.style.visibility = "hidden";
+    sunflower.style.visibility = "hidden";
+
+    /*
+       Make pre-slide visible behind
+       the travelling flower
+    */
+    preSlide.style.opacity = "1";
+    preSlide.style.transform = "translateY(0)";
+
+    /* Opening fades while flower remains */
+    opening.style.transition =
+        "opacity 0.8s ease";
 
     requestAnimationFrame(() => {
 
-        requestAnimationFrame(() => {
+        opening.style.opacity = "0";
 
-            /* Opening fades out */
-            opening.classList.add("fade-out");
+        /*
+           Travel to exact sunflower position
+        */
 
-            /* Pre-slide fades in */
-            preSlide.style.opacity = "1";
-            preSlide.style.transform = "translateY(0)";
+        clone.style.transition =
+            `
+            left 1.8s cubic-bezier(0.22,1,0.36,1),
+            top 1.8s cubic-bezier(0.22,1,0.36,1),
+            width 1.8s cubic-bezier(0.22,1,0.36,1),
+            height 1.8s cubic-bezier(0.22,1,0.36,1),
+            transform 1.8s cubic-bezier(0.22,1,0.36,1)
+            `;
 
-        });
+        clone.style.left =
+            endRect.left + "px";
+
+        clone.style.top =
+            endRect.top + "px";
+
+        clone.style.width =
+            endRect.width + "px";
+
+        clone.style.height =
+            endRect.height + "px";
+
+        /*
+           One complete rotation.
+           -12deg + 360deg + final 7deg
+        */
+
+        clone.style.transform =
+            "rotate(367deg)";
 
     });
 
     setTimeout(() => {
 
-        /* Remove opening after transition */
+        /* Remove travelling clone */
+        clone.remove();
+
+        /* Reveal actual sunflower */
+        sunflower.style.visibility = "visible";
+
+        /* Restore opening flower for Back */
+        openingFlower.style.visibility = "visible";
+
+        /* Hide opening */
         opening.style.display = "none";
-        opening.style.position = "";
-        opening.style.inset = "";
-        opening.style.zIndex = "";
+        opening.style.opacity = "";
 
         /* Return pre-slide to normal layout */
         preSlide.style.position = "";
@@ -2461,7 +2565,7 @@ function openLetter() {
 
         window.scrollTo(0, 0);
 
-    }, 800);
+    }, 1850);
 }
  function proceedToConfessionIntro() {
 
