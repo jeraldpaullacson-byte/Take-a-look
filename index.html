@@ -224,7 +224,184 @@ button:hover {
     margin-bottom: 25px;
     transform: rotate(18deg);
 }
+/* =========================================
+   PRE-SLIDE BOUQUET — STATIC PROTOTYPE
+   ========================================= */
 
+.bouquet {
+    position: relative;
+    width: 300px;
+    height: 245px;
+    margin: 4px auto 14px;
+
+    pointer-events: none;
+}
+
+/* Every flower occupies its own layer */
+.bouquet-flower {
+    position: absolute;
+    transform-origin: 50% 50%;
+}
+
+.bouquet-flower svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* SUNFLOWER — centerpiece */
+.bouquet-sunflower {
+    width: 138px;
+    height: 138px;
+
+    left: 81px;
+    top: 49px;
+
+    z-index: 5;
+
+    transform: rotate(7deg);
+}
+
+/* DUSTY PINK — upper left */
+.bouquet-pink {
+    width: 91px;
+    height: 91px;
+
+    left: 31px;
+    top: 24px;
+
+    z-index: 3;
+
+    transform: rotate(-24deg);
+}
+
+/* CREAM DAISY — upper right */
+.bouquet-cream {
+    width: 88px;
+    height: 88px;
+
+    right: 28px;
+    top: 19px;
+
+    z-index: 2;
+
+    transform: rotate(21deg);
+}
+
+/* PALE YELLOW — middle left */
+.bouquet-yellow {
+    width: 78px;
+    height: 78px;
+
+    left: 17px;
+    top: 101px;
+
+    z-index: 4;
+
+    transform: rotate(-11deg);
+}
+
+/* LAVENDER — middle right */
+.bouquet-lavender {
+    width: 75px;
+    height: 75px;
+
+    right: 15px;
+    top: 103px;
+
+    z-index: 4;
+
+    transform: rotate(31deg);
+}
+
+/* IVORY — lower left */
+.bouquet-ivory {
+    width: 81px;
+    height: 81px;
+
+    left: 55px;
+    bottom: 8px;
+
+    z-index: 2;
+
+    transform: rotate(17deg);
+}
+
+/* PEACH — lower right */
+.bouquet-peach {
+    width: 86px;
+    height: 86px;
+
+    right: 51px;
+    bottom: 3px;
+
+    z-index: 3;
+
+    transform: rotate(-29deg);
+}
+
+
+/* PHONE */
+@media (max-width: 600px) {
+
+    .bouquet {
+        width: 255px;
+        height: 205px;
+        margin-bottom: 10px;
+        transform: scale(0.92);
+        transform-origin: center center;
+    }
+
+    .bouquet-sunflower {
+        width: 118px;
+        height: 118px;
+        left: 69px;
+        top: 40px;
+    }
+
+    .bouquet-pink {
+        width: 76px;
+        height: 76px;
+        left: 25px;
+        top: 20px;
+    }
+
+    .bouquet-cream {
+        width: 74px;
+        height: 74px;
+        right: 23px;
+        top: 16px;
+    }
+
+    .bouquet-yellow {
+        width: 65px;
+        height: 65px;
+        left: 14px;
+        top: 85px;
+    }
+
+    .bouquet-lavender {
+        width: 63px;
+        height: 63px;
+        right: 12px;
+        top: 86px;
+    }
+
+    .bouquet-ivory {
+        width: 68px;
+        height: 68px;
+        left: 46px;
+        bottom: 6px;
+    }
+
+    .bouquet-peach {
+        width: 72px;
+        height: 72px;
+        right: 43px;
+        bottom: 3px;
+    }
+}
 .pre-slide-navigation {
     width: 100%;
     max-width: 420px;
@@ -1579,32 +1756,212 @@ background-repeat: no-repeat;
 <section id="preSlide">
 
     <div class="pre-slide-content">
+<!-- STATIC BOUQUET PROTOTYPE -->
 
-        <div class="pre-flower pre-flower-top">
-            <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="10" fill="#e5bd35"/>
-                <circle cx="50" cy="25" r="18" fill="#fff8c9"/>
-                <circle cx="75" cy="50" r="18" fill="#fff8c9"/>
-                <circle cx="50" cy="75" r="18" fill="#fff8c9"/>
-                <circle cx="25" cy="50" r="18" fill="#fff8c9"/>
-            </svg>
-        </div>
+<div class="bouquet">
+
+    <!-- 1 — DUSTY PINK -->
+    <div class="bouquet-flower bouquet-pink">
+        <svg viewBox="0 0 100 100">
+            <g>
+                <ellipse cx="50" cy="24" rx="17" ry="25" fill="#e8b7ae"/>
+                <ellipse cx="76" cy="43" rx="24" ry="17" fill="#e3aaa5"/>
+                <ellipse cx="66" cy="73" rx="19" ry="24" fill="#edc1b6"/>
+                <ellipse cx="34" cy="73" rx="19" ry="24" fill="#e4ada8"/>
+                <ellipse cx="24" cy="43" rx="24" ry="17" fill="#efc5ba"/>
+
+                <circle cx="50" cy="50" r="13" fill="#d39a54"/>
+                <circle cx="50" cy="50" r="7" fill="#b87c42"/>
+            </g>
+        </svg>
+    </div>
+
+
+    <!-- 2 — CREAM DAISY -->
+    <div class="bouquet-flower bouquet-cream">
+        <svg viewBox="0 0 100 100">
+            <g fill="#fff6d8">
+                <ellipse cx="50" cy="20" rx="10" ry="23"/>
+                <ellipse cx="73" cy="29" rx="10" ry="23"
+                         transform="rotate(45 73 29)"/>
+                <ellipse cx="80" cy="52" rx="10" ry="23"
+                         transform="rotate(90 80 52)"/>
+                <ellipse cx="69" cy="75" rx="10" ry="23"
+                         transform="rotate(135 69 75)"/>
+                <ellipse cx="45" cy="80" rx="10" ry="23"
+                         transform="rotate(180 45 80)"/>
+                <ellipse cx="24" cy="67" rx="10" ry="23"
+                         transform="rotate(225 24 67)"/>
+                <ellipse cx="20" cy="42" rx="10" ry="23"
+                         transform="rotate(270 20 42)"/>
+                <ellipse cx="31" cy="24" rx="10" ry="23"
+                         transform="rotate(315 31 24)"/>
+            </g>
+
+            <circle cx="50" cy="50" r="12" fill="#d8a83e"/>
+            <circle cx="50" cy="50" r="6" fill="#bd8730"/>
+        </svg>
+    </div>
+
+
+    <!-- 3 — PALE YELLOW -->
+    <div class="bouquet-flower bouquet-yellow">
+        <svg viewBox="0 0 100 100">
+            <g fill="#f3d675">
+                <circle cx="50" cy="25" r="18"/>
+                <circle cx="73" cy="39" r="18"/>
+                <circle cx="66" cy="67" r="18"/>
+                <circle cx="34" cy="67" r="18"/>
+                <circle cx="27" cy="39" r="18"/>
+            </g>
+
+            <circle cx="50" cy="50" r="12" fill="#c99432"/>
+        </svg>
+    </div>
+
+
+    <!-- 4 — LAVENDER -->
+    <div class="bouquet-flower bouquet-lavender">
+        <svg viewBox="0 0 100 100">
+            <g fill="#c9b7d9">
+                <ellipse cx="50" cy="24" rx="14" ry="23"/>
+                <ellipse cx="74" cy="42" rx="22" ry="14"
+                         transform="rotate(18 74 42)"/>
+                <ellipse cx="65" cy="70" rx="15" ry="22"
+                         transform="rotate(-18 65 70)"/>
+                <ellipse cx="35" cy="70" rx="15" ry="22"
+                         transform="rotate(18 35 70)"/>
+                <ellipse cx="26" cy="42" rx="22" ry="14"
+                         transform="rotate(-18 26 42)"/>
+            </g>
+
+            <circle cx="50" cy="50" r="11" fill="#e0b34c"/>
+            <circle cx="50" cy="50" r="5" fill="#bd8d32"/>
+        </svg>
+    </div>
+
+
+    <!-- 5 — IVORY -->
+    <div class="bouquet-flower bouquet-ivory">
+        <svg viewBox="0 0 100 100">
+            <g fill="#fff9e8">
+                <ellipse cx="50" cy="25" rx="13" ry="22"/>
+                <ellipse cx="72" cy="37" rx="13" ry="22"
+                         transform="rotate(58 72 37)"/>
+                <ellipse cx="68" cy="65" rx="13" ry="22"
+                         transform="rotate(118 68 65)"/>
+                <ellipse cx="42" cy="75" rx="13" ry="22"
+                         transform="rotate(180 42 75)"/>
+                <ellipse cx="25" cy="53" rx="13" ry="22"
+                         transform="rotate(242 25 53)"/>
+                <ellipse cx="30" cy="31" rx="13" ry="22"
+                         transform="rotate(300 30 31)"/>
+            </g>
+
+            <circle cx="50" cy="50" r="10" fill="#d6a74a"/>
+        </svg>
+    </div>
+
+
+    <!-- 6 — PEACH -->
+    <div class="bouquet-flower bouquet-peach">
+        <svg viewBox="0 0 100 100">
+            <g fill="#efbd91">
+                <circle cx="50" cy="26" r="18"/>
+                <circle cx="73" cy="43" r="18"/>
+                <circle cx="64" cy="70" r="18"/>
+                <circle cx="36" cy="70" r="18"/>
+                <circle cx="27" cy="43" r="18"/>
+            </g>
+
+            <circle cx="50" cy="50" r="12" fill="#d89a48"/>
+            <circle cx="50" cy="50" r="5" fill="#b87839"/>
+        </svg>
+    </div>
+
+
+    <!-- 7 — SUNFLOWER / CENTERPIECE -->
+    <div class="bouquet-flower bouquet-sunflower">
+        <svg viewBox="0 0 120 120">
+
+            <!-- outer petals -->
+            <g fill="#efbd2e">
+
+                <ellipse cx="60" cy="19" rx="10" ry="27"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(30 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(60 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(90 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(120 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(150 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(180 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(210 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(240 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(270 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(300 60 60)"/>
+                <ellipse cx="60" cy="19" rx="10" ry="27"
+                         transform="rotate(330 60 60)"/>
+
+            </g>
+
+            <!-- inner petals -->
+            <g fill="#f6ce43" opacity="0.95">
+
+                <ellipse cx="60" cy="28" rx="8" ry="20"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(45 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(90 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(135 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(180 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(225 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(270 60 60)"/>
+                <ellipse cx="60" cy="28" rx="8" ry="20"
+                         transform="rotate(315 60 60)"/>
+
+            </g>
+
+            <!-- sunflower center -->
+            <circle cx="60" cy="60" r="27" fill="#70461f"/>
+            <circle cx="60" cy="60" r="21" fill="#85562a"/>
+
+            <!-- subtle seed pattern -->
+            <g fill="#5e381c" opacity="0.72">
+                <circle cx="51" cy="51" r="2.3"/>
+                <circle cx="60" cy="48" r="2.3"/>
+                <circle cx="69" cy="52" r="2.3"/>
+                <circle cx="72" cy="61" r="2.3"/>
+                <circle cx="66" cy="69" r="2.3"/>
+                <circle cx="56" cy="71" r="2.3"/>
+                <circle cx="48" cy="65" r="2.3"/>
+                <circle cx="48" cy="57" r="2.3"/>
+                <circle cx="58" cy="59" r="2.1"/>
+                <circle cx="64" cy="62" r="2.1"/>
+            </g>
+
+        </svg>
+    </div>
+
+</div>
 
 <p class="pre-message">
     These aren't exactly real flowers,<br>
     but I made them for you.
 </p>
 
-        <div class="pre-flower pre-flower-bottom">
-            <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="9" fill="#b98b2c"/>
-                <ellipse cx="50" cy="23" rx="15" ry="20" fill="#f7e5a6"/>
-                <ellipse cx="76" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
-                <ellipse cx="66" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
-                <ellipse cx="34" cy="70" rx="20" ry="14" fill="#f7e5a6"/>
-                <ellipse cx="24" cy="40" rx="20" ry="14" fill="#f7e5a6"/>
-            </svg>
-        </div>
 
 
 <div class="pre-slide-navigation">
