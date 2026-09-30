@@ -288,6 +288,45 @@ button:hover {
     margin-top: 5px;
 }
 /* =========================================
+   PRE-SLIDE — CENTER CONTENT ON LANDSCAPE
+   ========================================= */
+
+@media (min-width: 601px) {
+
+    #preSlide {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .pre-slide-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bouquet {
+        flex-shrink: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pre-message {
+        width: 100%;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pre-slide-navigation {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+/* =========================================
    CONFESSION INTRO
    ========================================= */
 
