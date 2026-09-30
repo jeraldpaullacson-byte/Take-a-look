@@ -229,8 +229,14 @@ button:hover {
    ========================================= */
 .bouquet {
     position: relative;
-    width: 300px;
-    height: 245px;
+
+    /*
+       New enlarged coordinate area.
+       Sunflower center is the anchor.
+    */
+    width: 652px;
+    height: 533px;
+
     margin: 4px auto 14px;
     pointer-events: none;
 }
@@ -248,78 +254,144 @@ button:hover {
 }
 
 
-/* SUNFLOWER */
+/* =========================================
+   SUNFLOWER — ANCHOR / CENTER
+   ========================================= */
+
 .bouquet-sunflower {
     width: 300px;
     height: 300px;
-    left: 0px;
-    top: -32px;
+
+    /* sunflower center = bouquet center */
+    left: 176px;
+    top: 107px;
+
     z-index: 5;
     transform: rotate(7deg);
 }
 
 
-/* DUSTY PINK */
+/* =========================================
+   DUSTY PINK
+   Original relative center:
+   73.5px LEFT / 48.5px UP
+
+   Enlarged:
+   ~160px LEFT / ~105px UP
+   ========================================= */
+
 .bouquet-pink {
     width: 198px;
     height: 198px;
-    left: -23px;
-    top: -30px;
+
+    left: 115px;
+    top: 101px;
+
     z-index: 3;
     transform: rotate(-24deg);
 }
 
 
-/* CREAM DAISY */
+/* =========================================
+   CREAM
+   Original:
+   78px RIGHT / 55px UP
+
+   Enlarged:
+   ~170px RIGHT / ~120px UP
+   ========================================= */
+
 .bouquet-cream {
     width: 191px;
     height: 191px;
-    right: -24px;
-    top: -33px;
+
+    left: 400px;
+    top: 82px;
+
     z-index: 2;
     transform: rotate(21deg);
 }
 
 
-/* PALE YELLOW */
+/* =========================================
+   PALE YELLOW
+   Original:
+   94px LEFT / 22px DOWN
+
+   Enlarged:
+   ~204px LEFT / ~48px DOWN
+   ========================================= */
+
 .bouquet-yellow {
     width: 170px;
     height: 170px;
-    left: -29px;
-    top: 55px;
+
+    left: 37px;
+    top: 220px;
+
     z-index: 4;
     transform: rotate(-11deg);
 }
 
 
-/* LAVENDER */
+/* =========================================
+   LAVENDER
+   Original:
+   97.5px RIGHT / 22.5px DOWN
+
+   Enlarged:
+   ~212px RIGHT / ~49px DOWN
+   ========================================= */
+
 .bouquet-lavender {
     width: 163px;
     height: 163px;
-    right: -29px;
-    top: 59px;
+
+    left: 456px;
+    top: 224px;
+
     z-index: 4;
     transform: rotate(31deg);
 }
 
 
-/* IVORY */
+/* =========================================
+   IVORY
+   Original:
+   54.5px LEFT / 78.5px DOWN
+
+   Enlarged:
+   ~118px LEFT / ~171px DOWN
+   ========================================= */
+
 .bouquet-ivory {
     width: 176px;
     height: 176px;
-    left: 8px;
-    bottom: -40px;
+
+    left: 120px;
+    top: 340px;
+
     z-index: 2;
     transform: rotate(17deg);
 }
 
 
-/* PEACH */
+/* =========================================
+   PEACH
+   Original:
+   56px RIGHT / 81px DOWN
+
+   Enlarged:
+   ~122px RIGHT / ~176px DOWN
+   ========================================= */
+
 .bouquet-peach {
     width: 187px;
     height: 187px;
-    right: 1px;
-    bottom: -48px;
+
+    left: 360px;
+    top: 340px;
+
     z-index: 3;
     transform: rotate(-29deg);
 }
