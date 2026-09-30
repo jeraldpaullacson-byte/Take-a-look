@@ -2612,16 +2612,15 @@ function createForegroundFlowers() {
 
 function addSwipeBack(element, backFunction) {
 
+    /* ---------- PHONE / TOUCH ---------- */
+
     let touchStartX = 0;
     let touchStartY = 0;
 
     element.addEventListener("touchstart", function(e) {
-
         touchStartX = e.changedTouches[0].screenX;
         touchStartY = e.changedTouches[0].screenY;
-
     }, { passive: true });
-
 
     element.addEventListener("touchend", function(e) {
 
@@ -2630,11 +2629,6 @@ function addSwipeBack(element, backFunction) {
 
         const distanceX = touchEndX - touchStartX;
         const distanceY = touchEndY - touchStartY;
-
-        /*
-           Must move at least 80px to the RIGHT
-           and must be more horizontal than vertical.
-        */
 
         if (
             distanceX > 80 &&
@@ -2645,6 +2639,43 @@ function addSwipeBack(element, backFunction) {
 
     }, { passive: true });
 
+
+    /* ---------- LAPTOP / MOUSE ---------- */
+
+    let mouseStartX = 0;
+    let mouseStartY = 0;
+    let mouseDragging = false;
+
+    element.addEventListener("mousedown", function(e) {
+
+        /* Left mouse button only */
+        if (e.button !== 0) return;
+
+        mouseStartX = e.screenX;
+        mouseStartY = e.screenY;
+        mouseDragging = true;
+    });
+
+    element.addEventListener("mouseup", function(e) {
+
+        if (!mouseDragging) return;
+
+        mouseDragging = false;
+
+        const distanceX = e.screenX - mouseStartX;
+        const distanceY = e.screenY - mouseStartY;
+
+        if (
+            distanceX > 80 &&
+            Math.abs(distanceX) > Math.abs(distanceY)
+        ) {
+            backFunction();
+        }
+    });
+
+    element.addEventListener("mouseleave", function() {
+        mouseDragging = false;
+    });
 }
 
 addSwipeBack(
