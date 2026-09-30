@@ -162,120 +162,22 @@ button:hover {
     transform: translateY(-3px);
 }
 /* =========================================
-   PRE-SLIDE BOUQUET — LARGE RESPONSIVE
+   PRE-SLIDE BOUQUET — ORIGINAL GEOMETRY
    ========================================= */
 
 .bouquet {
     position: relative;
-    width: min(92vw, 82vmin);
-    height: min(58vh, 62vmin);
-    margin: 0 auto 2vh;
+
+    width: 300px;
+    height: 245px;
+
+    margin: 4px auto 14px;
+
     pointer-events: none;
-}
 
-.bouquet-flower {
-    position: absolute;
-    transform-origin: 50% 50%;
-}
-
-.bouquet-flower svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-}
-
-/* MAIN SUNFLOWER */
-.bouquet-sunflower {
-    width: 40vmin;
-    height: 40vmin;
-
-    left: 50%;
-    top: 50%;
-
-    z-index: 5;
-
-    transform:
-        translate(-50%, -50%)
-        rotate(7deg);
-}
-
-/* DUSTY PINK — upper left */
-.bouquet-pink {
-    width: 25vmin;
-    height: 25vmin;
-
-    left: 8%;
-    top: 2%;
-
-    z-index: 3;
-
-    transform: rotate(-24deg);
-}
-
-/* CREAM — upper right */
-.bouquet-cream {
-    width: 24vmin;
-    height: 24vmin;
-
-    right: 7%;
-    top: 1%;
-
-    z-index: 2;
-
-    transform: rotate(21deg);
-}
-
-/* PALE YELLOW — middle left */
-.bouquet-yellow {
-    width: 22vmin;
-    height: 22vmin;
-
-    left: 2%;
-    top: 39%;
-
-    z-index: 4;
-
-    transform: rotate(-11deg);
-}
-
-/* LAVENDER — middle right */
-.bouquet-lavender {
-    width: 21vmin;
-    height: 21vmin;
-
-    right: 1%;
-    top: 40%;
-
-    z-index: 4;
-
-    transform: rotate(31deg);
-}
-
-/* IVORY — lower left */
-.bouquet-ivory {
-    width: 23vmin;
-    height: 23vmin;
-
-    left: 17%;
-    bottom: 0;
-
-    z-index: 2;
-
-    transform: rotate(17deg);
-}
-
-/* PEACH — lower right */
-.bouquet-peach {
-    width: 24vmin;
-    height: 24vmin;
-
-    right: 16%;
-    bottom: 0;
-
-    z-index: 3;
-
-    transform: rotate(-29deg);
+    /* Scale the WHOLE bouquet as ONE object */
+    transform: scale(1.8);
+    transform-origin: center center;
 }
 .pre-slide-navigation {
     width: 100%;
