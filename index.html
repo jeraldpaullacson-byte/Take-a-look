@@ -4072,6 +4072,12 @@ sunflowerNoteDialog.classList.add("letter-returning");
     sunflowerNoteDialog.classList.add("envelope-closing");
 }
         });
+        envelope.appendChild(sheet);
+    });
+
+    smallNote.style.visibility = "hidden";
+    smallNote.inert = true;
+}        
 /* Restore the envelope after its flap finishes closing */
 sunflowerNoteDialog.addEventListener("animationend", (event) => {
     if (event.animationName !== "sunflowerFlapClose") return;
