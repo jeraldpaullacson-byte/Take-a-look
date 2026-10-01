@@ -2488,7 +2488,102 @@ background-repeat: no-repeat;
     .sunflower-note-dialog {
         --envelope-scene-scale: 0.6;
     }
-}    
+}
+ /* PRE-SLIDE — clickable sunflower hint */
+#preSlide:not(.flowers-settling)
+.bouquet .sunflower-morph-clone::before {
+    content: "";
+    position: absolute;
+    inset: 9%;
+    border: 3px dashed rgba(137, 114, 23, 0.55);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sunflowerClickHint 2.4s ease-in-out infinite;
+}
+
+#preSlide:not(.flowers-settling)
+.bouquet .sunflower-morph-clone::after {
+    content: "Tap me";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-168deg);
+
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #fff7d9;
+    color: #6b5424;
+    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-size: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+@keyframes sunflowerClickHint {
+    0%, 100% {
+        opacity: 0.35;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.85;
+        transform: scale(1.06);
+    }
+}
+
+/* ENVELOPE — clickable flap without the central Tap label */
+.sunflower-envelope .sunflower-tap {
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border-radius: 0;
+
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+    clip-path: polygon(0 0, 100% 0, 50% 58%);
+}
+
+.sunflower-envelope .sunflower-tap:hover {
+    transform: none;
+}
+
+.sunflower-note-dialog[open] .sunflower-tap {
+    animation: none;
+}
+
+/* Replace just the flap's tip with a folding piece */
+.sunflower-note-dialog:not(.letter-pulled)
+.sunflower-envelope::before {
+    clip-path: polygon(0 0, 100% 0, 55% 52%, 45% 52%);
+}
+
+.sunflower-flap-tip {
+    position: absolute;
+    left: 45%;
+    top: 52%;
+    width: 10%;
+    height: 6%;
+
+    background: #f4d98a;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: center top;
+
+    animation: envelopeTipFold 2.4s ease-in-out infinite;
+}
+
+@keyframes envelopeTipFold {
+    0%, 55%, 100% {
+        transform: perspective(100px) rotateX(0deg);
+    }
+    72%, 82% {
+        transform: perspective(100px) rotateX(-145deg);
+    }
+}
+
+.sunflower-note-dialog.letter-pulled .sunflower-flap-tip {
+    animation: none;
+}   
 </style>
 </head>
 
@@ -4124,9 +4219,11 @@ sunflowerNoteDialog.innerHTML = `
                 </div>
             </div>
 
-            <button type="button"
+                       <button type="button"
                     class="sunflower-tap"
-                    aria-label="Open the envelope">Tap</button>
+                    aria-label="Open the envelope">
+                <span class="sunflower-flap-tip" aria-hidden="true"></span>
+            </button>
         </div>
     </div>
 `;
