@@ -2277,6 +2277,27 @@ background-repeat: no-repeat;
         transform: translateY(45px) scale(0.85);
         z-index: 1;
     }
+}
+/* Open the flap before the sheets return */
+.sunflower-note-dialog[open].letter-returning
+.sunflower-envelope::before {
+    animation: sunflowerFlapReopen 0.4s ease both;
+}
+
+/* Close only after all sheets are inside */
+.sunflower-note-dialog[open].envelope-closing
+.sunflower-envelope::before {
+    animation: sunflowerFlapClose 0.4s ease both;
+}
+
+@keyframes sunflowerFlapReopen {
+    from { transform: rotateX(0deg); }
+    to   { transform: rotateX(180deg); }
+}
+
+@keyframes sunflowerFlapClose {
+    from { transform: rotateX(180deg); }
+    to   { transform: rotateX(0deg); }
 }    
 </style>
 </head>
@@ -3998,7 +4019,8 @@ function returnSunflowerLetter() {
         !sunflowerNoteDialog.classList.contains("letter-pulled")
     ) return;
 
-    sunflowerLetterReturning = true;
+sunflowerLetterReturning = true;
+sunflowerNoteDialog.classList.add("letter-returning");
 
     const envelope =
         sunflowerNoteDialog.querySelector(".sunflower-envelope");
@@ -4034,7 +4056,7 @@ function returnSunflowerLetter() {
         sheet.style.setProperty("--sheet-layer", String(8 - order));
 
         sheet.style.animation =
-            `sunflowerSheetReturn 0.65s ease-in-out ${order * 0.35}s both`;
+           `sunflowerSheetReturn 0.65s ease-in-out ${0.45 + order * 0.35}s both`;
 
         sheet.addEventListener("animationend", (event) => {
             if (
@@ -4045,35 +4067,45 @@ function returnSunflowerLetter() {
             sheet.remove();
             returnedSheets++;
 
-            if (returnedSheets === sheetOrder.length) {
-                sunflowerNoteDialog.classList.remove("letter-pulled");
-
-                smallNote.style.visibility = "";
-                smallNote.inert = true;
-                smallNote.setAttribute("aria-hidden", "true");
-
-                tapIndicator.disabled = false;
-                sunflowerLetterReturning = false;
-                showSunflowerNoteSlide(0);
-            }
-        });
-
-        envelope.appendChild(sheet);
-    });
-
-    smallNote.style.visibility = "hidden";
-    smallNote.inert = true;
+           if (returnedSheets === sheetOrder.length) {
+    sunflowerNoteDialog.classList.remove("letter-returning");
+    sunflowerNoteDialog.classList.add("envelope-closing");
 }
+        });
+/* Restore the envelope after its flap finishes closing */
+sunflowerNoteDialog.addEventListener("animationend", (event) => {
+    if (event.animationName !== "sunflowerFlapClose") return;
 
+    sunflowerNoteDialog.classList.remove(
+        "letter-pulled",
+        "letter-returning",
+        "envelope-closing"
+    );
+
+    smallNote.style.visibility = "";
+    smallNote.inert = true;
+    smallNote.setAttribute("aria-hidden", "true");
+
+    tapIndicator.disabled = false;
+    sunflowerLetterReturning = false;
+    showSunflowerNoteSlide(0);
+});
+
+/* Clean up if the entire popup is closed */
 sunflowerNoteDialog.addEventListener("close", () => {
     sunflowerNoteDialog
         .querySelectorAll(".sunflower-returning-sheet")
         .forEach(sheet => sheet.remove());
 
+    sunflowerNoteDialog.classList.remove(
+        "letter-pulled",
+        "letter-returning",
+        "envelope-closing"
+    );
+
     smallNote.style.visibility = "";
     sunflowerLetterReturning = false;
 });
-
 function openSunflowerNote() {
     const preSlide = document.getElementById("preSlide");
 
