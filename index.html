@@ -2011,12 +2011,17 @@ background-repeat: no-repeat;
 #preSlide:not(.flowers-settling) .swipe-continue-hint {
     animation: swipeContinueHint 2.4s ease-in-out infinite;
 }
-/* Smooth pre-slide exit in both directions */
+/* Smooth navigation after flowers settle */
 #preSlide {
     transition:
         opacity 0.8s ease,
         transform 0.8s ease;
-}    
+}
+
+/* Keep the bouquet stationary while measuring and landing */
+#preSlide.flowers-settling {
+    transition: none;
+}
 </style>
 </head>
 
