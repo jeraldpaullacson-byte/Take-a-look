@@ -1838,6 +1838,23 @@ background-repeat: no-repeat;
     opacity: 1;
     transform: scale(1);
 }
+/* Pre-slide navigation: 20px below the message */
+#preSlide .pre-message {
+    margin-bottom: 0;
+}
+
+#preSlide .pre-slide-navigation {
+    margin-top: 20px;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: none;
+}
+
+#preSlide .pre-slide-navigation .swipe-back-hint,
+#preSlide .pre-slide-navigation .swipe-continue-hint {
+    position: static;
+}    
 </style>
 </head>
 
@@ -2125,14 +2142,17 @@ background-repeat: no-repeat;
     but I made them for you.
 </p>
 
-<div class="swipe-back-hint">
-    <span class="swipe-back-arrow">↝</span>
-    <span>swipe to go back</span>
+<div class="pre-slide-navigation">
+    <div class="swipe-back-hint">
+        <span class="swipe-back-arrow">↝</span>
+        <span>swipe to go back</span>
+    </div>
+
+    <div class="swipe-continue-hint">
+        <span>swipe to continue</span>
+        <span class="swipe-continue-arrow">↜</span>
+    </div>
 </div>
- <div class="swipe-continue-hint">
-    <span>swipe to continue</span>
-    <span class="swipe-continue-arrow">↜</span>
-</div>       
 </div>    
 </section>
 <!-- CONFESSION INTRO -->
