@@ -2025,7 +2025,7 @@ background-repeat: no-repeat;
 
 
     <!-- 7 — SUNFLOWER / CENTERPIECE -->
-    <div class="bouquet-flower bouquet-sunflower">
+  <template id="sunflowerDesign">
         <svg viewBox="0 0 120 120">
 
             <!-- outer petals -->
@@ -2097,7 +2097,7 @@ background-repeat: no-repeat;
             </g>
 
         </svg>
-    </div>
+ </template>
 
 </div>
 
@@ -2501,8 +2501,11 @@ function openLetter() {
     const openingFlower =
         document.querySelector(".opening-flower-1");
 
-    const sunflower =
-        document.querySelector(".bouquet-sunflower");
+  const sunflower =
+    document.getElementById("sunflowerDesign");
+
+/* Remove the previous settled clone when replaying */
+preSlide.querySelector(".sunflower-morph-clone")?.remove();
 preSlide.classList.add("flowers-settling");
 preSlide.inert = true;
     /* Reset states */
@@ -2528,10 +2531,19 @@ preSlide.inert = true;
     const startRect =
         openingFlower.getBoundingClientRect();
 
-    /* Get exact sunflower destination */
-    const endRect =
-        sunflower.getBoundingClientRect();
+   /* Independent sunflower settings */
+const phonePortrait = window.matchMedia(
+    "(max-width: 600px) and (orientation: portrait)"
+).matches;
 
+const sunflowerSize = phonePortrait ? 168 : 300;
+
+const endRect = {
+    left: window.innerWidth * 0.50 - sunflowerSize / 2,
+    top: window.innerHeight * 0.42 - sunflowerSize / 2,
+    width: sunflowerSize,
+    height: sunflowerSize
+};
     /* Clone opening flower */
    /* =========================================
    BUILD TRAVELLING MORPH FLOWER
@@ -2588,7 +2600,7 @@ originalLayer.style.transform = "none";
    not its positioned bouquet wrapper.
 */
 const sunflowerLayer =
-    sunflower.querySelector("svg").cloneNode(true);
+    sunflower.content.querySelector("svg").cloneNode(true);
 
 sunflowerLayer.classList.add(
     "sunflower-morph-stage",
@@ -2604,12 +2616,10 @@ clone.appendChild(sunflowerLayer);
 document.body.appendChild(clone);
 /* Hide source immediately; travelling clone takes over */
 openingFlower.style.display = "none";
-/* Hide original bouquet sunflower during morph */
-sunflower.style.visibility = "hidden";
-    /*
-       Make pre-slide visible behind
-       the travelling flower
-    */
+
+/* Make pre-slide visible behind
+   the travelling flower
+*/
     preSlide.style.opacity = "1";
     preSlide.style.transform = "translateY(0)";
 
@@ -2671,42 +2681,23 @@ setTimeout(() => {
     originalLayer.remove();
 
 
-    /*
-       The sunflower that actually travelled
-       and morphed stays alive.
-    */
-    sunflowerLayer.classList.remove(
-        "sunflower-morph-stage",
-        "sunflower-morph-final"
-    );
+  /* Keep the same travelling sunflower */
+sunflowerLayer.classList.remove("sunflower-morph-final");
+sunflowerLayer.style.opacity = "1";
+sunflowerLayer.style.transform = "none";
 
-    sunflowerLayer.style.opacity = "1";
-    sunflowerLayer.style.transform = "";
-    sunflowerLayer.style.transition = "";
+/* Place the travelling clone directly inside the pre-slide */
+clone.style.transition = "none";
+clone.style.position = "absolute";
+clone.style.zIndex = "5";
 
+clone.style.left =
+    `calc(50% - ${sunflowerSize / 2}px)`;
 
-    /*
-       Put THAT SAME morphed sunflower SVG
-       into the existing bouquet sunflower wrapper.
+clone.style.top =
+    `calc(42vh - ${sunflowerSize / 2}px)`;
 
-       The wrapper keeps our locked:
-       - position
-       - size
-       - responsive behavior
-    */
-    sunflower.innerHTML = "";
-    sunflower.appendChild(sunflowerLayer);
-
-    sunflower.style.visibility = "visible";
-
-
-    /*
-       Remove only the temporary travelling SHELL.
-
-       The morphed sunflower itself is NOT deleted.
-       It has already been transferred above.
-    */
-    clone.remove();
+preSlide.appendChild(clone);
 
 
     /* =========================================
