@@ -2603,7 +2603,7 @@ clone.appendChild(sunflowerLayer);
 
 document.body.appendChild(clone);
 /* Hide source immediately; travelling clone takes over */
-openingFlower.style.visibility = "hidden";
+openingFlower.style.display = "none";
 /* Hide original bouquet sunflower during morph */
 sunflower.style.visibility = "hidden";
     /*
@@ -2721,7 +2721,7 @@ setTimeout(() => {
     openingFlower.style.transition = "";
     openingFlower.style.opacity = "1";
     openingFlower.style.visibility = "visible";
-
+openingFlower.style.display = "";
 
     /* =========================================
        FINISH OPENING → PRE-SLIDE TRANSITION
