@@ -2142,15 +2142,20 @@ background-repeat: no-repeat;
     flex-shrink: 0;
 }
 
-.sunflower-note-navigation button {
-    padding: 7px 10px;
-    font-size: 12px;
-    box-shadow: none;
+.sunflower-note-swipe {
+    flex: 1;
+    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: center;
+    color: #897217;
+    opacity: 0.65;
+    pointer-events: none;
 }
 
-.sunflower-note-navigation button:disabled {
-    opacity: 0.35;
-    cursor: default;
+.sunflower-small-note {
+    touch-action: pan-y;
+    user-select: none;
 }
 
 .sunflower-note-count {
@@ -2231,6 +2236,48 @@ background-repeat: no-repeat;
     from { opacity: 0; transform: translateY(6px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+.sunflower-small-note {
+    padding-top: 36px;
+}
+
+.sunflower-letter-exit {
+    position: absolute;
+    top: 4px;
+    right: 6px;
+    padding: 2px 9px;
+    background: transparent;
+    color: #897217;
+    box-shadow: none;
+    font-size: 22px;
+}
+
+.sunflower-returning-sheet {
+    pointer-events: none;
+}
+
+@keyframes sunflowerSheetReturn {
+    0% {
+        opacity: 1;
+        transform: translateY(calc(-55px + var(--sheet-offset)));
+        z-index: var(--sheet-layer);
+    }
+
+    49% {
+        opacity: 1;
+        z-index: var(--sheet-layer);
+    }
+
+    50% {
+        opacity: 1;
+        z-index: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(45px) scale(0.85);
+        z-index: 1;
+    }
+}    
 </style>
 </head>
 
@@ -3847,17 +3894,22 @@ sunflowerNoteDialog.innerHTML = `
     <div class="sunflower-note-scene">
         <div class="sunflower-envelope">
             <div class="sunflower-small-note" aria-hidden="true">
+            <button type="button"
+        class="sunflower-letter-exit"
+        aria-label="Put the letter back inside the envelope">×</button>
                 <div class="sunflower-note-text"
                      aria-live="polite"></div>
 
-                <div class="sunflower-note-navigation">
-                    <button type="button"
-                            class="sunflower-note-back">‹ Back</button>
+                              <div class="sunflower-note-navigation">
+                    <span class="sunflower-note-swipe sunflower-note-back-hint">
+                        Swipe right<br>to go back
+                    </span>
 
                     <span class="sunflower-note-count"></span>
 
-                    <button type="button"
-                            class="sunflower-note-next">Next ›</button>
+                    <span class="sunflower-note-swipe sunflower-note-next-hint">
+                        Swipe left<br>to continue
+                    </span>
                 </div>
             </div>
 
@@ -3876,10 +3928,11 @@ const noteText =
     sunflowerNoteDialog.querySelector(".sunflower-note-text");
 const noteCount =
     sunflowerNoteDialog.querySelector(".sunflower-note-count");
-const noteBack =
-    sunflowerNoteDialog.querySelector(".sunflower-note-back");
-const noteNext =
-    sunflowerNoteDialog.querySelector(".sunflower-note-next");
+const noteBackHint =
+    sunflowerNoteDialog.querySelector(".sunflower-note-back-hint");
+
+const noteNextHint =
+    sunflowerNoteDialog.querySelector(".sunflower-note-next-hint");
 const tapIndicator =
     sunflowerNoteDialog.querySelector(".sunflower-tap");
 
@@ -3895,10 +3948,12 @@ function showSunflowerNoteSlide(index) {
     noteCount.textContent =
         `${sunflowerNoteIndex + 1} / ${sunflowerNoteSlides.length}`;
 
-    noteBack.disabled = sunflowerNoteIndex === 0;
-    noteNext.disabled =
-        sunflowerNoteIndex === sunflowerNoteSlides.length - 1;
+ noteBackHint.style.visibility =
+    sunflowerNoteIndex === 0 ? "hidden" : "visible";
 
+noteNextHint.style.visibility =
+    sunflowerNoteIndex === sunflowerNoteSlides.length - 1
+        ? "hidden" : "visible";
     /* Replay the gentle text entrance */
     noteText.classList.remove("note-slide-enter");
     void noteText.offsetWidth;
@@ -3912,18 +3967,112 @@ tapIndicator.addEventListener("click", () => {
     sunflowerNoteDialog.classList.add("letter-pulled");
 });
 
-noteBack.addEventListener("click", () => {
-    showSunflowerNoteSlide(sunflowerNoteIndex - 1);
-});
-
-noteNext.addEventListener("click", () => {
-    showSunflowerNoteSlide(sunflowerNoteIndex + 1);
-});
-
+addSwipeNavigation(
+    smallNote,
+    () => {
+        if (sunflowerNoteDialog.classList.contains("letter-pulled") &&
+            sunflowerNoteIndex > 0) {
+            showSunflowerNoteSlide(sunflowerNoteIndex - 1);
+        }
+    },
+    () => {
+        if (sunflowerNoteDialog.classList.contains("letter-pulled") &&
+            sunflowerNoteIndex < sunflowerNoteSlides.length - 1) {
+            showSunflowerNoteSlide(sunflowerNoteIndex + 1);
+        }
+    }
+);
 sunflowerNoteDialog.querySelector(".sunflower-note-close")
     .addEventListener("click", () => {
         sunflowerNoteDialog.close();
     });
+
+let sunflowerLetterReturning = false;
+
+sunflowerNoteDialog.querySelector(".sunflower-letter-exit")
+    .addEventListener("click", returnSunflowerLetter);
+
+function returnSunflowerLetter() {
+    if (
+        sunflowerLetterReturning ||
+        !sunflowerNoteDialog.classList.contains("letter-pulled")
+    ) return;
+
+    sunflowerLetterReturning = true;
+
+    const envelope =
+        sunflowerNoteDialog.querySelector(".sunflower-envelope");
+
+    const sheetOrder = [
+        sunflowerNoteIndex,
+        ...sunflowerNoteSlides
+            .map((_, index) => index)
+            .filter(index => index !== sunflowerNoteIndex)
+    ];
+
+    let returnedSheets = 0;
+
+    sheetOrder.forEach((slideIndex, order) => {
+        const sheet = smallNote.cloneNode(true);
+
+        sheet.classList.add("sunflower-returning-sheet");
+        sheet.setAttribute("aria-hidden", "true");
+        sheet.inert = true;
+
+        sheet.querySelector(".sunflower-note-navigation")?.remove();
+        sheet.querySelector(".sunflower-letter-exit")?.remove();
+
+        const sheetText =
+            sheet.querySelector(".sunflower-note-text");
+
+        sheetText.classList.remove("note-slide-enter");
+        sheetText.textContent = sunflowerNoteSlides[slideIndex];
+
+        sheet.style.visibility = "visible";
+        sheet.style.pointerEvents = "none";
+        sheet.style.setProperty("--sheet-offset", `${order * 4}px`);
+        sheet.style.setProperty("--sheet-layer", String(8 - order));
+
+        sheet.style.animation =
+            `sunflowerSheetReturn 0.65s ease-in-out ${order * 0.35}s both`;
+
+        sheet.addEventListener("animationend", (event) => {
+            if (
+                event.target !== sheet ||
+                event.animationName !== "sunflowerSheetReturn"
+            ) return;
+
+            sheet.remove();
+            returnedSheets++;
+
+            if (returnedSheets === sheetOrder.length) {
+                sunflowerNoteDialog.classList.remove("letter-pulled");
+
+                smallNote.style.visibility = "";
+                smallNote.inert = true;
+                smallNote.setAttribute("aria-hidden", "true");
+
+                tapIndicator.disabled = false;
+                sunflowerLetterReturning = false;
+                showSunflowerNoteSlide(0);
+            }
+        });
+
+        envelope.appendChild(sheet);
+    });
+
+    smallNote.style.visibility = "hidden";
+    smallNote.inert = true;
+}
+
+sunflowerNoteDialog.addEventListener("close", () => {
+    sunflowerNoteDialog
+        .querySelectorAll(".sunflower-returning-sheet")
+        .forEach(sheet => sheet.remove());
+
+    smallNote.style.visibility = "";
+    sunflowerLetterReturning = false;
+});
 
 function openSunflowerNote() {
     const preSlide = document.getElementById("preSlide");
@@ -3946,7 +4095,6 @@ function openSunflowerNote() {
     showSunflowerNoteSlide(0);
     sunflowerNoteDialog.showModal();
 }
- 
 </script>
 
 
