@@ -2668,7 +2668,7 @@ clone.style.transform = "rotate(168deg)";
 
     });
 
-setTimeout(() => {
+const finishFlowerTravel = () => {
 
     /* =========================================
        MORPH COMPLETE
@@ -2679,12 +2679,6 @@ setTimeout(() => {
        from the travelling object.
     */
     originalLayer.remove();
-
-
-  /* Keep the same travelling sunflower */
-sunflowerLayer.classList.remove("sunflower-morph-final");
-sunflowerLayer.style.opacity = "1";
-sunflowerLayer.style.transform = "none";
 
 /* Place the travelling clone directly inside the pre-slide */
 clone.style.transition = "none";
@@ -2733,7 +2727,26 @@ requestAnimationFrame(() => {
     preSlide.classList.remove("flowers-settling");
     preSlide.inert = false;
 });
-}, 1850);
+};
+
+function handleFlowerTravelEnd(event) {
+    if (
+        event.target !== clone ||
+        event.propertyName !== "transform"
+    ) return;
+
+    clone.removeEventListener(
+        "transitionend",
+        handleFlowerTravelEnd
+    );
+
+    finishFlowerTravel();
+}
+
+clone.addEventListener(
+    "transitionend",
+    handleFlowerTravelEnd
+);
  }   
  function proceedToConfessionIntro() {
 
