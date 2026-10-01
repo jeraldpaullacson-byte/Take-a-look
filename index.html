@@ -1932,6 +1932,59 @@ background-repeat: no-repeat;
         min-height: 0;
     }
 }
+/* Supporting flowers: alternate rotation directions */
+.bouquet-pink {
+    --settled-angle: -24deg;
+    --flower-turn: 180deg;
+}
+
+.bouquet-cream {
+    --settled-angle: 21deg;
+    --flower-turn: -180deg;
+}
+
+.bouquet-yellow {
+    --settled-angle: -11deg;
+    --flower-turn: -180deg;
+}
+
+.bouquet-lavender {
+    --settled-angle: 31deg;
+    --flower-turn: 180deg;
+}
+
+.bouquet-ivory {
+    --settled-angle: 17deg;
+    --flower-turn: 180deg;
+}
+
+.bouquet-peach {
+    --settled-angle: -29deg;
+    --flower-turn: -180deg;
+}
+
+@keyframes supportingFlowersArrive {
+    from {
+        transform:
+            rotate(calc(var(--settled-angle) - var(--flower-turn)))
+            scale(0);
+    }
+
+    to {
+        transform:
+            rotate(var(--settled-angle))
+            scale(1);
+    }
+}
+
+#preSlide.flowers-settling .bouquet-flower {
+    transform-origin: center center;
+    animation:
+        supportingFlowersArrive
+        1.8s
+        cubic-bezier(0.22, 1, 0.36, 1)
+        both;
+}    
 </style>
 </head>
 
