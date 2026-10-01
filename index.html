@@ -299,6 +299,25 @@ button:hover {
     }
 
 }
+/* Compact bouquet for short landscape screens */
+@media (orientation: landscape) and (max-height: 700px) {
+    .bouquet {
+        transform: scale(0.50);
+        transform-origin: center center;
+        margin-top: -133px;
+        margin-bottom: -133px;
+    }
+
+    #preSlide {
+        padding: 20px;
+    }
+
+    #preSlide .pre-message {
+        font-size: 20px;
+        line-height: 1.5;
+        margin: 12px 0 18px;
+    }
+}    
 /* =========================================
    SUNFLOWER — ANCHOR / CENTER
    ========================================= */
@@ -2531,18 +2550,28 @@ preSlide.inert = true;
     const startRect =
         openingFlower.getBoundingClientRect();
 
-   /* Independent sunflower settings */
-const phonePortrait = window.matchMedia(
-    "(max-width: 600px) and (orientation: portrait)"
-).matches;
+/* Sunflower's own settings inside the bouquet */
+const sunflowerSize = 300;
+const sunflowerCenterX = 326;
+const sunflowerCenterY = 257;
 
-const sunflowerSize = phonePortrait ? 168 : 300;
+const bouquet = preSlide.querySelector(".bouquet");
+
+/* Measure the final position without the entrance offset */
+preSlide.style.transform = "translateY(0)";
+
+const bouquetRect = bouquet.getBoundingClientRect();
+const bouquetScale = bouquetRect.width / bouquet.offsetWidth;
 
 const endRect = {
-    left: window.innerWidth * 0.50 - sunflowerSize / 2,
-    top: window.innerHeight * 0.42 - sunflowerSize / 2,
-    width: sunflowerSize,
-    height: sunflowerSize
+    left: bouquetRect.left +
+        (sunflowerCenterX - sunflowerSize / 2) * bouquetScale,
+
+    top: bouquetRect.top +
+        (sunflowerCenterY - sunflowerSize / 2) * bouquetScale,
+
+    width: sunflowerSize * bouquetScale,
+    height: sunflowerSize * bouquetScale
 };
     /* Clone opening flower */
    /* =========================================
@@ -2680,19 +2709,21 @@ const finishFlowerTravel = () => {
     */
     originalLayer.remove();
 
-/* Place the travelling clone directly inside the pre-slide */
+/* Keep the same clone inside the supporting bouquet */
 clone.style.transition = "none";
 clone.style.position = "absolute";
 clone.style.zIndex = "5";
 
+clone.style.width = sunflowerSize + "px";
+clone.style.height = sunflowerSize + "px";
+
 clone.style.left =
-    `calc(50% - ${sunflowerSize / 2}px)`;
+    sunflowerCenterX - sunflowerSize / 2 + "px";
 
 clone.style.top =
-    `calc(42vh - ${sunflowerSize / 2}px)`;
+    sunflowerCenterY - sunflowerSize / 2 + "px";
 
-preSlide.appendChild(clone);
-
+bouquet.appendChild(clone);
 
     /* =========================================
        RESTORE OPENING SOURCE FOR BACK
