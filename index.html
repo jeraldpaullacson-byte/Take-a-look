@@ -1984,6 +1984,18 @@ background-repeat: no-repeat;
         1.8s
         cubic-bezier(0.22, 1, 0.36, 1)
         both;
+}  
+/* Reveal the group, then keep the swipe hints moving */
+#preSlide:not(.flowers-settling) .pre-slide-navigation {
+    animation: preContentReveal 0.8s ease 0.25s both;
+}
+
+#preSlide:not(.flowers-settling) .swipe-back-hint {
+    animation: swipeHint 2.4s ease-in-out infinite;
+}
+
+#preSlide:not(.flowers-settling) .swipe-continue-hint {
+    animation: swipeContinueHint 2.4s ease-in-out infinite;
 }    
 </style>
 </head>
