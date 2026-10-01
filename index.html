@@ -2125,9 +2125,63 @@ background-repeat: no-repeat;
     animation: envelopeFlapOpen 0.45s ease 0.35s both;
 }
 
+/* Reserve room for the whole letter above the envelope */
+.sunflower-note-dialog .sunflower-note-scene {
+    padding-top: 140px;
+}
+
+/* Letter stays inside until Tap */
 .sunflower-note-dialog[open] .sunflower-small-note {
-    animation: smallNoteRise 0.7s cubic-bezier(0.22, 1, 0.36, 1)
-        0.7s both;
+    animation: none;
+}
+
+/* Keep the message hidden during opening and pull-out */
+.sunflower-note-text {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.sunflower-note-dialog.message-revealed .sunflower-note-text {
+    opacity: 1;
+}
+
+/* Tap indicator on the front of the envelope */
+.sunflower-tap {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    z-index: 4;
+
+    transform: translateX(-50%);
+    padding: 8px 22px;
+    background: #897217;
+    color: #fffdf3;
+    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(80, 60, 10, 0.15);
+}
+
+.sunflower-tap:hover {
+    transform: translateX(-50%) scale(1.05);
+}
+
+.sunflower-tap:disabled {
+    cursor: default;
+}
+
+.sunflower-note-dialog[open] .sunflower-tap {
+    animation: sunflowerTapHint 1.8s ease-in-out 0.8s infinite both;
+}
+
+.sunflower-note-dialog.letter-pulled .sunflower-tap {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Pull out only after the second tap */
+.sunflower-note-dialog[open].letter-pulled .sunflower-small-note {
+    animation: smallNoteRise 0.8s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes envelopeAppear {
@@ -2142,8 +2196,13 @@ background-repeat: no-repeat;
 
 @keyframes smallNoteRise {
     from { transform: translateY(0); }
-    to   { transform: translateY(-65px); }
-}   
+    to   { transform: translateY(calc(-100% - 18px)); }
+}
+
+@keyframes sunflowerTapHint {
+    0%, 100% { opacity: 0.6; }
+    50%      { opacity: 1; }
+}
 </style>
 </head>
 
@@ -3739,7 +3798,7 @@ addSwipeNavigation(
 history.scrollRestoration = "manual";
 showSlide(0, "back");
 window.scrollTo(0, 0);
-/* Change this text to your own little message */
+/* Your little message */
 const sunflowerNoteMessage =
     "A little something, just for you. 🌻";
 
@@ -3754,16 +3813,51 @@ sunflowerNoteDialog.innerHTML = `
 
     <div class="sunflower-note-scene">
         <div class="sunflower-envelope">
-            <div class="sunflower-small-note"></div>
+            <div class="sunflower-small-note" aria-hidden="true">
+                <span class="sunflower-note-text"></span>
+            </div>
+
+            <button type="button"
+                    class="sunflower-tap"
+                    aria-label="Pull the letter out"
+                    disabled>Tap</button>
         </div>
     </div>
 `;
 
-sunflowerNoteDialog.querySelector(".sunflower-small-note")
+const smallNote =
+    sunflowerNoteDialog.querySelector(".sunflower-small-note");
+
+const tapIndicator =
+    sunflowerNoteDialog.querySelector(".sunflower-tap");
+
+sunflowerNoteDialog.querySelector(".sunflower-note-text")
     .textContent = sunflowerNoteMessage;
 
 document.body.appendChild(sunflowerNoteDialog);
 
+/* Enable Tap once the flap has opened */
+sunflowerNoteDialog.addEventListener("animationend", (event) => {
+    if (event.animationName === "envelopeFlapOpen") {
+        tapIndicator.disabled = false;
+    }
+
+    if (
+        event.target === smallNote &&
+        event.animationName === "smallNoteRise"
+    ) {
+        sunflowerNoteDialog.classList.add("message-revealed");
+        smallNote.setAttribute("aria-hidden", "false");
+    }
+});
+
+/* Pull the whole letter out */
+tapIndicator.addEventListener("click", () => {
+    tapIndicator.disabled = true;
+    sunflowerNoteDialog.classList.add("letter-pulled");
+});
+
+/* Close popup */
 sunflowerNoteDialog.querySelector(".sunflower-note-close")
     .addEventListener("click", () => {
         sunflowerNoteDialog.close();
@@ -3778,8 +3872,17 @@ function openSunflowerNote() {
         sunflowerNoteDialog.open
     ) return;
 
+    /* Reset for every opening */
+    sunflowerNoteDialog.classList.remove(
+        "letter-pulled",
+        "message-revealed"
+    );
+
+    smallNote.setAttribute("aria-hidden", "true");
+    tapIndicator.disabled = true;
+
     sunflowerNoteDialog.showModal();
-}  
+}
  
 </script>
 
