@@ -2510,35 +2510,8 @@ preSlide.inert = true;
 
     opening.style.opacity = "";
     opening.style.transform = "";
-/* Keep opening text visible above the pre-slide */
-const openingContent =
-    opening.querySelector(".opening-content");
 
-const textRect = openingContent.getBoundingClientRect();
-const openingTextCopy = openingContent.cloneNode(true);
-
-openingTextCopy.querySelectorAll("[id]").forEach(element => {
-    element.removeAttribute("id");
-});
-
-openingTextCopy.querySelectorAll("button").forEach(button => {
-    button.style.visibility = "hidden";
-});
-
-Object.assign(openingTextCopy.style, {
-    position: "fixed",
-    left: textRect.left + "px",
-    top: textRect.top + "px",
-    width: textRect.width + "px",
-    height: textRect.height + "px",
-    margin: "0",
-    textAlign: "center",
-    pointerEvents: "none",
-    zIndex: "999"
-});
-
-openingTextCopy.setAttribute("aria-hidden", "true");
-document.body.appendChild(openingTextCopy);
+    opening.style.zIndex = "11";
     /* Prepare pre-slide */
     preSlide.style.display = "flex";
     preSlide.style.position = "fixed";
@@ -2644,19 +2617,11 @@ sunflower.style.visibility = "hidden";
 
     /* Opening fades while flower remains */
     opening.style.transition =
-        "opacity 0.8s ease";
+        "opacity 1.4s ease";
 void clone.offsetWidth;
     requestAnimationFrame(() => {
 
-        opening.style.opacity = "0";
- openingTextCopy.animate(
-    [{ opacity: 1 }, { opacity: 0 }],
-    {
-        duration: 1400,
-        easing: "ease",
-        fill: "forwards"
-    }
-);       
+        opening.style.opacity = "0";   
 /* Start morph shortly after travel begins */
 setTimeout(() => {
 
@@ -2769,7 +2734,7 @@ setTimeout(() => {
     /* =========================================
        FINISH OPENING → PRE-SLIDE TRANSITION
        ========================================= */
-openingTextCopy.remove();
+opening.style.zIndex = "";
     opening.style.display = "none";
     opening.style.opacity = "";
 
