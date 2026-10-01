@@ -1915,21 +1915,35 @@ background-repeat: no-repeat;
         display: none;
     }
 } 
-/* Landscape: content-sized paper, centered with controls */
+/* Landscape: stable viewport, centered when content fits */
 @media (orientation: landscape) {
     #letter {
+        position: fixed;
+        inset: 0;
+        min-height: 0;
+        height: auto;
+
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     #letter .letter-content {
         flex-shrink: 0;
+        margin: auto 0;
     }
 
     #letter .paper,
     #letter .reveal-slide,
     #letter .reveal-message {
         min-height: 0;
+    }
+
+    #letter .flower-layer,
+    #letter .foreground-flower-layer {
+        height: 100%;
     }
 }
 /* Supporting flowers: alternate rotation directions */
