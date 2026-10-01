@@ -2602,10 +2602,8 @@ clone.appendChild(originalLayer);
 clone.appendChild(sunflowerLayer);
 
 document.body.appendChild(clone);
-/* Keep source flower visible at the start */
-openingFlower.style.visibility = "visible";
-openingFlower.style.opacity = "1";
-
+/* Hide source immediately; travelling clone takes over */
+openingFlower.style.visibility = "hidden";
 /* Hide original bouquet sunflower during morph */
 sunflower.style.visibility = "hidden";
     /*
@@ -2628,12 +2626,6 @@ setTimeout(() => {
     /* Start clone morph */
     clone.classList.add("morphing");
 
-    /*
-       Fade the ORIGINAL source flower
-       at exactly the same moment
-    */
-    openingFlower.style.transition = "opacity 0.9s ease";
-    openingFlower.style.opacity = "0";
 
 }, 280);
         /*
