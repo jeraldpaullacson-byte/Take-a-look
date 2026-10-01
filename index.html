@@ -1914,6 +1914,14 @@ background-repeat: no-repeat;
     #letter::-webkit-scrollbar {
         display: none;
     }
+} 
+/* Landscape paper follows the message length */
+@media (orientation: landscape) {
+    #letter .paper,
+    #letter .reveal-slide,
+    #letter .reveal-message {
+        min-height: 0;
+    }
 }    
 </style>
 </head>
