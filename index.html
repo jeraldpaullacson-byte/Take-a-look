@@ -266,7 +266,8 @@ button:hover {
     width: 652px;
     height: 533px;
 
-    margin: 4px auto 14px;
+margin: 4px 0 14px;
+flex-shrink: 0;
     pointer-events: none;
 }
 
@@ -291,7 +292,7 @@ button:hover {
 @media (max-width: 600px) and (orientation: portrait) {
 
     .bouquet {
-        transform: translateX(-126px) scale(0.56);
+     transform: scale(0.56);
         transform-origin: center center;
 
         margin-top: -105px;
@@ -1854,6 +1855,22 @@ background-repeat: no-repeat;
 #preSlide .pre-slide-navigation .swipe-back-hint,
 #preSlide .pre-slide-navigation .swipe-continue-hint {
     position: static;
+} 
+/* Confession intro: controls 20px below the message */
+#confessionIntro .confession-intro-message {
+    margin-bottom: 0;
+}
+
+#confessionIntro .confession-intro-navigation {
+    margin-top: 20px;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+#confessionIntro .confession-intro-navigation .swipe-back-hint,
+#confessionIntro .confession-intro-navigation .swipe-continue-hint {
+    position: static;
 }    
 </style>
 </head>
@@ -2146,6 +2163,10 @@ background-repeat: no-repeat;
     <div class="swipe-back-hint">
         <span class="swipe-back-arrow">↝</span>
         <span>swipe to go back</span>
+    <div class="confession-intro-navigation">
+    <div class="swipe-back-hint">
+        <span class="swipe-back-arrow">↝</span>
+        <span>swipe to go back</span>
     </div>
 
     <div class="swipe-continue-hint">
@@ -2153,7 +2174,6 @@ background-repeat: no-repeat;
         <span class="swipe-continue-arrow">↜</span>
     </div>
 </div>
-</div>    
 </section>
 <!-- CONFESSION INTRO -->
 
@@ -2166,17 +2186,20 @@ background-repeat: no-repeat;
             keeping to myself for a while.
         </p>
 
-<div class="swipe-back-hint">
-    <span class="swipe-back-arrow">↝</span>
-    <span>swipe to go back</span>
-</div>
-<div class="swipe-continue-hint">
-    <span>swipe to continue</span>
-    <span class="swipe-continue-arrow">↜</span>
-</div>
+<div class="pre-slide-navigation">
+    <div class="swipe-back-hint">
+        <span class="swipe-back-arrow">↝</span>
+        <span>swipe to go back</span>
     </div>
 
-</section>  
+    <div class="swipe-continue-hint">
+        <span>swipe to continue</span>
+        <span class="swipe-continue-arrow">↜</span>
+    </div>
+</div>
+
+    </div>
+</section>
 <!-- LETTER -->
 
 <section id="letter">
