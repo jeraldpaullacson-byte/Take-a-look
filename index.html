@@ -1915,14 +1915,23 @@ background-repeat: no-repeat;
         display: none;
     }
 } 
-/* Landscape paper follows the message length */
+/* Landscape: content-sized paper, centered with controls */
 @media (orientation: landscape) {
+    #letter {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    #letter .letter-content {
+        flex-shrink: 0;
+    }
+
     #letter .paper,
     #letter .reveal-slide,
     #letter .reveal-message {
         min-height: 0;
     }
-}    
+}
 </style>
 </head>
 
