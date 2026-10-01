@@ -1871,6 +1871,17 @@ background-repeat: no-repeat;
 #confessionIntro .confession-intro-navigation .swipe-back-hint,
 #confessionIntro .confession-intro-navigation .swipe-continue-hint {
     position: static;
+}
+/* Match the visible phone viewport */
+@media (max-width: 600px) and (orientation: portrait) {
+    #letter {
+        min-height: 100dvh;
+    }
+
+    #letter .flower-layer,
+    #letter .foreground-flower-layer {
+        height: 100dvh;
+    }
 }    
 </style>
 </head>
