@@ -2610,7 +2610,16 @@ background-repeat: no-repeat;
 .sunflower-envelope .sunflower-tap:focus-visible {
     outline: 2px dashed #897217;
     outline-offset: -4px;
-}    
+}
+ /* Hide all swipe controls while letters return or stay inside */
+.sunflower-note-dialog:not(.letter-pulled)
+.sunflower-note-navigation,
+.sunflower-note-dialog.letter-returning
+.sunflower-note-navigation,
+.sunflower-note-dialog.envelope-closing
+.sunflower-note-navigation {
+    display: none;
+}   
 </style>
 </head>
 
