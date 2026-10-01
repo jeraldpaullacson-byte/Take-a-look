@@ -2034,11 +2034,11 @@ background-repeat: no-repeat;
     border-radius: 50%;
 }
 
-/* Small envelope popup */
+/* Envelope popup */
 .sunflower-note-dialog {
-    width: min(360px, calc(100vw - 32px));
+    width: min(380px, calc(100vw - 32px));
     max-height: calc(100dvh - 24px);
-    padding: 24px;
+    padding: 20px;
     border: 0;
     border-radius: 20px;
     background: #fff7d9;
@@ -2062,14 +2062,13 @@ background-repeat: no-repeat;
 }
 
 .sunflower-note-scene {
-    padding-top: 75px;
-    padding-bottom: 12px;
+    padding: 65px 0 90px;
     perspective: 700px;
 }
 
 .sunflower-envelope {
     position: relative;
-    width: min(260px, 100%);
+    width: min(280px, 100%);
     height: 145px;
     margin: auto;
     border-radius: 8px;
@@ -2077,7 +2076,7 @@ background-repeat: no-repeat;
     isolation: isolate;
 }
 
-/* Opening flap */
+/* Flap stays closed until Tap */
 .sunflower-envelope::before {
     content: "";
     position: absolute;
@@ -2089,7 +2088,6 @@ background-repeat: no-repeat;
     backface-visibility: hidden;
 }
 
-/* Front of the envelope */
 .sunflower-envelope::after {
     content: "";
     position: absolute;
@@ -2100,59 +2098,74 @@ background-repeat: no-repeat;
     clip-path: polygon(0 0, 50% 48%, 100% 0, 100% 100%, 0 100%);
 }
 
+/* Letter appears in front of the envelope */
 .sunflower-small-note {
     position: absolute;
     top: 12px;
-    left: 8%;
-    width: 84%;
-    min-height: 108px;
+    left: 6%;
+    width: 88%;
+    height: 240px;
     padding: 18px 14px;
-    border-radius: 6px;
-    background: #fffdf3;
-    box-shadow: 0 3px 12px rgba(80, 60, 10, 0.12);
-    font-family: "Segoe Print", "Bradley Hand", cursive;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center;
-    z-index: 1;
-}
-
-.sunflower-note-dialog[open] .sunflower-envelope {
-    animation: envelopeAppear 0.45s ease both;
-}
-
-.sunflower-note-dialog[open] .sunflower-envelope::before {
-    animation: envelopeFlapOpen 0.45s ease 0.35s both;
-}
-
-/* Reserve room for the whole letter above the envelope */
-.sunflower-note-dialog .sunflower-note-scene {
-    padding-top: 140px;
-}
-
-/* Letter stays inside until Tap */
-.sunflower-note-dialog[open] .sunflower-small-note {
-    animation: none;
-}
-
-/* Keep the message hidden during opening and pull-out */
-.sunflower-note-text {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.sunflower-note-dialog.message-revealed .sunflower-note-text {
-    opacity: 1;
-}
-
-/* Tap indicator on the front of the envelope */
-.sunflower-tap {
-    position: absolute;
-    top: 80px;
-    left: 50%;
     z-index: 4;
 
-    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    border-radius: 8px;
+    background: #fffdf3;
+    box-shadow: 0 8px 24px rgba(80, 60, 10, 0.2);
+
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sunflower-note-text {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+
+    font-family: "Segoe Print", "Bradley Hand", cursive;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.sunflower-note-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.sunflower-note-navigation button {
+    padding: 7px 10px;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+.sunflower-note-navigation button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.sunflower-note-count {
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* Tap sits at the exact center */
+.sunflower-tap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+
+    transform: translate(-50%, -50%);
     padding: 8px 22px;
     background: #897217;
     color: #fffdf3;
@@ -2162,26 +2175,36 @@ background-repeat: no-repeat;
 }
 
 .sunflower-tap:hover {
-    transform: translateX(-50%) scale(1.05);
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
-.sunflower-tap:disabled {
-    cursor: default;
+.sunflower-note-dialog[open] .sunflower-envelope {
+    animation: envelopeAppear 0.45s ease both;
 }
 
 .sunflower-note-dialog[open] .sunflower-tap {
-    animation: sunflowerTapHint 1.8s ease-in-out 0.8s infinite both;
+    animation: sunflowerTapHint 1.8s ease-in-out infinite;
 }
 
+/* Second tap opens the flap and reveals the letter */
 .sunflower-note-dialog.letter-pulled .sunflower-tap {
     visibility: hidden;
     pointer-events: none;
 }
 
-/* Pull out only after the second tap */
+.sunflower-note-dialog[open].letter-pulled .sunflower-envelope::before {
+    animation: envelopeFlapOpen 0.45s ease both;
+}
+
 .sunflower-note-dialog[open].letter-pulled .sunflower-small-note {
+    visibility: visible;
+    pointer-events: auto;
     animation: smallNoteRise 0.8s
-        cubic-bezier(0.22, 1, 0.36, 1) both;
+        cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+}
+
+.note-slide-enter {
+    animation: sunflowerNoteSlideIn 0.35s ease both;
 }
 
 @keyframes envelopeAppear {
@@ -2195,13 +2218,18 @@ background-repeat: no-repeat;
 }
 
 @keyframes smallNoteRise {
-    from { transform: translateY(0); }
-    to   { transform: translateY(calc(-100% - 18px)); }
+    from { opacity: 0; transform: translateY(25px) scale(0.9); }
+    to   { opacity: 1; transform: translateY(-55px) scale(1); }
 }
 
 @keyframes sunflowerTapHint {
-    0%, 100% { opacity: 0.6; }
+    0%, 100% { opacity: 0.65; }
     50%      { opacity: 1; }
+}
+
+@keyframes sunflowerNoteSlideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -3798,66 +3826,100 @@ addSwipeNavigation(
 history.scrollRestoration = "manual";
 showSlide(0, "back");
 window.scrollTo(0, 0);
-/* Your little message */
-const sunflowerNoteMessage =
-    "A little something, just for you. 🌻";
+/* Replace these with your three message parts */
+const sunflowerNoteSlides = [
+    `Sample message for slide 1.`,
+    `Sample message for slide 2.`,
+    `Sample message for slide 3.`
+];
+
+let sunflowerNoteIndex = 0;
 
 const sunflowerNoteDialog = document.createElement("dialog");
 sunflowerNoteDialog.className = "sunflower-note-dialog";
-sunflowerNoteDialog.setAttribute("aria-label", "A little note");
+sunflowerNoteDialog.setAttribute("aria-label", "A little letter");
 
 sunflowerNoteDialog.innerHTML = `
     <button type="button"
             class="sunflower-note-close"
-            aria-label="Close note">×</button>
+            aria-label="Close letter">×</button>
 
     <div class="sunflower-note-scene">
         <div class="sunflower-envelope">
             <div class="sunflower-small-note" aria-hidden="true">
-                <span class="sunflower-note-text"></span>
+                <div class="sunflower-note-text"
+                     aria-live="polite"></div>
+
+                <div class="sunflower-note-navigation">
+                    <button type="button"
+                            class="sunflower-note-back">‹ Back</button>
+
+                    <span class="sunflower-note-count"></span>
+
+                    <button type="button"
+                            class="sunflower-note-next">Next ›</button>
+                </div>
             </div>
 
             <button type="button"
                     class="sunflower-tap"
-                    aria-label="Pull the letter out"
-                    disabled>Tap</button>
+                    aria-label="Open the envelope">Tap</button>
         </div>
     </div>
 `;
 
+document.body.appendChild(sunflowerNoteDialog);
+
 const smallNote =
     sunflowerNoteDialog.querySelector(".sunflower-small-note");
-
+const noteText =
+    sunflowerNoteDialog.querySelector(".sunflower-note-text");
+const noteCount =
+    sunflowerNoteDialog.querySelector(".sunflower-note-count");
+const noteBack =
+    sunflowerNoteDialog.querySelector(".sunflower-note-back");
+const noteNext =
+    sunflowerNoteDialog.querySelector(".sunflower-note-next");
 const tapIndicator =
     sunflowerNoteDialog.querySelector(".sunflower-tap");
 
-sunflowerNoteDialog.querySelector(".sunflower-note-text")
-    .textContent = sunflowerNoteMessage;
+function showSunflowerNoteSlide(index) {
+    sunflowerNoteIndex = Math.max(
+        0,
+        Math.min(index, sunflowerNoteSlides.length - 1)
+    );
 
-document.body.appendChild(sunflowerNoteDialog);
+    noteText.textContent = sunflowerNoteSlides[sunflowerNoteIndex];
+    noteText.scrollTop = 0;
 
-/* Enable Tap once the flap has opened */
-sunflowerNoteDialog.addEventListener("animationend", (event) => {
-    if (event.animationName === "envelopeFlapOpen") {
-        tapIndicator.disabled = false;
-    }
+    noteCount.textContent =
+        `${sunflowerNoteIndex + 1} / ${sunflowerNoteSlides.length}`;
 
-    if (
-        event.target === smallNote &&
-        event.animationName === "smallNoteRise"
-    ) {
-        sunflowerNoteDialog.classList.add("message-revealed");
-        smallNote.setAttribute("aria-hidden", "false");
-    }
-});
+    noteBack.disabled = sunflowerNoteIndex === 0;
+    noteNext.disabled =
+        sunflowerNoteIndex === sunflowerNoteSlides.length - 1;
 
-/* Pull the whole letter out */
+    /* Replay the gentle text entrance */
+    noteText.classList.remove("note-slide-enter");
+    void noteText.offsetWidth;
+    noteText.classList.add("note-slide-enter");
+}
+
 tapIndicator.addEventListener("click", () => {
     tapIndicator.disabled = true;
+    smallNote.inert = false;
+    smallNote.setAttribute("aria-hidden", "false");
     sunflowerNoteDialog.classList.add("letter-pulled");
 });
 
-/* Close popup */
+noteBack.addEventListener("click", () => {
+    showSunflowerNoteSlide(sunflowerNoteIndex - 1);
+});
+
+noteNext.addEventListener("click", () => {
+    showSunflowerNoteSlide(sunflowerNoteIndex + 1);
+});
+
 sunflowerNoteDialog.querySelector(".sunflower-note-close")
     .addEventListener("click", () => {
         sunflowerNoteDialog.close();
@@ -3872,15 +3934,16 @@ function openSunflowerNote() {
         sunflowerNoteDialog.open
     ) return;
 
-    /* Reset for every opening */
     sunflowerNoteDialog.classList.remove(
         "letter-pulled",
         "message-revealed"
     );
 
+    smallNote.inert = true;
     smallNote.setAttribute("aria-hidden", "true");
-    tapIndicator.disabled = true;
+    tapIndicator.disabled = false;
 
+    showSunflowerNoteSlide(0);
     sunflowerNoteDialog.showModal();
 }
  
