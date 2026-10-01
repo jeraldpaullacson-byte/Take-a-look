@@ -2010,6 +2010,12 @@ background-repeat: no-repeat;
 
 #preSlide:not(.flowers-settling) .swipe-continue-hint {
     animation: swipeContinueHint 2.4s ease-in-out infinite;
+}
+/* Smooth pre-slide exit in both directions */
+#preSlide {
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
 }    
 </style>
 </head>
