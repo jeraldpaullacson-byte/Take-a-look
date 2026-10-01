@@ -1872,17 +1872,29 @@ background-repeat: no-repeat;
 #confessionIntro .confession-intro-navigation .swipe-continue-hint {
     position: static;
 }
-/* Match the visible phone viewport */
+/* Keep portrait letter inside the screen */
 @media (max-width: 600px) and (orientation: portrait) {
     #letter {
-        min-height: 100dvh;
+        position: fixed;
+        inset: 0;
+        min-height: 0;
+        height: auto;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+        justify-content: flex-start;
+    }
+
+    #letter .letter-content {
+        flex-shrink: 0;
+        margin: auto 0;
     }
 
     #letter .flower-layer,
     #letter .foreground-flower-layer {
-        height: 100dvh;
+        height: 100%;
     }
-}    
+}
 </style>
 </head>
 
@@ -2910,7 +2922,6 @@ setTimeout(() => {
     }, 800);
 }   
 function proceedToLetter() {
-
     const confessionIntro = document.getElementById("confessionIntro");
     const letter = document.getElementById("letter");
 
@@ -2920,7 +2931,6 @@ function proceedToLetter() {
     letter.style.inset = "0";
     letter.style.zIndex = "10";
     letter.style.overflowY = "auto";
-showSlide(currentSlide, "next");
     letter.style.opacity = "0";
     letter.style.transform = "translateY(15px)";
 
