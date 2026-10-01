@@ -2298,6 +2298,195 @@ background-repeat: no-repeat;
 @keyframes sunflowerFlapClose {
     from { transform: rotateX(180deg); }
     to   { transform: rotateX(0deg); }
+}
+/* Reference-style envelope and letter movement */
+.sunflower-note-dialog {
+    --envelope-scene-scale: 1;
+    width: min(420px, calc(100vw - 32px));
+}
+
+.sunflower-note-scene {
+    position: relative;
+    height: calc(405px * var(--envelope-scene-scale));
+    padding: 0;
+    perspective: 800px;
+}
+
+.sunflower-envelope {
+    top: calc(150px * var(--envelope-scene-scale));
+    transform-origin: center top;
+}
+
+/* Show the underside of the opened flap */
+.sunflower-envelope::before {
+    backface-visibility: visible;
+}
+
+/* Folded envelope front */
+.sunflower-envelope::after {
+    background: conic-gradient(
+        from -45deg at 50% 50%,
+        #edcf80 0deg 90deg,
+        #dab454 90deg 180deg,
+        #e3be63 180deg 270deg,
+        #e7c46a 270deg 360deg
+    );
+}
+
+.sunflower-small-note {
+    left: 50%;
+    width: min(320px, calc(100vw - 72px));
+    transform-origin: center top;
+}
+
+/* Flap opens first, then the small paper travels upward */
+.sunflower-note-dialog[open].letter-pulled .sunflower-small-note {
+    animation: smallNoteRise 1.25s
+        cubic-bezier(0.22, 1, 0.36, 1) 0.45s both;
+}
+
+@keyframes envelopeAppear {
+    from {
+        opacity: 0;
+        transform:
+            translateY(15px)
+            scale(calc(var(--envelope-scene-scale) * 0.85));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(var(--envelope-scene-scale));
+    }
+}
+
+/* Open flap moves behind the travelling paper */
+@keyframes envelopeFlapOpen {
+    0% {
+        transform: rotateX(0deg);
+        z-index: 3;
+    }
+
+    49% {
+        z-index: 3;
+    }
+
+    50% {
+        z-index: 0;
+    }
+
+    100% {
+        transform: rotateX(180deg);
+        z-index: 0;
+    }
+}
+
+/* Small paper exits fully, then enlarges over the envelope */
+@keyframes smallNoteRise {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.55);
+        z-index: 1;
+    }
+
+    12% {
+        opacity: 1;
+    }
+
+    45% {
+        opacity: 1;
+        transform: translate(-50%, -150px) scale(0.55);
+        z-index: 1;
+    }
+
+    55% {
+        transform: translate(-50%, -150px) scale(0.55);
+        z-index: 4;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -55px) scale(1);
+        z-index: 4;
+    }
+}
+
+/* Reverse motion for each returning sheet */
+@keyframes sunflowerSheetReturn {
+    0% {
+        opacity: 1;
+        transform:
+            translate(-50%, calc(-55px + var(--sheet-offset)))
+            scale(1);
+        z-index: var(--sheet-layer);
+    }
+
+    45% {
+        opacity: 1;
+        transform: translate(-50%, -150px) scale(0.55);
+        z-index: var(--sheet-layer);
+    }
+
+    55% {
+        transform: translate(-50%, -150px) scale(0.55);
+        z-index: var(--sheet-layer);
+    }
+
+    60% {
+        z-index: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0) scale(0.55);
+        z-index: 1;
+    }
+}
+
+/* Keep the flap open while the sheets return */
+@keyframes sunflowerFlapReopen {
+    from {
+        transform: rotateX(180deg);
+        z-index: 0;
+    }
+
+    to {
+        transform: rotateX(180deg);
+        z-index: 0;
+    }
+}
+
+/* Close after the last sheet enters */
+@keyframes sunflowerFlapClose {
+    0% {
+        transform: rotateX(180deg);
+        z-index: 0;
+    }
+
+    49% {
+        z-index: 0;
+    }
+
+    50% {
+        z-index: 3;
+    }
+
+    100% {
+        transform: rotateX(0deg);
+        z-index: 3;
+    }
+}
+
+/* Fit the animation on shorter landscape screens */
+@media (max-height: 520px) {
+    .sunflower-note-dialog {
+        --envelope-scene-scale: 0.75;
+    }
+}
+
+@media (max-height: 380px) {
+    .sunflower-note-dialog {
+        --envelope-scene-scale: 0.6;
+    }
 }    
 </style>
 </head>
@@ -4056,7 +4245,7 @@ sunflowerNoteDialog.classList.add("letter-returning");
         sheet.style.setProperty("--sheet-layer", String(8 - order));
 
         sheet.style.animation =
-           `sunflowerSheetReturn 0.65s ease-in-out ${0.45 + order * 0.35}s both`;
+          `sunflowerSheetReturn 1s ease-in-out ${0.1 + order * 0.85}s both`;
 
         sheet.addEventListener("animationend", (event) => {
             if (
