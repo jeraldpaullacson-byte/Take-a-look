@@ -3211,12 +3211,17 @@ function backToConfessionIntro() {
     message.style.opacity = "1";
     message.style.transform = "translateY(0)";
 
-    /* Keep letter above during transition */
-    letter.style.position = "fixed";
-    letter.style.inset = "0";
-    letter.style.zIndex = "20";
-    letter.style.overflowY = "auto";
+ /* Preserve the letter's screen position before fading */
+const letterRect = letter.getBoundingClientRect();
 
+letter.style.position = "fixed";
+letter.style.inset = "auto";
+letter.style.top = letterRect.top + "px";
+letter.style.left = letterRect.left + "px";
+letter.style.width = letterRect.width + "px";
+letter.style.height = letterRect.height + "px";
+letter.style.zIndex = "20";
+letter.style.overflowY = "auto";
     /* Force browser to register starting state */
     void confessionIntro.offsetWidth;
 
@@ -3240,10 +3245,14 @@ function backToConfessionIntro() {
 
         /* Hide letter */
         letter.style.display = "none";
-        letter.style.position = "";
-        letter.style.inset = "";
-        letter.style.zIndex = "";
-        letter.style.overflowY = "";
+       letter.style.position = "";
+letter.style.inset = "";
+letter.style.top = "";
+letter.style.left = "";
+letter.style.width = "";
+letter.style.height = "";
+letter.style.zIndex = "";
+letter.style.overflowY = "";
 
         /* Reset letter for next Continue */
         letter.style.opacity = "0";
