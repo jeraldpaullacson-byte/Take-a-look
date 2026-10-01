@@ -224,6 +224,35 @@ button:hover {
     margin-bottom: 25px;
     transform: rotate(18deg);
 }
+/* Reveal content only after flowers settle */
+@keyframes preContentReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#preSlide .pre-message {
+    animation: preContentReveal 0.9s ease both;
+}
+
+#preSlide .pre-slide-navigation,
+#preSlide .swipe-back-hint,
+#preSlide .swipe-continue-hint {
+    animation: preContentReveal 0.8s ease 0.25s both;
+}
+
+#preSlide.flowers-settling .pre-message,
+#preSlide.flowers-settling .pre-slide-navigation,
+#preSlide.flowers-settling .swipe-back-hint,
+#preSlide.flowers-settling .swipe-continue-hint {
+    visibility: hidden;
+    animation: none;
+}    
 /* =========================================
    PRE-SLIDE BOUQUET — STATIC PROTOTYPE
    ========================================= */
@@ -2474,7 +2503,8 @@ function openLetter() {
 
     const sunflower =
         document.querySelector(".bouquet-sunflower");
-
+preSlide.classList.add("flowers-settling");
+preSlide.inert = true;
     /* Reset states */
     opening.classList.remove("returning", "fade-out");
 
@@ -2715,7 +2745,10 @@ setTimeout(() => {
 
 
     window.scrollTo(0, 0);
-
+requestAnimationFrame(() => {
+    preSlide.classList.remove("flowers-settling");
+    preSlide.inert = false;
+});
 }, 1850);
  }   
  function proceedToConfessionIntro() {
