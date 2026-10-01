@@ -2489,44 +2489,49 @@ background-repeat: no-repeat;
         --envelope-scene-scale: 0.6;
     }
 }
- /* PRE-SLIDE — clickable sunflower hint */
+/* Sunflower — repeating hand touch hint */
 #preSlide:not(.flowers-settling)
 .bouquet .sunflower-morph-clone::before {
-    content: "";
-    position: absolute;
-    inset: 9%;
-    border: 3px dashed rgba(137, 114, 23, 0.55);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: sunflowerClickHint 2.4s ease-in-out infinite;
+    content: none;
 }
 
 #preSlide:not(.flowers-settling)
 .bouquet .sunflower-morph-clone::after {
-    content: "Tap me";
+    content: "";
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(-168deg);
-
-    padding: 5px 10px;
-    border-radius: 20px;
-    background: #fff7d9;
-    color: #6b5424;
-    font-family: "Segoe Print", "Bradley Hand", cursive;
-    font-size: 20px;
-    white-space: nowrap;
+    width: 60px;
+    height: 72px;
     pointer-events: none;
+
+    background: center / contain no-repeat
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 72'%3E%3Cpath d='M25 63C19 58 15 49 9 42C5 36 11 31 16 36L22 42V13C22 5 32 5 32 13V32C32 25 41 25 41 32V35C41 29 49 29 49 36V39C49 34 56 35 56 41V50C56 56 52 61 49 65Z' fill='%23fff7d9' stroke='%236b5424' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-168deg);
+    animation: sunflowerHandHint 3.65s linear infinite;
 }
 
-@keyframes sunflowerClickHint {
-    0%, 100% {
-        opacity: 0.35;
-        transform: scale(1);
+@keyframes sunflowerHandHint {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%)
+                   rotate(-168deg) scale(1.12);
     }
-    50% {
-        opacity: 0.85;
-        transform: scale(1.06);
+
+    /* Appearance: 0.50 seconds */
+    13.6986% {
+        opacity: 1;
+        transform: translate(-50%, -50%)
+                   rotate(-168deg) scale(1);
+    }
+
+    /* Fade out: 0.15 seconds */
+    17.8082%, 100% {
+        opacity: 0;
+        transform: translate(-50%, -50%)
+                   rotate(-168deg) scale(1);
     }
 }
 
@@ -2583,7 +2588,29 @@ background-repeat: no-repeat;
 
 .sunflower-note-dialog.letter-pulled .sunflower-flap-tip {
     animation: none;
-}   
+}
+/* Hide the letter's exit button while returning or closed */
+.sunflower-note-dialog:not(.letter-pulled) .sunflower-letter-exit,
+.sunflower-note-dialog.letter-returning .sunflower-letter-exit,
+.sunflower-note-dialog.envelope-closing .sunflower-letter-exit {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Keep the clickable flap visually transparent */
+.sunflower-envelope .sunflower-tap {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    outline: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.sunflower-envelope .sunflower-tap:focus-visible {
+    outline: 2px dashed #897217;
+    outline-offset: -4px;
+}    
 </style>
 </head>
 
