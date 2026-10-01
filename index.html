@@ -3466,6 +3466,20 @@ window.addEventListener("pageshow", function(event) {
         restartLetterPage();
         return;
     }
+
+    window.scrollTo(0, 0);
+});
+
+document.addEventListener("visibilitychange", function() {
+    if (document.visibilityState === "hidden") {
+        letterWasHidden = true;
+        return;
+    }
+
+    if (letterWasHidden) {
+        restartLetterPage();
+    }
+});
 </script>
 
 
