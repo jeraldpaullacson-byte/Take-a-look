@@ -1895,6 +1895,26 @@ background-repeat: no-repeat;
         height: 100%;
     }
 }
+/* Hide landscape scrollbars; keep scrolling available */
+@media (orientation: landscape) {
+    html,
+    body,
+    #opening,
+    #preSlide,
+    #confessionIntro,
+    #letter {
+        scrollbar-width: none;
+    }
+
+    html::-webkit-scrollbar,
+    body::-webkit-scrollbar,
+    #opening::-webkit-scrollbar,
+    #preSlide::-webkit-scrollbar,
+    #confessionIntro::-webkit-scrollbar,
+    #letter::-webkit-scrollbar {
+        display: none;
+    }
+}    
 </style>
 </head>
 
