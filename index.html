@@ -4245,8 +4245,7 @@ sunflowerNoteDialog.classList.add("letter-returning");
         sheet.style.setProperty("--sheet-layer", String(8 - order));
 
         sheet.style.animation =
-          `sunflowerSheetReturn 1s ease-in-out ${0.1 + order * 0.85}s both`;
-
+         `sunflowerSheetReturn 1s ease-in-out ${0.1 + order * 0.15}s both`;
         sheet.addEventListener("animationend", (event) => {
             if (
                 event.target !== sheet ||
