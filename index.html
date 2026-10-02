@@ -2675,6 +2675,35 @@ background-repeat: no-repeat;
         inset 0 -2px 3px rgba(112, 47, 30, 0.18);
 
     pointer-events: none;
+}
+.sunflower-envelope {
+    background: linear-gradient(
+        135deg, #ffe9ae 0%, #efbd76 55%, #dc956e 100%
+    );
+}
+
+.sunflower-envelope::before {
+    background: linear-gradient(
+        180deg, #fff2c6 0%, #f8cda0 52%, #f8cda0 100%
+    );
+}
+
+.sunflower-envelope::after {
+    background:
+        conic-gradient(
+            from -45deg at 50% 50%,
+            transparent 0deg 90deg,
+            rgba(140, 76, 34, 0.12) 90deg 180deg,
+            rgba(140, 76, 34, 0.06) 180deg 270deg,
+            rgba(255, 255, 255, 0.14) 270deg 360deg
+        ),
+        linear-gradient(
+            135deg, #ffe6a3 0%, #f3c27e 50%, #e8a182 100%
+        );
+}
+
+.sunflower-flap-tip {
+    background: #f8cda0;
 }    
 </style>
 </head>
