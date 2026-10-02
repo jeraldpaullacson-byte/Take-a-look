@@ -2845,7 +2845,18 @@ background-repeat: no-repeat;
             translateY(0)
             scale(var(--envelope-scene-scale));
     }
-}   
+}
+/* Refined hand touch symbol */
+#preSlide:not(.flowers-settling)
+.bouquet .sunflower-morph-clone::after {
+    background: center / contain no-repeat
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 72'%3E%3Cdefs%3E%3ClinearGradient id='handFill' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fffef6'/%3E%3Cstop offset='1' stop-color='%23f0d9ad'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M25 63C19 58 15 49 9 42C5 36 11 31 16 36L22 42V13C22 5 32 5 32 13V32C32 25 41 25 41 32V35C41 29 49 29 49 36V39C49 34 56 35 56 41V50C56 56 52 61 49 65Z' fill='url(%23handFill)' stroke='%2388663e' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M26 15V36' fill='none' stroke='%23ffffff' stroke-opacity='.8' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M32 36V43M41 38V45M49 42V47M24 48C29 45 34 46 36 49' fill='none' stroke='%23b69466' stroke-opacity='.65' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+
+    filter:
+        drop-shadow(0 2px 2px rgba(77, 48, 20, 0.22));
+}
+
+    
 </style>
 </head>
 
