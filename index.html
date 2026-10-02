@@ -3069,7 +3069,10 @@ background-repeat: no-repeat;
         background: rgba(65, 49, 16, 0);
     }
 }
-
+/* JavaScript now handles the popup entrance */
+.sunflower-note-dialog[open]:not(.popup-closing) {
+    animation: none;
+}
 
     
 </style>
@@ -4029,8 +4032,28 @@ preSlide.inert = true;
     void preSlide.offsetWidth;
 
     /* Get exact starting position */
-    const startRect =
-        openingFlower.getBoundingClientRect();
+ const openingFlowerBounds = openingFlower.getBoundingClientRect();
+const openingFlowerStyle = getComputedStyle(openingFlower);
+
+/* Actual dimensions before rotation */
+const openingFlowerWidth = parseFloat(openingFlowerStyle.width);
+const openingFlowerHeight = parseFloat(openingFlowerStyle.height);
+
+/* Match the original flower's center without enlarging the clone */
+const startRect = {
+    left:
+        openingFlowerBounds.left +
+        openingFlowerBounds.width / 2 -
+        openingFlowerWidth / 2,
+
+    top:
+        openingFlowerBounds.top +
+        openingFlowerBounds.height / 2 -
+        openingFlowerHeight / 2,
+
+    width: openingFlowerWidth,
+    height: openingFlowerHeight
+};
 
 /* Sunflower's own settings inside the bouquet */
 const sunflowerSize = 300;
@@ -5036,7 +5059,9 @@ function closeSunflowerPopupSmoothly() {
         !sunflowerNoteDialog.open ||
         sunflowerNoteDialog.classList.contains("popup-closing")
     ) return;
-
+sunflowerPopupEntrance?.cancel();
+sunflowerPopupEntrance = null;
+sunflowerNoteDialog.style.opacity = "";
     sunflowerNoteDialog.classList.add("popup-closing");
 
     /* Fallback if animationend doesn't fire */
@@ -5172,6 +5197,8 @@ sunflowerNoteDialog.addEventListener("close", () => {
     smallNote.style.visibility = "";
     sunflowerLetterReturning = false;
 });
+let sunflowerPopupEntrance = null;
+
 function openSunflowerNote() {
     const preSlide = document.getElementById("preSlide");
 
@@ -5181,9 +5208,12 @@ function openSunflowerNote() {
         sunflowerNoteDialog.open
     ) return;
 
+    sunflowerPopupEntrance?.cancel();
+
     sunflowerNoteDialog.classList.remove(
         "letter-pulled",
-        "message-revealed"
+        "message-revealed",
+        "popup-closing"
     );
 
     smallNote.inert = true;
@@ -5191,7 +5221,53 @@ function openSunflowerNote() {
     tapIndicator.disabled = false;
 
     showSunflowerNoteSlide(0);
+
+    /* Keep the first displayed frame hidden */
+    sunflowerNoteDialog.style.opacity = "0";
     sunflowerNoteDialog.showModal();
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            if (
+                !sunflowerNoteDialog.open ||
+                sunflowerNoteDialog.classList.contains("popup-closing")
+            ) {
+                sunflowerNoteDialog.style.opacity = "";
+                return;
+            }
+
+            const entrance = sunflowerNoteDialog.animate(
+                [
+                    {
+                        opacity: 0,
+                        transform: "translateY(22px) scale(0.94)"
+                    },
+                    {
+                        opacity: 1,
+                        transform: "translateY(0) scale(1)"
+                    }
+                ],
+                {
+                    duration: 600,
+                    easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                    fill: "both"
+                }
+            );
+
+            sunflowerPopupEntrance = entrance;
+            sunflowerNoteDialog.style.opacity = "";
+
+            entrance.finished
+                .then(() => {
+                    entrance.cancel();
+
+                    if (sunflowerPopupEntrance === entrance) {
+                        sunflowerPopupEntrance = null;
+                    }
+                })
+                .catch(() => {});
+        });
+    });
 }
 </script>
 
