@@ -3140,6 +3140,23 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
         transform: translate(-50%, -50%) scale(1.1);
     }
 }
+ /* Hide letter scrollbars while keeping scrolling available */
+#letter,
+#letter *,
+.sunflower-note-dialog,
+.sunflower-note-dialog * {
+    scrollbar-width: none;
+}
+
+#letter::-webkit-scrollbar,
+#letter *::-webkit-scrollbar,
+.sunflower-note-dialog::-webkit-scrollbar,
+.sunflower-note-dialog *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
     
 </style>
 </head>
@@ -3663,11 +3680,6 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
  </template>
 
 </div>
-
-<p class="pre-message">
-    These aren't exactly real flowers,<br>
-    but I made them for you.
-</p>
 
 <div class="pre-slide-navigation">
     <div class="swipe-back-hint">
