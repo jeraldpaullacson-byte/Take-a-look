@@ -2704,7 +2704,25 @@ background-repeat: no-repeat;
 
 .sunflower-flap-tip {
     background: #f8cda0;
-}    
+}
+/* Slowly rotate supporting flowers after they settle */
+#preSlide:not(.flowers-settling) .bouquet-flower > svg {
+    transform-origin: center center;
+    animation: supportingFlowersSlowSpin 40s linear 1s infinite;
+}
+
+@keyframes supportingFlowersSlowSpin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(
+            calc(var(--flower-turn) + var(--flower-turn))
+        );
+    }
+}
+    
 </style>
 </head>
 
