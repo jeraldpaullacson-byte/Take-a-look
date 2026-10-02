@@ -2897,6 +2897,125 @@ background-repeat: no-repeat;
     stroke-opacity: 0.45;
     paint-order: stroke fill;
 }
+/* Space for the wrapping paper below the flowers */
+.bouquet {
+    height: 605px;
+}
+
+.bouquet-holder {
+    position: absolute;
+    left: 70px;
+    top: 145px;
+    width: 512px;
+    height: 455px;
+    z-index: 0;
+    pointer-events: none;
+    transform-origin: 50% 35%;
+}
+
+.bouquet-holder svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 8px 9px rgba(105, 64, 44, 0.18));
+}
+
+/* Paper appears alongside the arriving flowers */
+#preSlide.flowers-settling .bouquet-holder {
+    animation: bouquetHolderArrive 1.8s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes bouquetHolderArrive {
+    from {
+        opacity: 0;
+        transform: translateY(24px) scale(0.82);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Keep the extra space compact on smaller screens */
+@media (max-width: 600px) and (orientation: portrait) {
+    .bouquet {
+        margin-top: -121px;
+        margin-bottom: -121px;
+    }
+}
+
+@media (orientation: landscape) and (max-height: 700px) {
+    .bouquet {
+        margin-top: -151px;
+        margin-bottom: -151px;
+    }
+}
+/* Golden sunflower petals */
+.sunflower-morph-final > g:nth-of-type(1) > ellipse {
+    fill: url(#sunflowerOuterGold);
+    stroke: #b77c20;
+    stroke-width: 0.55;
+    stroke-opacity: 0.45;
+    paint-order: stroke fill;
+}
+
+.sunflower-morph-final > g:nth-of-type(2) > ellipse {
+    fill: url(#sunflowerInnerGold);
+    stroke: #d5a136;
+    stroke-width: 0.45;
+    stroke-opacity: 0.4;
+    paint-order: stroke fill;
+}
+
+/* Rich center with fine seed texture */
+.sunflower-morph-final > circle:nth-of-type(1) {
+    fill: url(#sunflowerRichCenter);
+    stroke: #d6a03b;
+    stroke-width: 1.2;
+}
+
+.sunflower-morph-final > circle:nth-of-type(2) {
+    fill: url(#sunflowerFineSeeds);
+    opacity: 0.65;
+}
+
+.sunflower-morph-final {
+    filter: drop-shadow(0 3px 3px rgba(95, 60, 22, 0.22));
+}
+
+/* Leaves sit above the wrap and behind the flowers */
+.bouquet-foliage {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 652px;
+    height: 605px;
+    overflow: visible;
+    z-index: 1;
+    pointer-events: none;
+    transform-origin: 50% 45%;
+    filter: drop-shadow(0 3px 3px rgba(51, 78, 47, 0.15));
+}
+
+/* Foliage joins the bouquet entrance */
+#preSlide.flowers-settling .bouquet-foliage {
+    animation: bouquetFoliageArrive 1.8s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes bouquetFoliageArrive {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.75);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
     
 </style>
 </head>
@@ -2982,7 +3101,153 @@ background-repeat: no-repeat;
 <!-- STATIC BOUQUET PROTOTYPE -->
 
 <div class="bouquet">
+ <!-- Leaves, stems and small filler flowers -->
+<svg class="bouquet-foliage"
+     viewBox="0 0 652 605"
+     aria-hidden="true">
+    <defs>
+        <linearGradient id="bouquetLeafGreen"
+                        x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#b8ce9d"/>
+            <stop offset="50%" stop-color="#7eaa80"/>
+            <stop offset="100%" stop-color="#49765d"/>
+        </linearGradient>
 
+        <g id="bouquetLeafShape">
+            <path d="M0 0 C-30 -18 -35 -53 -10 -76
+                     C20 -58 28 -22 0 0 Z"
+                  fill="url(#bouquetLeafGreen)"
+                  stroke="#557b5c" stroke-width="1"/>
+            <path d="M0 -3 Q-8 -35 -10 -68"
+                  fill="none" stroke="#e0e8c5"
+                  stroke-width="1.5" stroke-opacity=".65"/>
+        </g>
+
+        <g id="bouquetFillerBloom">
+            <g fill="#fff2d5" stroke="#c5ad83" stroke-width=".5">
+                <circle cx="0" cy="-4" r="3.5"/>
+                <circle cx="4" cy="-1" r="3.5"/>
+                <circle cx="2.5" cy="4" r="3.5"/>
+                <circle cx="-2.5" cy="4" r="3.5"/>
+                <circle cx="-4" cy="-1" r="3.5"/>
+            </g>
+            <circle r="2" fill="#d8ad59"/>
+        </g>
+    </defs>
+
+    <!-- Branches behind the blooms -->
+    <g fill="none" stroke="#63876b"
+       stroke-width="3" stroke-linecap="round">
+        <path d="M326 545 Q178 320 72 140"/>
+        <path d="M326 545 Q472 310 582 155"/>
+        <path d="M326 545 Q177 420 60 320"/>
+        <path d="M326 545 Q470 430 590 345"/>
+    </g>
+
+    <!-- Leaves around the bouquet edges -->
+    <use href="#bouquetLeafShape"
+         transform="translate(106 183) rotate(-35) scale(.9)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(161 242) rotate(-75) scale(.85)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(546 197) rotate(35) scale(.95)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(492 270) rotate(75) scale(.85)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(113 365) rotate(-70)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(169 420) rotate(-105) scale(.8)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(537 387) rotate(75)"/>
+    <use href="#bouquetLeafShape"
+         transform="translate(481 444) rotate(105) scale(.8)"/>
+
+    <!-- Delicate filler sprays -->
+    <g fill="none" stroke="#8b9d76" stroke-width="1.5">
+        <path d="M185 173 L181 92 M181 119 L153 102
+                 M182 137 L207 111"/>
+        <path d="M477 344 L581 281 M537 305 L554 264
+                 M557 296 L600 301"/>
+    </g>
+
+    <use href="#bouquetFillerBloom" transform="translate(181 92)"/>
+    <use href="#bouquetFillerBloom" transform="translate(153 102)"/>
+    <use href="#bouquetFillerBloom" transform="translate(207 111)"/>
+    <use href="#bouquetFillerBloom" transform="translate(581 281)"/>
+    <use href="#bouquetFillerBloom" transform="translate(554 264)"/>
+    <use href="#bouquetFillerBloom" transform="translate(600 301)"/>
+</svg>   
+<!-- Bouquet paper wrap and ribbon -->
+<div class="bouquet-holder" aria-hidden="true">
+    <svg viewBox="0 0 512 455">
+        <defs>
+            <linearGradient id="bouquetWrap" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fff0db"/>
+                <stop offset="55%" stop-color="#e9c9b5"/>
+                <stop offset="100%" stop-color="#c99583"/>
+            </linearGradient>
+
+            <linearGradient id="bouquetFold" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#f7decb"/>
+                <stop offset="100%" stop-color="#d6ad99"/>
+            </linearGradient>
+
+            <linearGradient id="bouquetRibbon" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cf8994"/>
+                <stop offset="100%" stop-color="#a9566d"/>
+            </linearGradient>
+        </defs>
+
+        <!-- Outer wrapping paper -->
+        <path d="M20 25 L256 100 L492 25
+                 L318 442 Q256 454 194 442 Z"
+              fill="url(#bouquetWrap)"
+              stroke="#bb8c79" stroke-width="1.5"/>
+
+        <!-- Overlapping folded paper -->
+        <path d="M20 25 L290 230 L318 442
+                 Q256 454 194 442 Z"
+              fill="url(#bouquetFold)"/>
+
+        <!-- Soft crease and edge highlights -->
+        <path d="M20 25 L290 230 L318 442"
+              fill="none" stroke="#fff3e4"
+              stroke-width="3" stroke-opacity=".6"/>
+        <path d="M492 25 L235 245 L194 442"
+              fill="none" stroke="#a87867"
+              stroke-width="2" stroke-opacity=".25"/>
+
+        <!-- Ribbon tails -->
+        <path d="M248 395 L219 449 L238 440 L246 454 L263 401"
+              fill="url(#bouquetRibbon)"/>
+        <path d="M263 395 L297 449 L276 439 L268 454 L250 401"
+              fill="url(#bouquetRibbon)"/>
+
+        <!-- Bow loops -->
+        <path d="M254 399
+                 C205 363 181 380 200 401
+                 C213 415 235 411 254 399 Z"
+              fill="url(#bouquetRibbon)"
+              stroke="#994e62" stroke-width="1"/>
+        <path d="M258 399
+                 C307 363 331 380 312 401
+                 C299 415 277 411 258 399 Z"
+              fill="url(#bouquetRibbon)"
+              stroke="#994e62" stroke-width="1"/>
+
+        <!-- Ribbon around the paper -->
+        <path d="M177 391 Q256 409 335 391"
+              fill="none" stroke="#ac5d72" stroke-width="12"/>
+        <path d="M177 388 Q256 406 335 388"
+              fill="none" stroke="#e5a8b0"
+              stroke-width="2" stroke-opacity=".7"/>
+
+        <!-- Bow knot -->
+        <rect x="247" y="388" width="19" height="22" rx="7"
+              fill="url(#bouquetRibbon)"
+              stroke="#994e62" stroke-width="1"/>
+    </svg>
+</div>
     <!-- 1 — DUSTY PINK -->
     <div class="bouquet-flower bouquet-pink">
         <svg viewBox="0 0 100 100">
