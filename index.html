@@ -2708,7 +2708,7 @@ background-repeat: no-repeat;
 /* Slowly rotate supporting flowers after they settle */
 #preSlide:not(.flowers-settling) .bouquet-flower > svg {
     transform-origin: center center;
-    animation: supportingFlowersSlowSpin 40s linear 1s infinite;
+    animation: supportingFlowersSlowSpin 30s linear 1s infinite;
 }
 
 @keyframes supportingFlowersSlowSpin {
@@ -2722,7 +2722,89 @@ background-repeat: no-repeat;
         );
     }
 }
-    
+ /* Richer flower palettes */
+.bouquet-pink {
+    --petal-main: #e5a1ad;
+    --petal-light: #f3bdc7;
+    --petal-deep: #d88e9d;
+    --petal-edge: #b97586;
+}
+
+.bouquet-cream {
+    --petal-main: #fff3cf;
+    --petal-light: #fffbea;
+    --petal-deep: #f1dfaf;
+    --petal-edge: #cbb783;
+}
+
+.bouquet-yellow {
+    --petal-main: #f2cc58;
+    --petal-light: #ffe394;
+    --petal-deep: #e6b841;
+    --petal-edge: #bf9235;
+}
+
+.bouquet-lavender {
+    --petal-main: #bea5d6;
+    --petal-light: #d9c6eb;
+    --petal-deep: #ac8bc7;
+    --petal-edge: #8d70a7;
+}
+
+.bouquet-ivory {
+    --petal-main: #fff8e7;
+    --petal-light: #fffdf5;
+    --petal-deep: #eee1c4;
+    --petal-edge: #c4b491;
+}
+
+.bouquet-peach {
+    --petal-main: #e99a7e;
+    --petal-light: #ffc0a2;
+    --petal-deep: #d9826c;
+    --petal-edge: #b86b57;
+}
+
+/* Soft depth around each flower silhouette */
+#preSlide .bouquet-flower > svg {
+    filter:
+        drop-shadow(0 3px 2px rgba(91, 61, 42, 0.16))
+        drop-shadow(0 8px 8px rgba(91, 61, 42, 0.10));
+}
+
+/* Petal colors and delicate edges */
+#preSlide .bouquet-flower svg g > ellipse,
+#preSlide .bouquet-yellow svg g > circle,
+#preSlide .bouquet-peach svg g > circle {
+    fill: var(--petal-main);
+    stroke: var(--petal-edge);
+    stroke-width: 0.65;
+    stroke-opacity: 0.45;
+    paint-order: stroke fill;
+}
+
+/* Alternate light and shaded petals */
+#preSlide .bouquet-flower svg g > ellipse:nth-child(3n + 1),
+#preSlide .bouquet-yellow svg g > circle:nth-child(3n + 1),
+#preSlide .bouquet-peach svg g > circle:nth-child(3n + 1) {
+    fill: var(--petal-light);
+}
+
+#preSlide .bouquet-flower svg g > ellipse:nth-child(3n),
+#preSlide .bouquet-yellow svg g > circle:nth-child(3n),
+#preSlide .bouquet-peach svg g > circle:nth-child(3n) {
+    fill: var(--petal-deep);
+}
+
+/* Give the flower centers a raised appearance */
+#preSlide .bouquet-flower svg > circle,
+#preSlide .bouquet-pink svg g > circle {
+    stroke: #91632f;
+    stroke-width: 0.6;
+    stroke-opacity: 0.30;
+    paint-order: stroke fill;
+    filter: drop-shadow(0 1px 1px rgba(91, 55, 25, 0.23));
+}   
 </style>
 </head>
 
