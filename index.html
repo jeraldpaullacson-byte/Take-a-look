@@ -3085,6 +3085,13 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
 .sunflower-note-dialog {
     will-change: opacity, transform;
 }
+ /* Remove the browser's blue tap highlight */
+*,
+*::before,
+*::after {
+    -webkit-tap-highlight-color: transparent;
+}
+
     
 </style>
 </head>
