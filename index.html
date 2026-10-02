@@ -3438,7 +3438,35 @@ background-repeat: no-repeat;
     <!-- 7 — SUNFLOWER / CENTERPIECE -->
   <template id="sunflowerDesign">
         <svg viewBox="0 0 120 120">
+<defs>
+    <linearGradient id="sunflowerOuterGold"
+                    x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffe49a"/>
+        <stop offset="45%" stop-color="#efbc36"/>
+        <stop offset="100%" stop-color="#c88719"/>
+    </linearGradient>
 
+    <linearGradient id="sunflowerInnerGold"
+                    x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff0b0"/>
+        <stop offset="55%" stop-color="#f6cd54"/>
+        <stop offset="100%" stop-color="#dda22d"/>
+    </linearGradient>
+
+    <radialGradient id="sunflowerRichCenter"
+                    cx="38%" cy="32%" r="70%">
+        <stop offset="0%" stop-color="#a87943"/>
+        <stop offset="55%" stop-color="#79502d"/>
+        <stop offset="100%" stop-color="#49301d"/>
+    </radialGradient>
+
+    <pattern id="sunflowerFineSeeds"
+             width="5" height="5"
+             patternUnits="userSpaceOnUse">
+        <circle cx="1.5" cy="1.5" r="0.85" fill="#382419"/>
+        <circle cx="3.8" cy="3.8" r="0.65" fill="#d2a363"/>
+    </pattern>
+</defs>
             <!-- outer petals -->
             <g fill="#efbd2e">
 
