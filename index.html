@@ -3091,7 +3091,55 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
 *::after {
     -webkit-tap-highlight-color: transparent;
 }
+/* Remove the folding-tip hint */
+.sunflower-flap-tip {
+    display: none;
+    animation: none;
+}
 
+/* Restore the complete triangular flap */
+.sunflower-note-dialog:not(.letter-pulled)
+.sunflower-envelope::before {
+    clip-path: polygon(0 0, 100% 0, 50% 58%);
+}
+
+/* Let the seal overlap the flap's tip */
+.sunflower-envelope .sunflower-tap {
+    clip-path: none;
+}
+
+/* Replace the heart with a sunflower seal */
+.sunflower-envelope .sunflower-tap::after {
+    content: "";
+    left: 50%;
+    top: 58%;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cdefs%3E%3ClinearGradient id='p' x2='0.8' y2='1'%3E%3Cstop stop-color='%23ffe589'/%3E%3Cstop offset='1' stop-color='%23e5a02a'/%3E%3C/linearGradient%3E%3CradialGradient id='c' cx='.35' cy='.3'%3E%3Cstop stop-color='%2399673d'/%3E%3Cstop offset='1' stop-color='%23553724'/%3E%3C/radialGradient%3E%3Cellipse id='petal' cx='40' cy='19' rx='7' ry='16'/%3E%3C/defs%3E%3Cg fill='url(%23p)' stroke='%23bd801f' stroke-width='.8'%3E%3Cuse href='%23petal'/%3E%3Cuse href='%23petal' transform='rotate(30 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(60 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(90 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(120 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(150 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(180 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(210 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(240 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(270 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(300 40 40)'/%3E%3Cuse href='%23petal' transform='rotate(330 40 40)'/%3E%3C/g%3E%3Ccircle cx='40' cy='40' r='15' fill='url(%23c)' stroke='%23b77c2c' stroke-width='2'/%3E%3Cg fill='%23d3a465' opacity='.65'%3E%3Ccircle cx='35' cy='35' r='1.3'/%3E%3Ccircle cx='43' cy='33' r='1.3'/%3E%3Ccircle cx='47' cy='40' r='1.3'/%3E%3Ccircle cx='40' cy='40' r='1.3'/%3E%3Ccircle cx='33' cy='42' r='1.3'/%3E%3Ccircle cx='39' cy='47' r='1.3'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow: none;
+    filter: drop-shadow(0 3px 3px rgba(105, 65, 25, 0.3));
+    transform: translate(-50%, -50%);
+}
+
+/* Soft clickable hint while the envelope is closed */
+.sunflower-note-dialog[open]:not(.letter-pulled)
+.sunflower-tap::after {
+    animation: sunflowerSealPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes sunflowerSealPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
     
 </style>
 </head>
