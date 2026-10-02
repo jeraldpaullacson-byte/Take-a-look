@@ -3073,7 +3073,18 @@ background-repeat: no-repeat;
 .sunflower-note-dialog[open]:not(.popup-closing) {
     animation: none;
 }
+/* Pause background motion while the popup is visible */
+body.sunflower-popup-active .bouquet-flower > svg,
+body.sunflower-popup-active .sunflower-morph-clone::after,
+body.sunflower-popup-active #preSlide .swipe-back-hint,
+body.sunflower-popup-active #preSlide .swipe-continue-hint {
+    animation-play-state: paused;
+}
 
+/* Prepare the popup for opacity and movement animation */
+.sunflower-note-dialog {
+    will-change: opacity, transform;
+}
     
 </style>
 </head>
@@ -5092,6 +5103,7 @@ sunflowerNoteDialog.addEventListener("cancel", (event) => {
 sunflowerNoteDialog.addEventListener("close", () => {
     clearTimeout(sunflowerPopupCloseTimer);
     sunflowerNoteDialog.classList.remove("popup-closing");
+ document.body.classList.remove("sunflower-popup-active");   
 });
 
 let sunflowerLetterReturning = false;
@@ -5224,6 +5236,7 @@ function openSunflowerNote() {
 
     /* Keep the first displayed frame hidden */
     sunflowerNoteDialog.style.opacity = "0";
+    document.body.classList.add("sunflower-popup-active");
     sunflowerNoteDialog.showModal();
 
     requestAnimationFrame(() => {
@@ -5240,7 +5253,7 @@ function openSunflowerNote() {
                 [
                     {
                         opacity: 0,
-                        transform: "translateY(22px) scale(0.94)"
+                      transform: "translateY(10px) scale(0.985)"
                     },
                     {
                         opacity: 1,
@@ -5248,8 +5261,8 @@ function openSunflowerNote() {
                     }
                 ],
                 {
-                    duration: 600,
-                    easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+                   duration: 850,
+easing: "ease-in-out",
                     fill: "both"
                 }
             );
