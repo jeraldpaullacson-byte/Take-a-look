@@ -3162,6 +3162,33 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
     align-content: safe center;
     text-align: center;
 }
+/* Reserve each paragraph's complete height */
+.letter-typing-line {
+    position: relative;
+}
+
+.letter-typing-spacing {
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.letter-typing-visible {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: inherit;
+}
+
+/* Typing now handles the reveal and signature */
+#letter .reveal-line,
+#letter .signature {
+    animation: none;
+    opacity: 1;
+    transform: none;
+}
+
     
 </style>
 </head>
@@ -4462,6 +4489,7 @@ function proceedToLetter() {
 
     /* Prepare entire letter scene behind confession intro */
     letter.style.display = "flex";
+    startLetterTyping(currentSlide);
     letter.style.position = "fixed";
     letter.style.inset = "0";
     letter.style.zIndex = "10";
@@ -4522,7 +4550,104 @@ const backButton = document.querySelector(".back");
 const continueButton = document.querySelector(".continue-button");
 const beginningButton = document.querySelector(".beginning-button");
 
+const letterTypingParts = new Map();
+let letterTypingTimer;
 
+/* Keep the full text space so the paper stays steady */
+slides.forEach(slide => {
+    const parts = [];
+
+    slide.querySelectorAll(".message p, .message .signature")
+        .forEach(element => {
+            let text = element.textContent
+                .replace(/\s+/g, " ")
+                .trim();
+
+            const suspense =
+                element.classList.contains("reveal-line");
+
+            if (suspense) {
+                text = "Well..... Trixie, it's you.";
+            }
+
+            const spacing = document.createElement("span");
+            spacing.className = "letter-typing-spacing";
+            spacing.textContent = text;
+
+            const visible = document.createElement("span");
+            visible.className = "letter-typing-visible";
+            visible.setAttribute("aria-hidden", "true");
+
+            element.classList.add("letter-typing-line");
+            element.replaceChildren(spacing, visible);
+
+            parts.push({ text, visible, suspense });
+        });
+
+    letterTypingParts.set(slide, parts);
+});
+
+function startLetterTyping(index) {
+    clearTimeout(letterTypingTimer);
+
+    const slide = slides[index];
+    const parts = letterTypingParts.get(slide) || [];
+
+    parts.forEach(part => {
+        part.visible.textContent = "";
+    });
+
+    let partIndex = 0;
+    let characterIndex = 0;
+
+    function typeNextCharacter() {
+        const letter = document.getElementById("letter");
+
+        if (
+            !slide.classList.contains("active") ||
+            getComputedStyle(letter).display === "none"
+        ) return;
+
+        const part = parts[partIndex];
+        if (!part) return;
+
+        characterIndex++;
+        const shown = part.text.slice(0, characterIndex);
+        part.visible.textContent = shown;
+
+        let delay = part.suspense ? 85 : 22;
+        const character = shown.slice(-1);
+
+        if (part.suspense) {
+            if (shown === "Well.....") {
+                delay = 1400;
+            } else if (shown === "Well..... Trixie,") {
+                delay = 1100;
+            } else if (character === ".") {
+                delay = 220;
+            }
+        } else {
+            if (/[.!?]/.test(character)) delay = 260;
+            else if (/[,;:]/.test(character)) delay = 130;
+        }
+
+        if (characterIndex >= part.text.length) {
+            partIndex++;
+            characterIndex = 0;
+            delay = 450;
+        }
+
+        if (partIndex < parts.length) {
+            letterTypingTimer = setTimeout(
+                typeNextCharacter,
+                delay
+            );
+        }
+    }
+
+    /* Let the slide entrance settle before typing */
+    letterTypingTimer = setTimeout(typeNextCharacter, 700);
+}
 function showSlide(index, direction) {
 
     const paper = document.querySelector(".paper");
@@ -4597,6 +4722,7 @@ if (index === slides.length - 1) {
     continueButton.style.display = "block";
     beginningButton.style.display = "none";
 }
+startLetterTyping(index);    
 }
 function nextSlide() {
 
