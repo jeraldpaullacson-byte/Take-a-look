@@ -2804,6 +2804,47 @@ background-repeat: no-repeat;
     stroke-opacity: 0.30;
     paint-order: stroke fill;
     filter: drop-shadow(0 1px 1px rgba(91, 55, 25, 0.23));
+}
+ /* Popup fades in smoothly */
+.sunflower-note-dialog[open] {
+    animation: envelopePopupFade 0.35s ease-out both;
+}
+
+/* Background dimming follows the popup */
+.sunflower-note-dialog[open]::backdrop {
+    animation: envelopeBackdropFade 0.4s ease-out both;
+}
+
+/* Envelope gently rises and grows into place */
+.sunflower-note-dialog[open] .sunflower-envelope {
+    animation: envelopeSoftEntrance 0.7s
+        cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+@keyframes envelopePopupFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes envelopeBackdropFade {
+    from { background: rgba(65, 49, 16, 0); }
+    to   { background: rgba(65, 49, 16, 0.28); }
+}
+
+@keyframes envelopeSoftEntrance {
+    from {
+        opacity: 0;
+        transform:
+            translateY(28px)
+            scale(calc(var(--envelope-scene-scale) * 0.88));
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(var(--envelope-scene-scale));
+    }
 }   
 </style>
 </head>
