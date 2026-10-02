@@ -4660,11 +4660,11 @@ showFullMessageButton.addEventListener("click", () => {
     const activeSlide =
         document.querySelector("#letter .slide.active");
 
-    if (
-        !activeSlide ||
-        activeSlide.classList.contains("reveal-slide")
-    ) return;
-
+  if (
+    !activeSlide ||
+    activeSlide.classList.contains("reveal-slide") ||
+    activeSlide === slides[slides.length - 1]
+) return;
     clearTimeout(letterTypingTimer);
 
     const parts = letterTypingParts.get(activeSlide) || [];
@@ -4682,7 +4682,8 @@ function startLetterTyping(index) {
     const parts = letterTypingParts.get(slide) || [];
 showFullMessageButton.hidden =
     parts.length === 0 ||
-    slide.classList.contains("reveal-slide");
+    slide.classList.contains("reveal-slide") ||
+    index === slides.length - 1;
     parts.forEach(part => {
         part.visible.textContent = "";
     });
