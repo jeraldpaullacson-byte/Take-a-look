@@ -3016,6 +3016,61 @@ background-repeat: no-repeat;
         transform: translateY(0) scale(1);
     }
 }
+/* Smooth popup entrance in portrait and landscape */
+.sunflower-note-dialog[open] {
+    animation: sunflowerPopupEnter 0.55s
+        cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sunflower-note-dialog[open]::backdrop {
+    animation: envelopeBackdropFade 0.45s ease both;
+}
+
+/* Keep the popup open until the exit finishes */
+.sunflower-note-dialog[open].popup-closing {
+    animation: sunflowerPopupExit 0.3s ease-in both;
+    pointer-events: none;
+}
+
+.sunflower-note-dialog[open].popup-closing::backdrop {
+    animation: sunflowerBackdropExit 0.3s ease-in both;
+}
+
+@keyframes sunflowerPopupEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes sunflowerPopupExit {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(14px) scale(0.96);
+    }
+}
+
+@keyframes sunflowerBackdropExit {
+    from {
+        background: rgba(65, 49, 16, 0.28);
+    }
+
+    to {
+        background: rgba(65, 49, 16, 0);
+    }
+}
+
+
     
 </style>
 </head>
@@ -4964,10 +5019,55 @@ addSwipeNavigation(
         }
     }
 );
-sunflowerNoteDialog.querySelector(".sunflower-note-close")
-    .addEventListener("click", () => {
+let sunflowerPopupCloseTimer;
+
+function finishSunflowerPopupClose() {
+    clearTimeout(sunflowerPopupCloseTimer);
+
+    if (sunflowerNoteDialog.open) {
         sunflowerNoteDialog.close();
-    });
+    }
+
+    sunflowerNoteDialog.classList.remove("popup-closing");
+}
+
+function closeSunflowerPopupSmoothly() {
+    if (
+        !sunflowerNoteDialog.open ||
+        sunflowerNoteDialog.classList.contains("popup-closing")
+    ) return;
+
+    sunflowerNoteDialog.classList.add("popup-closing");
+
+    /* Fallback if animationend doesn't fire */
+    sunflowerPopupCloseTimer = setTimeout(
+        finishSunflowerPopupClose,
+        400
+    );
+}
+
+sunflowerNoteDialog.querySelector(".sunflower-note-close")
+    .addEventListener("click", closeSunflowerPopupSmoothly);
+
+sunflowerNoteDialog.addEventListener("animationend", (event) => {
+    if (
+        event.target === sunflowerNoteDialog &&
+        event.animationName === "sunflowerPopupExit"
+    ) {
+        finishSunflowerPopupClose();
+    }
+});
+
+/* Escape / native dialog dismiss uses the same transition */
+sunflowerNoteDialog.addEventListener("cancel", (event) => {
+    event.preventDefault();
+    closeSunflowerPopupSmoothly();
+});
+
+sunflowerNoteDialog.addEventListener("close", () => {
+    clearTimeout(sunflowerPopupCloseTimer);
+    sunflowerNoteDialog.classList.remove("popup-closing");
+});
 
 let sunflowerLetterReturning = false;
 
