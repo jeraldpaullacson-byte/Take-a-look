@@ -4393,6 +4393,7 @@ const finishFlowerTravel = () => {
 
 /* Keep the same clone inside the supporting bouquet */
 clone.style.transition = "none";
+clone.style.willChange = "auto";
 clone.style.position = "absolute";
 clone.style.zIndex = "5";
 
@@ -4680,28 +4681,30 @@ showFullMessageButton.addEventListener("click", () => {
 
     showFullMessageButton.hidden = true;
 });
-function startLetterTyping(index) {
+unction startLetterTyping(index) {
     clearTimeout(letterTypingTimer);
 
+    const letter = document.getElementById("letter");
     const slide = slides[index];
     const parts = letterTypingParts.get(slide) || [];
-showFullMessageButton.hidden =
-    parts.length === 0 ||
-    slide.classList.contains("reveal-slide") ||
-    index === slides.length - 1;
+
+    showFullMessageButton.hidden =
+        parts.length === 0 ||
+        slide.classList.contains("reveal-slide") ||
+        index === slides.length - 1;
+
     parts.forEach(part => {
-        part.visible.textContent = "";
+        part.typingNode = document.createTextNode("");
+        part.visible.replaceChildren(part.typingNode);
     });
 
     let partIndex = 0;
     let characterIndex = 0;
 
     function typeNextCharacter() {
-        const letter = document.getElementById("letter");
-
         if (
             !slide.classList.contains("active") ||
-            getComputedStyle(letter).display === "none"
+            letter.style.display !== "flex"
         ) return;
 
         const part = parts[partIndex];
@@ -4709,9 +4712,9 @@ showFullMessageButton.hidden =
 
         characterIndex++;
         const shown = part.text.slice(0, characterIndex);
-        part.visible.textContent = shown;
+        part.typingNode.data = shown;
 
-    let delay = part.signature ? 120 : part.suspense ? 85 : 22;
+        let delay = part.signature ? 120 : part.suspense ? 85 : 22;
         const character = shown.slice(-1);
 
         if (part.suspense) {
@@ -4730,25 +4733,22 @@ showFullMessageButton.hidden =
         if (characterIndex >= part.text.length) {
             partIndex++;
             characterIndex = 0;
-       delay = parts[partIndex]?.signature ? 1200 : 450;
+            delay = parts[partIndex]?.signature ? 1200 : 450;
         }
 
-       if (partIndex < parts.length) {
-    letterTypingTimer = setTimeout(
-        typeNextCharacter,
-        delay
-    );
-} else {
-    showFullMessageButton.hidden = true;
-}
+        if (partIndex < parts.length) {
+            letterTypingTimer = setTimeout(typeNextCharacter, delay);
+        } else {
+            showFullMessageButton.hidden = true;
+        }
     }
 
-    /* Let the slide entrance settle before typing */
     letterTypingTimer = setTimeout(typeNextCharacter, 700);
 }
 function showSlide(index, direction) {
 
     const paper = document.querySelector(".paper");
+    clearTimeout(paper.heightResetTimer);
 
     /* Remember current paper height */
     const oldHeight = paper.getBoundingClientRect().height;
@@ -4804,7 +4804,7 @@ function showSlide(index, direction) {
     }
 
     /* After animation, return to natural auto height */
-    setTimeout(() => {
+    paper.heightResetTimer = setTimeout(() => {
         paper.style.height = "auto";
     }, 800);
 
