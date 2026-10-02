@@ -3188,7 +3188,28 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
     opacity: 1;
     transform: none;
 }
+/* Slight overlap at the hinge removes the thin seam */
+.sunflower-envelope::before {
+    transform-origin: center 1px;
+    box-shadow: none;
+}
 
+/* Keep the seal below the letter */
+.sunflower-envelope .sunflower-tap {
+    z-index: 3;
+}
+
+/* Keep it visible while the letter travels upward */
+.sunflower-note-dialog.letter-pulled .sunflower-tap {
+    visibility: visible;
+    pointer-events: none;
+}
+
+/* The letter now covers it; it can safely disappear */
+.sunflower-note-dialog.letter-pulled.seal-covered
+.sunflower-tap {
+    visibility: hidden;
+}
     
 </style>
 </head>
@@ -5236,7 +5257,21 @@ tapIndicator.addEventListener("click", () => {
     smallNote.setAttribute("aria-hidden", "false");
     sunflowerNoteDialog.classList.add("letter-pulled");
 });
+/* Keep the seal visible during each new opening */
+tapIndicator.addEventListener("click", () => {
+    sunflowerNoteDialog.classList.remove("seal-covered");
+});
 
+/* Hide it only after the letter has moved over it */
+smallNote.addEventListener("animationend", (event) => {
+    if (
+        event.target === smallNote &&
+        event.animationName === "smallNoteRise" &&
+        sunflowerNoteDialog.classList.contains("letter-pulled")
+    ) {
+        sunflowerNoteDialog.classList.add("seal-covered");
+    }
+});
 addSwipeNavigation(
     smallNote,
     () => {
