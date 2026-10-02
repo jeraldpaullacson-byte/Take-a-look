@@ -3212,11 +3212,17 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
 }
 /* Reserve space so navigation stays steady */
 .typing-controls {
+    position: absolute;
+    bottom: 6px;
+    left: 0;
+    right: 0;
+    z-index: 2;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 36px;
-    margin-top: 6px;
+    min-height: 0;
+    margin: 0;
 }
 
 #showFullMessageBtn {
@@ -4135,15 +4141,17 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
         </div>
 
     </div>
-</div>
-</div>
- <div class="typing-controls">
+</div> <!-- end of slides -->
+
+<div class="typing-controls">
     <button type="button"
             id="showFullMessageBtn"
             hidden>
         Show full message
     </button>
-</div>       
+</div>
+
+</div> <!-- end of paper -->
 <div class="navigation">
 
     <button class="nav-button back" onclick="previousSlide()">
