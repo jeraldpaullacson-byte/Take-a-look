@@ -3210,6 +3210,40 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
 .sunflower-tap {
     visibility: hidden;
 }
+/* Reserve space so navigation stays steady */
+.typing-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 36px;
+    margin-top: 6px;
+}
+
+#showFullMessageBtn {
+    padding: 6px 12px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    box-shadow: none;
+    color: #897217;
+    font-family: inherit;
+    font-size: 12px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    animation: none;
+    transform: none;
+    transition: background-color 0.2s ease;
+}
+
+#showFullMessageBtn:hover {
+    background-color: rgba(137, 114, 23, 0.08);
+}
+
+#showFullMessageBtn[hidden] {
+    display: none;
+}
+
     
 </style>
 </head>
@@ -4103,6 +4137,13 @@ body.sunflower-popup-active #preSlide .swipe-continue-hint {
     </div>
 </div>
 </div>
+ <div class="typing-controls">
+    <button type="button"
+            id="showFullMessageBtn"
+            hidden>
+        Show full message
+    </button>
+</div>       
 <div class="navigation">
 
     <button class="nav-button back" onclick="previousSlide()">
@@ -4604,13 +4645,36 @@ slides.forEach(slide => {
 
     letterTypingParts.set(slide, parts);
 });
+const showFullMessageButton =
+    document.getElementById("showFullMessageBtn");
 
+showFullMessageButton.addEventListener("click", () => {
+    const activeSlide =
+        document.querySelector("#letter .slide.active");
+
+    if (
+        !activeSlide ||
+        activeSlide.classList.contains("reveal-slide")
+    ) return;
+
+    clearTimeout(letterTypingTimer);
+
+    const parts = letterTypingParts.get(activeSlide) || [];
+
+    parts.forEach(part => {
+        part.visible.textContent = part.text;
+    });
+
+    showFullMessageButton.hidden = true;
+});
 function startLetterTyping(index) {
     clearTimeout(letterTypingTimer);
 
     const slide = slides[index];
     const parts = letterTypingParts.get(slide) || [];
-
+showFullMessageButton.hidden =
+    parts.length === 0 ||
+    slide.classList.contains("reveal-slide");
     parts.forEach(part => {
         part.visible.textContent = "";
     });
@@ -4655,12 +4719,14 @@ function startLetterTyping(index) {
             delay = 450;
         }
 
-        if (partIndex < parts.length) {
-            letterTypingTimer = setTimeout(
-                typeNextCharacter,
-                delay
-            );
-        }
+       if (partIndex < parts.length) {
+    letterTypingTimer = setTimeout(
+        typeNextCharacter,
+        delay
+    );
+} else {
+    showFullMessageButton.hidden = true;
+}
     }
 
     /* Let the slide entrance settle before typing */
