@@ -5596,6 +5596,53 @@ easing: "ease-in-out",
         });
     });
 }
+// Slowly rotating sunflower tab icon
+(() => {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) return;
+
+    const originalIcon = favicon.href;
+    const sunflowerIcon = new Image();
+    const canvas = document.createElement("canvas");
+
+    canvas.width = canvas.height = 64;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let rotation = 0;
+    let rotationTimer = null;
+
+    function rotateTabIcon() {
+        ctx.clearRect(0, 0, 64, 64);
+        ctx.save();
+        ctx.translate(32, 32);
+        ctx.rotate(rotation);
+        ctx.drawImage(sunflowerIcon, -32, -32, 64, 64);
+        ctx.restore();
+
+        favicon.type = "image/png";
+        favicon.href = canvas.toDataURL("image/png");
+
+        rotation = (rotation + Math.PI * 2 / 90) % (Math.PI * 2);
+    }
+
+    function updateTabRotation() {
+        clearInterval(rotationTimer);
+        rotationTimer = null;
+
+        if (!document.hidden) {
+            rotateTabIcon();
+            rotationTimer = setInterval(rotateTabIcon, 1000 / 6);
+        }
+    }
+
+    sunflowerIcon.onload = () => {
+        updateTabRotation();
+        document.addEventListener("visibilitychange", updateTabRotation);
+    };
+
+    sunflowerIcon.src = originalIcon;
+})();      
 </script>
 
 
